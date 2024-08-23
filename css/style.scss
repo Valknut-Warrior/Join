@@ -1,0 +1,167 @@
+@import url('fonts.css');
+
+:root {
+
+  --background-color: #fff;
+  --text-color: #121416d8;
+  --link-color: #543fd7;
+  --font-face: "Lato", "Roboto", sans-serif;
+  --font-style-italic: "italic";
+  --font-style-normal: "normal";
+}
+
+html[data-theme='light'] {
+  --background-color: #fff;
+  --text-color: #121416d8;
+  --link-color: #543fd7;
+}
+
+html[data-theme='dark'] {
+  --background-color: #212a2e;
+  --text-color: #F7F8F8;
+  --link-color: #828fff;
+}
+
+
+* {
+  font-family: var(--font-face);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  scrollbar-color: snow lightslategray;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:hover {
+  text-decoration: underline;
+  filter: brightness(80%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-face), serif;
+  font-style: var(--font-style-normal);
+  font-weight: 700;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  flex-basis: 50px;
+}
+
+.headerName {
+  flex-basis: 270px;
+  padding: 10px;
+  flex-grow: 5;
+  flex-shrink: 5;
+}
+
+.headerRight {
+  flex-direction: row;
+  display: flex;
+  flex-basis: 50px;
+  justify-content: flex-end;
+  flex-grow: 2;
+  flex-shrink: 2;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+#siteName {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.2em;
+}
+
+.headerRight ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin-right: 10px;
+}
+
+.headerRight svg {
+  width: 25px;
+  height: 25px;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar-left {
+  flex-basis: 100px;
+
+}
+.content {
+  flex: 4;
+}
+
+.footer {
+  flex-basis: 50px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+  .header {
+    display: flex;
+    height: 70px;
+    max-width: 1980px;
+    min-width: 1200px;
+  }
+
+
+}
+
+/* Extra 4K devices landscape */
+@media only screen and (min-width: 3840px) and (orientation: landscape) {
+
+
+}
+
+/* Extra 4K devices portrait  */
+@media only screen and (min-height: 2160px) and (orientation: portrait) {
+
+
+}
