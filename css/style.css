@@ -12,12 +12,16 @@ html[data-theme=light] {
   --background-color: #fff;
   --text-color: #121416d8;
   --link-color: #543fd7;
+  --border-shadow: 0 3px 0 0 rgba(227, 228, 229, 0.7);
+  --background-header: rgba(255, 255, 255, 1);
 }
 
 html[data-theme=dark] {
   --background-color: #212a2e;
   --text-color: #F7F8F8;
   --link-color: #828fff;
+  --border-shadow: 0 3px 0 0 rgba(190, 190, 190, 0.7);
+  --background-header: rgba(43, 52, 56, 1);
 }
 
 * {
@@ -46,6 +50,10 @@ a:hover {
   filter: brightness(80%);
 }
 
+#theme_switcher:focus {
+  outline: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-face), serif;
   font-style: var(--font-style-normal);
@@ -60,7 +68,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header {
+  background-color: var(--background-header);
   flex-basis: 50px;
+  box-shadow: var(--border-shadow);
 }
 
 .headerName {
@@ -117,6 +127,82 @@ h1, h2, h3, h4, h5, h6 {
   flex-basis: 50px;
 }
 
+/* Tooltip CSS */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  -webkit-font-smoothing: antialiased;
+  margin: 0 auto;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9;
+  transition: 0.6s ease-in-out 0.4s;
+}
+
+[data-tooltip]:before {
+  content: "";
+  height: 0;
+  width: 0;
+  top: calc(100% - 9px);
+  border-style: solid;
+  border-width: 10px;
+  border-color: transparent transparent #333 transparent;
+}
+
+[data-tooltip]:after {
+  content: attr(data-tooltip);
+  white-space: nowrap;
+  background: #333;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  top: calc(100% + 11px);
+  color: #fff;
+  border-radius: 2px;
+  text-shadow: 0px 1px 1px #000;
+  z-index: 9;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  opacity: 1;
+  visibility: visible;
+  transition: 0.4s ease-in-out 0.3s;
+}
+
+.d-none {
+  display: none;
+}
+
+.spinner-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #212529 !important;
+  opacity: 1;
+  z-index: 9999;
+  visibility: hidden;
+}
+
+.spinner-content.active {
+  visibility: visible;
+}
+
+.loading-text {
+  margin: 30px;
+  font-family: "Lato-Bold-Italic";
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
 /* Extra small devices (phones, 600px and down) */
 /* Small devices (portrait tablets and large phones, 600px and up) */
 /* Medium devices (landscape tablets, 768px and up) */
@@ -128,6 +214,78 @@ h1, h2, h3, h4, h5, h6 {
     height: 70px;
     max-width: 1980px;
     min-width: 1200px;
+  }
+  #question img {
+    width: 17px;
+    height: 17px;
+  }
+  .loader {
+    animation: rotate 1s infinite;
+    height: 50px;
+    width: 50px;
+  }
+  .loader:before,
+  .loader:after {
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 20px;
+    width: 20px;
+  }
+  .loader:before {
+    animation: ball1 1s infinite;
+    background-color: #cb2025;
+    box-shadow: 30px 0 0 #f8b334;
+    margin-bottom: 10px;
+  }
+  .loader:after {
+    animation: ball2 1s infinite;
+    background-color: #00a096;
+    box-shadow: 30px 0 0 #97bf0d;
+  }
+  @keyframes rotate {
+    0% {
+      -webkit-transform: rotate(0deg) scale(0.8);
+      -moz-transform: rotate(0deg) scale(0.8);
+    }
+    50% {
+      -webkit-transform: rotate(360deg) scale(1.2);
+      -moz-transform: rotate(360deg) scale(1.2);
+    }
+    100% {
+      -webkit-transform: rotate(720deg) scale(0.8);
+      -moz-transform: rotate(720deg) scale(0.8);
+    }
+  }
+  @keyframes ball1 {
+    0% {
+      box-shadow: 30px 0 0 #f8b334;
+    }
+    50% {
+      box-shadow: 0 0 0 #f8b334;
+      margin-bottom: 0;
+      -webkit-transform: translate(15px, 15px);
+      -moz-transform: translate(15px, 15px);
+    }
+    100% {
+      box-shadow: 30px 0 0 #f8b334;
+      margin-bottom: 10px;
+    }
+  }
+  @keyframes ball2 {
+    0% {
+      box-shadow: 30px 0 0 #97bf0d;
+    }
+    50% {
+      box-shadow: 0 0 0 #97bf0d;
+      margin-top: -20px;
+      -webkit-transform: translate(15px, 15px);
+      -moz-transform: translate(15px, 15px);
+    }
+    100% {
+      box-shadow: 30px 0 0 #97bf0d;
+      margin-top: 0;
+    }
   }
 }
 /* Extra 4K devices landscape */
