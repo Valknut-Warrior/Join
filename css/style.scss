@@ -16,6 +16,8 @@ html[data-theme='light'] {
   --link-color: #543fd7;
   --border-shadow: 0 3px 0 0 rgba(227, 228, 229, 0.7);
   --background-header: rgba(255, 255, 255, 1);
+  --background-color-content: rgba(246, 247, 248, 1);
+  --background-color-sidebar: rgba(42, 54, 71, 1);
 }
 
 html[data-theme='dark'] {
@@ -23,7 +25,9 @@ html[data-theme='dark'] {
   --text-color: #F7F8F8;
   --link-color: #828fff;
   --border-shadow: 0 3px 0 0 rgba(190, 190, 190, 0.7);
-  --background-header: rgba(43, 52, 56, 1);
+  --background-header: rgba(63, 77, 84, 1);
+  --background-color-content: rgba(55, 68, 74, 1);
+  --background-color-sidebar: rgba(46, 56, 61, 1);
 }
 
 
@@ -42,6 +46,7 @@ html {
 body {
   background: var(--background-color);
   color: var(--text-color);
+  overflow-y: hidden;
 }
 
 a {
@@ -119,11 +124,44 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar-left {
-  flex-basis: 100px;
-
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color-sidebar);
+  position: fixed;
+  top: -50px;
+  width: 232px;
+  bottom: 0;
 }
+
+
+.logo-sidebar {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 10px;
+}
+
+.sidebar-menu {
+  display: flex;
+  align-self: center;
+}
+
+.sidebar-menu li {
+  list-style: none;
+}
+
+.logo-sidebar img {
+  width: 100px;
+  height: 121px;
+}
+
 .content {
+  background-color: var(--background-color-content);
   flex: 4;
+  height: 100em;
 }
 
 .footer {
