@@ -1,73 +1,75 @@
 <!doctype html>
 <html lang="de" data-theme="auto">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
-    <!-- Custom CSS -->
+  <!-- Custom CSS -->
 
-    <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
-    <!-- Favicons -->
+  <!-- Favicons -->
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-    <link rel="manifest" href="/icons/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
 
+  <!-- W3.js laden -->
 
-    <title>Join</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+  <title>Join - Summary</title>
 </head>
 <body>
 
 
 <div class="root">
 
-    <div class="spinner-content" id="loading">
-        <div class="loader"></div>
-        <div class="loading-text">Loading...</div>
+  <div class="spinner-content" id="loading">
+    <div class="loader"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+
+  <div class="header">
+
+    <div class="headerName">
+      <span id="siteName">Kanban Project Management Tool</span>
+    </div>
+    <div class="headerRight">
+      <ul>
+        <li><a href="#" id="question"><img src="/icons/question.png" alt="Question"></a></li>
+        <li><a href="#" id="theme_switcher"></a></li>
+      </ul>
     </div>
 
-    <div class="header">
 
-        <div class="headerName">
-            <span id="siteName">Kanban Project Management Tool</span>
-        </div>
-        <div class="headerRight">
-            <ul>
-                <li><a href="#" id="question"><img src="/icons/question.png" alt="Question"></a></li>
-                <li><a href="#" id="theme_switcher"></a></li>
-            </ul>
-        </div>
+  </div>
 
+  <div class="main">
+
+    <div class="login-content">
+
+      <div class="login">
+
+       <div class="login-formular">
+         <div class="login-header">
+           <p><img src="/login.svg" alt="Log In"></p>
+           <p><img src="/line.svg" alt="Line"></p>
+         </div>
+
+         <div class="login-body">
+           Test
+         </div>
+       </div>
+
+      </div>
 
     </div>
-
-    <div class="main">
-
-        <div class="sidebar-left">
-
-            <div class="logo-sidebar">
-                <img src="public/logo-sidebar.svg" alt="logo">
-
-            </div>
-
-
-            <div class="sidebar-menu">
-                <ul>
-                    <li><img src="" alt=""> <span>Summary</span></li>
-                    <li><img src="" alt=""> <span>Add Task</span></li>
-                    <li><img src="" alt=""> <span>Board</span></li>
-                    <li><img src="" alt=""> <span>Contacts</span></li>
-                </ul>
-            </div>
-
-        </div>
-        <div class="content">Content</div>
-    </div>
+  </div>
 </div>
 <script src="js/themeSwitcher.js"></script>
 <script src="js/main.js"></script>

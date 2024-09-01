@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="de" data-theme="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Favicons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/icons/site.webmanifest">
+
+    <!-- W3.js laden -->
+
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+    <title>Join - Summary</title>
+</head>
+<body>
+
+
+<div class="root">
+
+    <div class="spinner-content" id="loading">
+        <div class="loader"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <div class="header">
+
+        <div class="headerName">
+            <span id="siteName">Kanban Project Management Tool</span>
+        </div>
+        <div class="headerRight">
+            <ul>
+                <li><a href="#" id="question"><img src="/icons/question.png" alt="Question"></a></li>
+                <li><a href="#" id="theme_switcher"></a></li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <div class="main">
+
+        <!-- Hier wird die Sidebar inkludiert -->
+        <div w3-include-html="sidebar.html"></div>
+
+        <div class="content">Content</div>
+    </div>
+</div>
+<script src="js/themeSwitcher.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

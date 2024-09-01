@@ -7,10 +7,9 @@ const loadingIndicator = document.getElementById("loading");
 
 document.addEventListener('DOMContentLoaded', () => {
     showLoading();
-
     themeToggle();
-
     hideLoading();
+    w3.includeHTML();
 
 });
 
