@@ -22,6 +22,7 @@ html[data-theme='light'] {
   --text-color-sidebar: rgba(200, 204, 209, 1);
   --background-color-login: rgba(255, 255, 255, 1);
   --background-color-login-content: rgba(246, 247, 248, 1);
+  --border-inputfeld-login: rgba(227, 228, 229, 0.7);
 }
 
 html[data-theme='dark'] {
@@ -36,6 +37,7 @@ html[data-theme='dark'] {
   --text-color-sidebar: rgba(200, 204, 209, 1);
   --background-color-login: rgba(63, 77, 84, 1);
   --background-color-login-content: rgba(55, 68, 74, 1);
+  --border-inputfeld-login: rgba(190, 190, 190, 0.7);
 }
 
 * {
@@ -337,6 +339,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   background-color: var(--background-color-login);
 }
 
@@ -351,7 +354,49 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   align-items: center;
   padding: 2px;
+  flex: 1;
 }
+
+.login-body {
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+}
+
+.login-body input {
+  display: flex;
+  gap: 8px;
+  width: 97%;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  background: var(--background-color-login);;
+  color: var(--text-color);
+  padding-left: 20px;
+  border: none;
+}
+
+.input-mail, .input-pwd {
+  width: 422px;
+  background: var(--background-color-login);
+  border: solid 1px var(--border-inputfeld-login);
+  border-radius: 10px;
+}
+
+#mail {
+  background: url(../public/icons/mail.svg) right no-repeat;
+}
+
+#pwd {
+  background: url("../public/icons/lock.svg") right no-repeat;
+}
+
+
+
+
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
