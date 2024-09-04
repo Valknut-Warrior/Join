@@ -25,11 +25,12 @@ html[data-theme='light'] {
   --border-inputfeld-login: rgba(227, 228, 229, 0.7);
   --border-input-focus: rgba(21, 29, 254, 1);
   --submit-login-button: rgba(42, 54, 71, 1);
+  --submit-login-button-text: rgba(255, 255, 255, 1);
 }
 
 html[data-theme='dark'] {
   --background-color: #212a2e;
-  --text-color: #F7F8F8;
+  --text-color: rgba(247, 248, 248, 1);
   --link-color: #828fff;
   --border-shadow: 0 3px 0 0 rgba(190, 190, 190, 0.7);
   --background-header: rgba(63, 77, 84, 1);
@@ -42,6 +43,7 @@ html[data-theme='dark'] {
   --border-inputfeld-login: rgba(190, 190, 190, 0.7);
   --border-input-focus: rgba(56, 62, 219, 1);
   --submit-login-button: rgba(42, 54, 71, 1);
+  --submit-login-button-text: rgba(247, 248, 248, 1);
 }
 
 * {
@@ -425,7 +427,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .submit-login button {
  background-color: var(--submit-login-button);
-  color: var(--text-color);
+  color: var(--submit-login-button-text);
+  border-radius: 8px;
 }
 
 .submit-guest button{
