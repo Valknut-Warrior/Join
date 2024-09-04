@@ -55,7 +55,7 @@
 
     <div class="login-content">
 
-      <div class="login">
+      <div class="login" id="login">
 
        <div class="login-formular">
          <div class="login-header">
@@ -64,8 +64,17 @@
          </div>
 
          <div class="login-body">
-           <div class="input-mail"><input type="email" id="mail" placeholder="E-Mail"></div>
-           <div class="input-pwd"><input type="password" id="pwd" name="pwd" placeholder="Passwort"></div>
+           <div class="input-mail" id="mailInput"><input type="email" id="mail" placeholder="E-Mail"></div>
+           <div class="input-pwd" id="pwdInput"><input type="password" id="pwd" name="pwd" placeholder="Passwort"></div>
+         </div>
+
+         <div class="button-set" id="login-button">
+           <div class="submit-login">
+                     <button type="submit" id="submit-login">Log in</button>
+           </div>
+           <div class="submit-guest">
+                         <button type="submit" id="guest-login">Guest Log in</button>
+           </div>
          </div>
        </div>
 

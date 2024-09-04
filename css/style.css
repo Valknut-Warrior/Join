@@ -21,6 +21,8 @@ html[data-theme=light] {
   --background-color-login: rgba(255, 255, 255, 1);
   --background-color-login-content: rgba(246, 247, 248, 1);
   --border-inputfeld-login: rgba(227, 228, 229, 0.7);
+  --border-input-focus: rgba(21, 29, 254, 1);
+  --submit-login-button: rgba(42, 54, 71, 1);
 }
 
 html[data-theme=dark] {
@@ -36,6 +38,8 @@ html[data-theme=dark] {
   --background-color-login: rgba(63, 77, 84, 1);
   --background-color-login-content: rgba(55, 68, 74, 1);
   --border-inputfeld-login: rgba(190, 190, 190, 0.7);
+  --border-input-focus: rgba(56, 62, 219, 1);
+  --submit-login-button: rgba(42, 54, 71, 1);
 }
 
 * {
@@ -43,6 +47,10 @@ html[data-theme=dark] {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+*:focus {
+  outline: none;
 }
 
 html {
@@ -380,11 +388,39 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #mail {
-  background: url(../public/icons/mail.svg) right no-repeat;
+  background: url(/icons/mail.svg) right no-repeat;
 }
 
 #pwd {
-  background: url("../public/icons/lock.svg") right no-repeat;
+  background: url("/icons/lock.svg") right no-repeat;
+}
+
+.button-set {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  height: 50px;
+  flex: 3;
+}
+
+.button-set button {
+  width: 110px;
+  height: 48px;
+  padding: 15px 24px 15px 24px;
+  border: none;
+  background: none;
+}
+
+.submit-login button {
+  background-color: var(--submit-login-button);
+  color: var(--text-color);
+}
+
+.submit-guest button {
+  width: 177px;
 }
 
 /* Extra small devices (phones, 600px and down) */
