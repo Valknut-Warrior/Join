@@ -26,6 +26,9 @@ html[data-theme='light'] {
   --border-input-focus: rgba(21, 29, 254, 1);
   --submit-login-button: rgba(42, 54, 71, 1);
   --submit-login-button-text: rgba(255, 255, 255, 1);
+  --submit-login-guest-button-text: rgba(18, 20, 22, 0.85);
+  --mouseover-button: rgba(0, 255, 255, 1);
+  --mouseover-button-text: rgba(18, 20, 22, 0.85);
 }
 
 html[data-theme='dark'] {
@@ -44,7 +47,11 @@ html[data-theme='dark'] {
   --border-input-focus: rgba(56, 62, 219, 1);
   --submit-login-button: rgba(42, 54, 71, 1);
   --submit-login-button-text: rgba(247, 248, 248, 1);
+  --submit-login-guest-button-text: rgba(247, 248, 248, 1);
+  --mouseover-button: rgba(0, 255, 255, 1);
+  --mouseover-button-text: rgba(18, 20, 22, 0.85);
 }
+
 
 * {
   font-family: var(--font-face);
@@ -116,6 +123,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 2;
   padding: 10px;
   font-size: 1.2em;
+  margin-right: 35px;
 }
 
 #siteName {
@@ -367,6 +375,26 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
 }
 
+.sign-up button {
+  width: 91px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--submit-login-button);
+  color: var(--submit-login-button-text);
+}
+
+.focus-sign-up button {
+  background-color: var(--mouseover-button);
+  color: var(--mouseover-button-text);
+  width: 91px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .login-body {
   display: flex;
   flex-direction: column;
@@ -388,8 +416,6 @@ h1, h2, h3, h4, h5, h6 {
   padding-left: 20px;
   border: none;
 }
-
-
 
 .input-mail, .input-pwd {
   width: 422px;
@@ -423,17 +449,36 @@ h1, h2, h3, h4, h5, h6 {
   padding: 15px 24px 15px 24px;
   border: none;
   background: none;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .submit-login button {
- background-color: var(--submit-login-button);
+  background-color: var(--submit-login-button);
   color: var(--submit-login-button-text);
   border-radius: 8px;
 }
 
-.submit-guest button{
-  width: 177px;
+.focus-login button {
+  background-color: var(--mouseover-button);
+  color: var(--mouseover-button-text);
+  width: 110px;
+  height: 48px;
+  padding: 15px 24px 15px 24px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
 }
+
+.submit-guest button {
+  width: 177px;
+  border: solid 1px black;
+  border-radius: 8px;
+  color: var(--submit-login-guest-button-text);
+}
+
+
+
 
 
 
