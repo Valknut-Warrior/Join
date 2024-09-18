@@ -64,27 +64,44 @@
          </div>
 
          <div class="login-body">
-           <div class="input-mail" id="mailInput"><input type="email" id="mail" placeholder="E-Mail"></div>
-           <div class="input-pwd" id="pwdInput"><input type="password" id="pwd" name="pwd" placeholder="Passwort"></div>
+           <div class="input-mail" id="mailInput"><input type="email" id="mail" placeholder="E-Mail" required></div>
+           <div class="input-pwd" id="pwdInput"><input type="password" id="pwd" name="pwd" placeholder="Passwort" required></div>
          </div>
 
          <div class="button-set" id="login-button">
            <div class="submit-login" id="log">
-                     <button type="submit" id="submit-login">Log in</button>
+                     <button onclick="login();" type="submit" id="submit-login">Log in</button>
            </div>
-           <div class="submit-guest">
-                         <button type="submit" id="guest-login">Guest Log in</button>
+           <div class="submit-guest" id="guest-log">
+                         <button type="submit" id="guest-login" >Guest Log in</button>
            </div>
+         </div>
+           <div class="login-footer">
+               <div class="link-privacy">
+                   <a href="privacy.html" target="_self">Privacy Policy</a>
+               </div>
+               <div class="link-Legal">
+                   <a href="legal.html" target="_self">Legal notice</a>
+               </div>
          </div>
        </div>
 
       </div>
 
     </div>
+
+      <div class="logo-container">
+          <img src="/logo.svg" alt="Logo" id="logo">
+      </div>
+
+    <div id="toast"><div><img id="img" src="/icons/error.png" alt="Error"></div>
+      <div id="desc">A notification message..</div>
+    </div>
+
   </div>
 </div>
 <script src="js/themeSwitcher.js"></script>
-<script src="js/main.js"></script>
-
+<script src="js/login.js"></script>
+<script src="js/toast.js"></script>
 </body>
 </html>

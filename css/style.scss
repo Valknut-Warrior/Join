@@ -29,6 +29,7 @@ html[data-theme='light'] {
   --submit-login-guest-button-text: rgba(18, 20, 22, 0.85);
   --mouseover-button: rgba(0, 255, 255, 1);
   --mouseover-button-text: rgba(18, 20, 22, 0.85);
+  --login-link-color: rgba(176, 178, 179, 1);
 }
 
 html[data-theme='dark'] {
@@ -50,6 +51,7 @@ html[data-theme='dark'] {
   --submit-login-guest-button-text: rgba(247, 248, 248, 1);
   --mouseover-button: rgba(0, 255, 255, 1);
   --mouseover-button-text: rgba(18, 20, 22, 0.85);
+  --login-link-color: rgba(221, 222, 223, 1);
 }
 
 
@@ -426,10 +428,23 @@ h1, h2, h3, h4, h5, h6 {
 
 #mail {
   background: url(/icons/mail.svg) right no-repeat;
+  padding-right: 30px;
+  cursor: pointer;
 }
 
 #pwd {
   background: url("/icons/lock.svg") right no-repeat;
+  padding-right: 30px;
+  cursor: pointer;
+}
+#pwd:focus {
+  background: url("/icons/visibility.svg") right no-repeat;
+  cursor: pointer;
+}
+
+#pwd.hidden {
+  background: url("/icons/visibility_off.svg") right no-repeat;
+  cursor: pointer;
 }
 
 .button-set {
@@ -468,6 +483,7 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   cursor: pointer;
   font-weight: bold;
+  border-radius: 8px;
 }
 
 .submit-guest button {
@@ -477,8 +493,161 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--submit-login-guest-button-text);
 }
 
+.focus-guest button {
+  width: 177px;
+  border: solid 1px var(--mouseover-button);
+  border-radius: 8px;
+  color: var(--mouseover-button);
+}
 
 
+.login-footer {
+  display: flex;
+  gap: 35px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-footer a {
+  text-decoration: none;
+  color: var(--login-link-color);
+}
+
+
+
+
+/* Definiere den Startzustand */
+.logo-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 2s ease-in-out;
+}
+
+/* Zustand nach der Animation */
+.logo-container.moved {
+  top: 10px;
+  left: 10px;
+  transform: translate(0, 0);
+}
+
+/* Größe und Stil des Logos */
+#logo {
+  width: 150px;
+  height: 150px;
+  transition: all 2s ease-in-out;
+}
+
+/* Größe des Logos in der oberen Ecke */
+.logo-container.moved #logo {
+  width: 32.5px;
+  height: 32.5px;
+}
+
+/* Toast */
+
+#toast {
+  visibility: hidden;
+  max-width: 64px;
+  height: 64px;
+  /*margin-left: -125px;*/
+  margin: auto;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+
+  position: fixed;
+  z-index: 1;
+  left: 0;right:0;
+  bottom: 30px;
+  font-size: 17px;
+  white-space: nowrap;
+}
+#toast #img{
+  width: 64px;
+  height: 64px;
+
+  float: left;
+
+  padding: 5px 2px 5px 2px;
+
+  box-sizing: border-box;
+
+
+  background-color: #111;
+  color: #fff;
+}
+#toast #desc{
+
+
+  color: #fff;
+
+  padding: 16px;
+
+  overflow: hidden;
+  white-space: nowrap;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#toast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes expand {
+  from {min-width: 50px}
+  to {min-width: 350px}
+}
+
+@keyframes expand {
+  from {min-width: 50px}
+  to {min-width: 350px}
+}
+@-webkit-keyframes stay {
+  from {min-width: 350px}
+  to {min-width: 350px}
+}
+
+@keyframes stay {
+  from {min-width: 350px}
+  to {min-width: 350px}
+}
+@-webkit-keyframes shrink {
+  from {min-width: 350px;}
+  to {min-width: 50px;}
+}
+
+@keyframes shrink {
+  from {min-width: 350px;}
+  to {min-width: 50px;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 60px; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 60px; opacity: 0;}
+}
 
 
 
