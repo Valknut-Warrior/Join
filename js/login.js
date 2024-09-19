@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     themeToggle();
     hideLoading();
     w3.includeHTML();
-    loadData("/users");
 });
 
 
@@ -27,6 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
  * @returns {Promise<void>}
  */
 
+
 async function loadData(path = "") {
     try {
         let response = await fetch(BASE_URL + path + ".json");
@@ -34,7 +34,7 @@ async function loadData(path = "") {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
         let data = await response.json();
-        console.log(data);
+        //console.log("Datenbank auslesen: " + data.email);
         return data;
 
     } catch (error) {
@@ -44,18 +44,47 @@ async function loadData(path = "") {
 
 }
 
-function login(data) {
 
+function login(data) {
     const mail = document.getElementById("mail");
     const pwd = document.getElementById("pwd");
 
-    if (mail.value >= null && pwd.value <= null) {
-        toastLoginDesc.innerText = "Sie müssen Benutzerdaten eingeben";
+    // Validierung der Eingaben
+    if (!mail.value || !pwd.value) {
+        toastLoginDesc.innerText = "Sie müssen Benutzerdaten eingeben.";
         launch_toast();
+        return; // Funktion hier beenden
+    }
+
+    // Sicherstellen, dass "data", "data.email" und "data.password" definiert sind
+    if (data && data.email && data.password) {
+        const dataMail = data.email.toString();
+        const dataPwd = data.password.toString();
+
+        // Überprüfen, ob die eingegebene Mail mit der Datenbank übereinstimmt
+        if (mail.value === dataMail && pwd.value === dataPwd) {
+            //console.log("Deine Daten lauten: " + JSON.stringify(data));
+            // Hir kommt die weiterleitung zum Board
+
+        } else {
+            launch_toast();
+            toastLoginDesc.innerText = "Du hast die falschen Daten eingegeben.";
+        }
     } else {
-        // Hier kommt eine if abfrage ob der benutzer in der Datenbank steht.
+        console.error("Die Daten sind nicht vorhanden oder ungültig.");
     }
 }
+
+
+
+
+document.getElementById("submit-login").addEventListener("click", async (event) => {
+    event.preventDefault(); // Verhindert das automatische Abschicken des Formulars
+    const users = await loadData("/users");
+    login(users); // Übergibt die geladenen Benutzerdaten an die login-Funktion
+});
+
+
 
 // Beim Klicken auf das E-Mail-Feld den Rahmen setzen
 mailInput.addEventListener("click", (event) => {
@@ -168,5 +197,5 @@ function hideLoading() {
 function launch_toast() {
     var x = document.getElementById("toast")
     x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 225000);
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
 }
