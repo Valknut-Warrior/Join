@@ -347,6 +347,33 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
 }
 
+.singup-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+}
+/* Sing Up */
+
+.singup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.singup-formular{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--background-color-login);
+}
+
+.singup-content {
+  background: var(--background-color-login-content);
+}
+
+
 /* Login */
 
 .login {
@@ -419,11 +446,17 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 
-.input-mail, .input-pwd {
+.input-name, .input-mail, .input-pwd, .input-pwd-confirm {
   width: 422px;
   background: var(--background-color-login);
   border: solid 1px var(--border-inputfeld-login);
   border-radius: 10px;
+}
+
+#name {
+  background: url(/icons/person.svg) right no-repeat;
+  padding-right: 30px;
+  cursor: pointer;
 }
 
 #mail {
@@ -446,6 +479,23 @@ h1, h2, h3, h4, h5, h6 {
   background: url("/icons/visibility_off.svg") right no-repeat;
   cursor: pointer;
 }
+
+#pwdConfirm {
+  background: url("/icons/lock.svg") right no-repeat;
+  padding-right: 30px;
+  cursor: pointer;
+}
+#pwdConfirm:focus {
+  background: url("/icons/visibility.svg") right no-repeat;
+  cursor: pointer;
+}
+
+#pwdConfirm.hidden {
+  background: url("/icons/visibility_off.svg") right no-repeat;
+  cursor: pointer;
+}
+
+
 
 .button-set {
   display: flex;
@@ -762,6 +812,29 @@ h1, h2, h3, h4, h5, h6 {
     }
   }
 
+  /* Sing Up */
+
+  .singup-content {
+    width: 100%;
+    height: 100em;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .singup {
+    width: 100%;
+    height: 50%;
+  }
+
+  .singup-formular {
+    width: 652px;
+    height: 600px;
+    border-radius: 30px;
+    padding: 48px 115px 48px 115px;
+    gap: 32px;
+  }
+
   /* Login */
 
   .login-content {
@@ -785,6 +858,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 48px 115px 48px 115px;
     gap: 32px;
   }
+
 
 
 }
