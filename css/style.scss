@@ -597,12 +597,37 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Toast */
+#toast{
+  position:fixed;
+  top:0;
+  left:50%;
+  transform:translate(-50%);
+  background-color: #950B02;
+  color:#fff;
+  padding:16px;
+  border-radius:4px;
+  text-align:center;
+  z-index:1;
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
+  visibility:hidden;
+  opacity:0;
+}
 
+#toast.show{
+  visibility:visible;
+  animation:fadeInOut 3s;
+}
+
+@keyframes fadeInOut{
+  5%,95%{opacity:1;top:50px}
+  15%,85%{opacity:1;top:30px}
+}
+
+/*
 #toast {
   visibility: hidden;
   max-width: 64px;
   height: 64px;
-  /*margin-left: -125px;*/
   margin: auto;
   background-color: #333;
   color: #fff;
@@ -616,7 +641,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 17px;
   white-space: nowrap;
 }
-#toast #img{
+#toast #img {
   width: 64px;
   height: 64px;
 
@@ -630,9 +655,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #111;
   color: #fff;
 }
-#toast #desc{
-
-
+#toast #desc {
   color: #fff;
 
   padding: 16px;
@@ -698,7 +721,68 @@ h1, h2, h3, h4, h5, h6 {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 60px; opacity: 0;}
 }
+*/
+.checkbox-police a {
+  color: var(--text-color-sidebar);
+  text-decoration: none;
+  filter: brightness(70%);
+}
 
+/* Verstecke die ursprüngliche Checkbox */
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Gestalte die Hülle der Checkbox */
+.custom-checkbox {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 21px;
+  user-select: none;
+}
+
+/* Gestalte das äußere Feld der Checkbox */
+.custom-checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 21px;
+  width: 21px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Ändere die Hintergrundfarbe, wenn die Checkbox gecheckt ist */
+.custom-checkbox input:checked + .checkmark {
+  background-color: #2196F3;
+  border: 2px solid #2196F3;
+}
+
+/* Erstelle das Häkchen */
+.custom-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Zeige das Häkchen an und lass es weiter aus der Checkbox herausragen */
+.custom-checkbox input:checked + .checkmark:after {
+  display: block;
+  /* Passe das Häkchen an, damit es weiter raussteht */
+  left: 6px;  /* Verschiebe es nach links */
+  top: -10px;  /* Verschiebe es weiter nach oben */
+  width: 7px;  /* Vergrößere die Breite */
+  height: 22px;  /* Vergrößere die Höhe */
+  border: solid dimgrey;
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
+  transform-origin: 50% 50%;
+}
 
 
 /* Extra small devices (phones, 600px and down) */

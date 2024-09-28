@@ -1,104 +1,109 @@
 <!doctype html>
 <html lang="de" data-theme="auto">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
-  <!-- Custom CSS -->
+    <!-- Custom CSS -->
 
-  <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
-  <!-- Favicons -->
+    <!-- Favicons -->
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-  <link rel="manifest" href="/icons/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/icons/site.webmanifest">
 
-  <!-- W3.js laden -->
+    <!-- W3.js laden -->
 
-  <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
 
-  <title>Join - Login</title>
+    <title>Join - Login</title>
 </head>
 <body>
 
 
 <div class="root">
 
-  <div class="spinner-content" id="loading">
-    <div class="loader"></div>
-    <div class="loading-text">Loading...</div>
-  </div>
-
-  <div class="header">
-
-    <div class="headerName">
-      <span id="siteName">Kanban Project Management Tool</span>
-    </div>
-    <div class="headerRight">
-      <ul>
-
-        <li>Not a Join user?</li>
-        <li class="sign-up" id="sign-up"><a href="singup.html"><button>Sign up</button></a></li>
-        <li><a href="#" id="theme_switcher"></a></li>
-      </ul>
+    <div class="spinner-content" id="loading">
+        <div class="loader"></div>
+        <div class="loading-text">Loading...</div>
     </div>
 
+    <div class="header">
 
-  </div>
+        <div class="headerName">
+            <span id="siteName">Kanban Project Management Tool</span>
+        </div>
+        <div class="headerRight">
+            <ul>
 
-  <div class="main">
+                <li>Not a Join user?</li>
+                <li class="sign-up" id="sign-up"><a href="singup.html">
+                    <button>Sign up</button>
+                </a></li>
+                <li><a href="#" id="theme_switcher"></a></li>
+            </ul>
+        </div>
 
-    <div class="login-content">
-
-      <div class="login" id="login">
-
-       <div class="login-formular">
-         <div class="login-header">
-           <p><img src="/login.svg" alt="Log In"></p>
-           <p><img src="/line.svg" alt="Line"></p>
-         </div>
-
-         <div class="login-body">
-           <div class="input-mail" id="mailInput"><input type="email" id="mail" placeholder="E-Mail" required></div>
-           <div class="input-pwd" id="pwdInput"><input type="password" id="pwd" name="pwd" placeholder="Passwort" required></div>
-         </div>
-
-         <div class="button-set" id="login-button">
-           <div class="submit-login" id="log">
-                     <button id="submit-login">Log in</button>
-           </div>
-           <div class="submit-guest" id="guest-log">
-                         <button id="guest-login" >Guest Log in</button>
-           </div>
-         </div>
-           <div class="login-footer">
-               <div class="link-privacy">
-                   <a href="privacy.html" target="_self">Privacy Policy</a>
-               </div>
-               <div class="link-Legal">
-                   <a href="legal.html" target="_self">Legal notice</a>
-               </div>
-         </div>
-       </div>
-
-      </div>
 
     </div>
 
-      <div class="logo-container">
-          <img src="/logo.svg" alt="Logo" id="logo">
-      </div>
+    <div class="main">
 
-    <div id="toast"><div><img id="img" src="/icons/error.png" alt="Error"></div>
-      <div id="desc"></div>
+        <div class="login-content">
+
+            <div class="login" id="login">
+
+                <div class="login-formular">
+                    <div class="login-header">
+                        <p><img src="/login.svg" alt="Log In"></p>
+                        <p><img src="/line.svg" alt="Line"></p>
+                    </div>
+
+                    <div class="login-body">
+                        <div class="input-mail" id="mailInput"><input type="email" id="mail" placeholder="E-Mail"
+                                                                      required></div>
+                        <div class="input-pwd" id="pwdInput"><input type="password" id="pwd" name="pwd"
+                                                                    placeholder="Passwort" required></div>
+                    </div>
+
+                    <div class="button-set" id="login-button">
+                        <div class="submit-login" id="log">
+                            <button id="submit-login">Log in</button>
+                        </div>
+                        <div class="submit-guest" id="guest-log">
+                            <button id="guest-login">Guest Log in</button>
+                        </div>
+                    </div>
+                    <div class="login-footer">
+                        <div class="link-privacy">
+                            <a href="privacy.html" target="_self">Privacy Policy</a>
+                        </div>
+                        <div class="link-Legal">
+                            <a href="legal.html" target="_self">Legal notice</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="logo-container">
+            <img src="/logo.svg" alt="Logo" id="logo">
+        </div>
+
+        <!-- <div id="toast"><div><img id="img" src="/icons/error.png" alt="Error"></div>
+          <div id="desc"></div>
+        </div>
+    -->
+        <div id="toast"></div>
     </div>
-
-  </div>
 </div>
 <script src="js/themeSwitcher.js"></script>
 <script src="js/login.js"></script>
