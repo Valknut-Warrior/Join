@@ -1,22 +1,23 @@
 "use strict";
 
-const loadingIndicator = document.getElementById("loading");
+//const loadingIndicator = document.getElementById("loading");
 const mailInput = document.getElementById("mailInput");
 const pwdInput = document.getElementById("pwdInput");
 const signUpButton = document.getElementById("sign-up");
 const loginButton = document.getElementById("log");
 const guestLoginButton = document.getElementById("guest-log");
 const pwdInputIcon = document.getElementById("pwd");
-const userLogin = document.getElementById("submit-login");
 const BASE_URL = "https://join-38273-default-rtdb.europe-west1.firebasedatabase.app/";
-const toastLoginDesc = document.getElementById("desc");
+const autoFill  = document.getElementById("auto-login");
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    showLoading();
+   // showLoading();
     themeToggle();
-    hideLoading();
+    //hideLoading();
     w3.includeHTML();
+    cleanFields();
+
 });
 
 
@@ -92,6 +93,20 @@ pwdInput.addEventListener("click", (event) => {
     pwdInput.style.border = "solid 1px var(--border-input-focus)";
     mailInput.style.border = "solid 1px var(--border-inputfeld-login)";
 });
+
+// Beim Klick auf Auto Fill werden daten eingesetzt
+
+    autoFill.addEventListener("click", (event) => {
+
+
+        const autoMail = document.getElementById("mail");
+        const autoPWD = document.getElementById("pwd");
+
+        autoMail.value = "demo@posteo.de";
+        autoPWD.value = "demo";
+
+
+    });
 
 /**
  * Event, das das Entfernen der Rahmen steuert, wenn außerhalb der Felder geklickt wird
@@ -179,26 +194,40 @@ window.addEventListener('load', () => {
 /**
  * Show Spinner
  */
+/*
 function showLoading() {
     loadingIndicator.classList.add("active");
 }
 
-
+*/
 
 /**
  * Hide Spinner
  */
+/*
 function hideLoading() {
     loadingIndicator.classList.remove("active");
 }
-
+*/
 
 
 function showToast(text){
-    var x=document.getElementById("toast");
+    const x=document.getElementById("toast");
     x.classList.add("show");
     x.innerHTML=text;
     setTimeout(function(){
         x.classList.remove("show");
     },4000);
+}
+
+/**
+ * Säubert alle Felder beim laden
+ */
+function cleanFields() {
+
+    const mailInput = document.getElementById("mail");
+    const pwdInput = document.getElementById("pwd");
+
+    mailInput.value = "";
+    pwdInput.value = "";
 }

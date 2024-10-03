@@ -34,19 +34,6 @@ window.addEventListener('load', () => {
 
 
 /**
- * Toast Benachrichtigung
- */
-function showToast(text){
-    var x=document.getElementById("toast");
-    x.classList.add("show");
-    x.innerHTML=text;
-    setTimeout(function(){
-        x.classList.remove("show");
-    },4000);
-}
-
-
-/**
  * Passwort Feld
  */
 pwdInputIcon.addEventListener("focus", () => {
@@ -88,7 +75,6 @@ pwdInputIconConfirm.addEventListener("click", (event) => {
         }
     }
 });
-
 
 
 /**
@@ -166,7 +152,7 @@ function cleanFields() {
 
 }
 
-async function postData(path="", data={}) {
+async function postData(path = "", data = {}) {
     let response = await fetch(BASE_URL + path + ".json", {
         method: "POST",
         header: {
@@ -183,18 +169,65 @@ document.getElementById("submit-singup").addEventListener("click", async (event)
     event.preventDefault(); // Verhindert das automatische Abschicken des Formulars
 
     const isPoliceChecked = document.getElementById("myCheckbox").checked;
+    const nameCheck = document.getElementById("name").value;
+    const mailCheck = document.getElementById("mail").value;
+    const pwdCheck = document.getElementById("pwd").value;
+    const pwdConfirmCheck = document.getElementById("pwdConfirm").value;
 
 
     console.log("klick button:", isPoliceChecked);
 
-    if (isPoliceChecked) {
-        //Hier kommt die logik rein was soll passieren, wenn der haken gesetzt wurde
-        console.log("check");
+    if (isPoliceChecked && nameCheck.trim() !== "" && mailCheck.trim() !== "" && pwdCheck.trim() !== "" && pwdConfirmCheck.trim() !== "") {
+        //Hier kommt die logik rein was soll passieren, wenn der haken gesetzt wurde und alle Felder ausgefüllt wurde.
+
+        // Überprüfen, ob das Passwort und das Bestätigungsfeld übereinstimmen
+        if (pwdCheck !== pwdConfirmCheck) {
+            showToast("Die Passwörter stimmen nicht überein.");
+        } else if (nameCheck.length <= 3) {
+           showToast("Dein Name sollte mehr als 3 Zeichen lang sein.")
+        } else {
+            postData("/users", {"name": nameCheck.trim(), "email": mailCheck.trim(), "password": pwdCheck.trim()});
+            // Hier könnte eine Weiterleitung zum Board oder eine Session gesetzt werden
+            setTimeout(() => {
+                window.location.href = "/board.html"; // Weiterleitung
+            }, 1000);
+        }
     } else {
         //Hier kommt die Logik rein was passieren soll, wenn der haken nicht gesetzt wurde
-        console.log("not check");
+
+        showToast("Sie haben vergessen eins oder mehre Felder anzuklicken");
+
+        // Einzelne Felder prüfen und spezifische Fehlermeldungen anzeigen
+        if (!isPoliceChecked) {
+            showToast("Sie haben vergessen, die Privacy Police zu bestätigen.");
+        }
+        else if (nameCheck === "") {
+            showToast("Sie haben vergessen, Ihren Namen einzutragen.");
+        }
+        else if (mailCheck === "") {
+            showToast("Sie haben vergessen, Ihre E-Mail-Adresse einzutragen.");
+        }
+        else if (pwdCheck === "") {
+            showToast("Sie haben vergessen, Ihr Passwort einzutragen.");
+        }
+        else if (pwdConfirmCheck === "") {
+            showToast("Sie haben vergessen, Ihr Passwort zu wiederholen.");
+        }
     }
 
 });
+
+
+/**
+ * Toast Benachrichtigung
+ */
+function showToast(text) {
+    const x = document.getElementById("toast");
+    x.classList.add("show");
+    x.innerHTML = text;
+    setTimeout(function () {
+        x.classList.remove("show");
+    }, 4000);
+}
 
 

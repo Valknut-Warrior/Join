@@ -404,6 +404,13 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
 }
 
+.auto-login span {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .sign-up button {
   width: 91px;
   height: 30px;
@@ -597,7 +604,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Toast */
-#toast{
+#toast {
   position:fixed;
   top:0;
   left:50%;
@@ -613,12 +620,12 @@ h1, h2, h3, h4, h5, h6 {
   opacity:0;
 }
 
-#toast.show{
+#toast.show {
   visibility:visible;
   animation:fadeInOut 3s;
 }
 
-@keyframes fadeInOut{
+@keyframes fadeInOut {
   5%,95%{opacity:1;top:50px}
   15%,85%{opacity:1;top:30px}
 }
