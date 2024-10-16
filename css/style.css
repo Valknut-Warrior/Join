@@ -7,13 +7,14 @@
   --font-face: "Lato", "Roboto", sans-serif;
   --font-style-italic: "italic";
   --font-style-normal: "normal";
+  --star-color: rgba(184, 20, 22, 0.7);
 }
 
 html[data-theme=light] {
   --background-color: #fff;
   --text-color: #121416d8;
   --link-color: #543fd7;
-  --border-shadow: 0 3px 0 0 rgba(227, 228, 229, 0.7);
+  --border-shadow: 0 1px 0 0 rgba(227, 228, 229, 0.7);
   --background-header: rgba(255, 255, 255, 1);
   --background-color-content: rgba(246, 247, 248, 1);
   --background-color-sidebar: rgba(42, 54, 71, 1);
@@ -29,13 +30,14 @@ html[data-theme=light] {
   --mouseover-button: rgba(0, 255, 255, 1);
   --mouseover-button-text: rgba(18, 20, 22, 0.85);
   --login-link-color: rgba(176, 178, 179, 1);
+  --border-left: 1px rgba(227, 228, 229, 0.7);
 }
 
 html[data-theme=dark] {
   --background-color: #212a2e;
   --text-color: rgba(247, 248, 248, 1);
   --link-color: #828fff;
-  --border-shadow: 0 3px 0 0 rgba(190, 190, 190, 0.7);
+  --border-shadow: 0 1px 0 0 rgba(190, 190, 190, 0.7);
   --background-header: rgba(63, 77, 84, 1);
   --background-color-content: rgba(55, 68, 74, 1);
   --background-color-sidebar: rgba(46, 56, 61, 1);
@@ -51,6 +53,7 @@ html[data-theme=dark] {
   --mouseover-button: rgba(0, 255, 255, 1);
   --mouseover-button-text: rgba(18, 20, 22, 0.85);
   --login-link-color: rgba(221, 222, 223, 1);
+  --border-left: 1px rgba(190, 190, 190, 0.7);
 }
 
 * {
@@ -252,6 +255,35 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--background-color-content);
   flex: 4;
   height: 100em;
+  margin-left: 232px;
+  width: 100%;
+}
+
+.content h1 {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.content-add-task {
+  display: flex;
+  flex-direction: row;
+  gap: 10px 0;
+}
+
+.content-left {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.content-right {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px;
+  border-left: solid var(--border-left);
 }
 
 .footer {
@@ -523,6 +555,18 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 8px;
 }
 
+.focus-submit-login button {
+  background-color: var(--mouseover-button);
+  color: var(--mouseover-button-text);
+  width: 110px;
+  height: 48px;
+  padding: 15px 24px 15px 24px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
 .focus-login button {
   background-color: var(--mouseover-button);
   color: var(--mouseover-button-text);
@@ -782,6 +826,10 @@ h1, h2, h3, h4, h5, h6 {
   border-width: 0 4px 4px 0;
   transform: rotate(45deg);
   transform-origin: 50% 50%;
+}
+
+#star {
+  color: var(--star-color);
 }
 
 /* Extra small devices (phones, 600px and down) */

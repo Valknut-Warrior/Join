@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de" data-theme="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Favicons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/icons/site.webmanifest">
+
+    <!-- W3.js laden -->
+
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+    <title>Join - Add Task</title>
+</head>
+<body>
+
+
+<div class="root">
+
+    <div class="header">
+
+        <div class="headerName">
+            <span id="siteName">Kanban Project Management Tool</span>
+        </div>
+        <div class="headerRight">
+            <ul>
+
+                <li><a href="#" id="theme_switcher"></a></li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <div class="main">
+        <!-- Hier wird die Sidebar inkludiert -->
+        <div w3-include-html="sidebar.html"></div>
+
+        <div class="content">
+            <h1>Add Task</h1>
+            <div class="content-add-task">
+                <div class="content-left">
+                   
+                    <div>
+                        <label for="title">Title<span id="star">*</span></label>
+                        <input type="text" id="title" name="title">
+                    </div>
+
+                </div>
+                <div class="content-right">
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="toast"></div>
+    </div>
+</div>
+<script src="js/themeSwitcher.js"></script>
+<script src="js/addTask.js"></script>
+</body>
+</html>

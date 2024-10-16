@@ -8,6 +8,8 @@ const mailInput = document.getElementById("mailInput");
 const pwdInput = document.getElementById("pwdInput");
 const pwdInputIcon = document.getElementById("pwd");
 const pwdInputIconConfirm = document.getElementById("pwdConfirm");
+const signUpButton = document.getElementById("log");
+
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -231,3 +233,13 @@ function showToast(text) {
 }
 
 
+signUpButton.addEventListener("mouseover", (event) => {
+    signUpButton.classList.add("focus-submit-login");
+    signUpButton.classList.remove("submit-login");
+    console.log("Test")
+});
+
+signUpButton.addEventListener("mouseout", (event) => {
+    signUpButton.classList.add("submit-login");
+    signUpButton.classList.remove("focus-submit-login");
+});
