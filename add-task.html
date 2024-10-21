@@ -52,17 +52,26 @@
             <h1>Add Task</h1>
             <div class="content-add-task">
                 <div class="content-left">
-                   
+
                     <div>
-                        <label for="title">Title<span id="star">*</span></label>
-                        <input type="text" id="title" name="title">
+                        <label for="title">Title<span class="star"> *</span></label>
+                        <input type="text" id="title" name="title" placeholder="Enter a Title">
+                    </div>
+
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description"
+                                  rows="4" cols="50" placeholder="Enter a Description">
+                        </textarea>
                     </div>
 
                 </div>
                 <div class="content-right">
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                    </p>
+                   <div>
+                       <label for="date">Due date<span class="star"> *</span></label>
+                       <input type="text" id="date" name="date" placeholder="dd/mm/yyyy">
+
+                   </div>
                 </div>
 
             </div>
