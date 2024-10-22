@@ -723,6 +723,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   padding: 15px;
   row-gap: 15px;
+  align-items: center;
 }
 
 .content-right {
@@ -732,6 +733,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 15px;
   row-gap: 15px;
   border-left: solid var(--border-left);
+  align-items: center;
 }
 
 .star {
@@ -752,6 +754,12 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 10px;
   cursor: pointer;
   background-color: var(--background-conten-button);
+}
+
+.content-add-task-button {
+  display: flex;
+  flex-direction: column;
+  width: 92%;
 }
 
 .add-button-content-high {
@@ -893,6 +901,20 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 30px;
     padding: 48px 115px 48px 115px;
     gap: 32px;
+  }
+  /* Add Task */
+  .content-left input, textarea, select {
+    width: 750px;
+    max-width: 750px;
+    min-width: 750px;
+  }
+  .content-left textarea {
+    min-height: 154px;
+  }
+  .content-right input, textarea, select {
+    width: 750px;
+    max-width: 750px;
+    min-width: 750px;
   }
 }
 /* Extra 4K devices landscape */
