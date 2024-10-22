@@ -36,7 +36,7 @@
         </div>
         <div class="headerRight">
             <ul>
-
+                <li><a href="#" id="question"><img src="/icons/question.png" alt="Question"></a></li>
                 <li><a href="#" id="theme_switcher"></a></li>
             </ul>
         </div>
@@ -67,11 +67,33 @@
 
                 </div>
                 <div class="content-right">
-                   <div>
-                       <label for="date">Due date<span class="star"> *</span></label>
-                       <input type="text" id="date" name="date" placeholder="dd/mm/yyyy">
+                    <div>
+                        <label for="date">Due date<span class="star"> *</span></label>
+                        <input type="text" id="date" name="date" placeholder="dd/mm/yyyy">
+                    </div>
 
-                   </div>
+                    <div>
+                        <p>Prio</p>
+                        <p class="add-task-button-set">
+                            <button class="prioritize-button-high" id="prioritize-button-high"><span class="add-button-content-high">Urgent</span></button>
+                            <button class="prioritize-button-medium" id="prioritize-button-medium"><span class="add-button-content-medium">Medium</span></button>
+                            <button class="prioritize-button-low" id="prioritize-button-low"><span class="add-button-content-low">Low</span></button>
+                        </p>
+                    </div>
+
+                    <div>
+                        <label for="category">Category<span class="star"> *</span></label>
+                        <select id="category" name="category">
+                            <option value="0">Select contacts to assign</option>
+                            <option value="1">Technical Task</option>
+                            <option value="1">User Story</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="subtask">Subtask</label>
+                        <input type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+                    </div>
                 </div>
 
             </div>

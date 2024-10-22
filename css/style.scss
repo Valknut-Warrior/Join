@@ -32,6 +32,7 @@ html[data-theme='light'] {
   --mouseover-button-text: rgba(18, 20, 22, 0.85);
   --login-link-color: rgba(176, 178, 179, 1);
   --border-left: 1px rgba(227, 228, 229, 0.7);
+  --background-conten-button: rgba(255, 255, 255, 1);
 }
 
 html[data-theme='dark'] {
@@ -55,8 +56,8 @@ html[data-theme='dark'] {
   --mouseover-button-text: rgba(18, 20, 22, 0.85);
   --login-link-color: rgba(221, 222, 223, 1);
   --border-left: 1px rgba(190, 190, 190, 0.7);
+  --background-conten-button: rgba(63, 77, 84, 1);
 }
-
 
 * {
   font-family: var(--font-face);
@@ -254,41 +255,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-color-sidebar);
   text-decoration: none;
   filter: brightness(70%);
-}
-
-.content {
-  background-color: var(--background-color-content);
-  flex: 4;
-  height: 100em;
-  margin-left: 232px;
-  width: 100%;
-}
-
-.content h1 {
-  display: flex;
-  margin-bottom: 10px;
-  padding: 15px;
-}
-
-.content-add-task {
-  display: flex;
-  flex-direction: row;
-  gap: 10px 0;
-}
-
-.content-left {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 15px;
-}
-
-.content-right {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 15px;
-  border-left: solid var(--border-left);
 }
 
 .footer {
@@ -534,8 +500,6 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
 }
 
-
-
 .button-set {
   display: flex;
   flex-direction: row;
@@ -671,105 +635,6 @@ h1, h2, h3, h4, h5, h6 {
   15%,85%{opacity:1;top:30px}
 }
 
-/*
-#toast {
-  visibility: hidden;
-  max-width: 64px;
-  height: 64px;
-  margin: auto;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 2px;
-
-  position: fixed;
-  z-index: 1;
-  left: 0;right:0;
-  bottom: 30px;
-  font-size: 17px;
-  white-space: nowrap;
-}
-#toast #img {
-  width: 64px;
-  height: 64px;
-
-  float: left;
-
-  padding: 5px 2px 5px 2px;
-
-  box-sizing: border-box;
-
-
-  background-color: #111;
-  color: #fff;
-}
-#toast #desc {
-  color: #fff;
-
-  padding: 16px;
-
-  overflow: hidden;
-  white-space: nowrap;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#toast.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
-}
-
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes expand {
-  from {min-width: 50px}
-  to {min-width: 350px}
-}
-
-@keyframes expand {
-  from {min-width: 50px}
-  to {min-width: 350px}
-}
-@-webkit-keyframes stay {
-  from {min-width: 350px}
-  to {min-width: 350px}
-}
-
-@keyframes stay {
-  from {min-width: 350px}
-  to {min-width: 350px}
-}
-@-webkit-keyframes shrink {
-  from {min-width: 350px;}
-  to {min-width: 50px;}
-}
-
-@keyframes shrink {
-  from {min-width: 350px;}
-  to {min-width: 50px;}
-}
-
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 60px; opacity: 0;}
-}
-
-@keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 60px; opacity: 0;}
-}
-*/
 .checkbox-police a {
   color: var(--text-color-sidebar);
   text-decoration: none;
@@ -832,8 +697,82 @@ h1, h2, h3, h4, h5, h6 {
   transform-origin: 50% 50%;
 }
 
+/* Add Task */
+
+.content {
+  background-color: var(--background-color-content);
+  flex: 4;
+  height: 100em;
+  margin-left: 232px;
+  width: 100%;
+}
+
+.content h1 {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.content-add-task {
+  display: flex;
+  flex-direction: row;
+  gap: 10px 0;
+}
+
+.content-left {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px;
+  row-gap: 15px;
+}
+
+.content-right {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px;
+  row-gap: 15px;
+  border-left: solid var(--border-left);
+}
+
 .star {
   color: var(--star-color);
+}
+
+.add-task-button-set {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-task-button-set button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: var(--background-conten-button);
+}
+
+.add-button-content-high {
+  background: url(/icons/prio-high.svg) right no-repeat;
+  padding-right: 20px;
+  background-size: 15px;
+}
+
+
+.add-button-content-medium {
+  background: url(/icons/prio-medium.svg) right no-repeat;
+  padding-right: 20px;
+  background-size: 15px;
+}
+
+.add-button-content-low {
+  background: url(/icons/prio-low.svg) right no-repeat;
+  padding-right: 20px;
+  background-size: 15px;
 }
 
 
