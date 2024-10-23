@@ -18,9 +18,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
     <link rel="manifest" href="/icons/site.webmanifest">
 
-    <!-- W3.js laden -->
-
-    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <!-- Script -->
+    <script src="./js/main.js"></script>
+    <script src="./js/addTask.js"></script>
 
     <title>Join - Add Task</title>
 </head>
@@ -28,21 +28,7 @@
 
 
 <div class="root">
-
-    <div class="header">
-
-        <div class="headerName">
-            <span id="siteName">Kanban Project Management Tool</span>
-        </div>
-        <div class="headerRight">
-            <ul>
-                <li><a href="#" id="question"><img src="/icons/question.png" alt="Question"></a></li>
-                <li><a href="#" id="theme_switcher"></a></li>
-            </ul>
-        </div>
-
-
-    </div>
+    <header w3-include-html="header.html"></header>
 
     <div class="main">
         <!-- Hier wird die Sidebar inkludiert -->
@@ -102,7 +88,5 @@
         <div id="toast"></div>
     </div>
 </div>
-<script src="js/themeSwitcher.js"></script>
-<script src="js/addTask.js"></script>
 </body>
 </html>
