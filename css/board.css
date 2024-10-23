@@ -1,0 +1,504 @@
+.drag-area {
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px dashed black;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.drag-area-highlight {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.todo {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+
+.board-mainContainer {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--header-height));
+    width: calc(100vw - var(--sidebar-width));
+    position: relative;
+    left: var(--sidebar-width);
+    top: var(--header-height);
+}
+
+.board-top {
+    display: flex;
+    margin: 48px;
+    margin-right: 90px;
+}
+
+.board-InputFieldDiv {
+    margin-right: 32px;
+    position: relative;
+}
+
+.board-InputField {
+    border-radius: 5px;
+    background: white;
+    width: 280px;
+    height: 32px;
+}
+
+.board-input {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.board-title h1 {
+    font-size: 64px;
+    font-weight: 700;
+}
+
+.board-topAddtaskDiv {
+    display: flex;
+    align-items: center;
+    background-color: #2A3647;
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.board-topAddtaskDiv:hover {
+    transform: scale(1.03);
+    transition: 0.1s ease;
+    filter: brightness(0.9);
+    background-color: #29ABE2;
+
+}
+
+.board-topAddtaskFont {
+    font-size: 21px;
+    margin-right: 10px;
+    color: white;
+    font-weight: 700;
+
+}
+
+.board-AddImage {
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+
+.board-searchImage {
+    position: absolute;
+    background-color: white;
+    top: 10px;
+    left: 250px;
+    cursor: pointer;
+}
+
+.board-searchImage:hover {
+    transform: scale(1.2);
+}
+
+.board-center {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.board-centerTitel {
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.board-bottomPlusImg {
+    width: 24px;
+    height: 24px;
+}
+
+.board-bottomPlusImg:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    background-color: white;
+}
+
+.board-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.noTaskSpan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin-right: 16px;
+    border: 2px dashed #d7d7d7;
+    background-color: #ededed;
+    padding: 16px;
+    border-radius: 10px;
+    color: #a9a9a9;
+}
+
+.scroll-div {
+    position: relative;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    /* overflow-y: scroll;*/
+    /* Verhindert anfängliche Anzeige der Scrollleiste */
+}
+
+
+
+.scroll-div::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scroll-div::-webkit-scrollbar-track {
+    background: #b8baba;
+    border-radius: 10px;
+}
+
+.scroll-div::-webkit-scrollbar-thumb {
+    background-color: #dcdada;
+    border-radius: 10px;
+    border: 2px solid #e4e2e2;
+}
+
+.scroll-div::-webkit-scrollbar-thumb:hover {
+    background-color: #c0c0c0;
+}
+
+#left,
+#right,
+#leftNum2,
+#rightNum2 {
+    width: 230px;
+    height: 100%;
+    padding: 1px;
+}
+
+.list {
+    height: 224px;
+    width: 224px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    cursor: grab;
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.background-bigListView {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-color: rgba(151, 149, 149, 0.37);
+}
+
+.inner-bigListView {
+    display: flex;
+    padding: 50px;
+    flex-direction: column;
+    border-radius: 40px;
+    min-height: 400px;
+    width: 500px;
+    background-color: whitesmoke;
+    scrollbar-width: none;
+    overflow-y: scroll;
+}
+
+.top-content-bigListView {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.close-bigListView-button {
+    cursor: pointer;
+}
+
+.board-centerTitel {
+    padding-right: 100px;
+}
+
+/* Task Card Styling */
+
+.task-card-category,
+.task-card-title,
+.task-card-description,
+.task-card-subtask,
+.task-card-bottom {
+    width: 90%;
+    flex: 1;
+}
+
+.task-card-category {
+    display: flex;
+    align-items: center;
+}
+
+.category-story,
+.category-technical {
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: white;
+}
+
+.category-story {
+    background-color: #1FD7C1;
+}
+
+.category-technical {
+    background-color: #0038ff;
+}
+
+.task-card-bottom,
+.task-card-subtask {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.task-card-subtask {
+    align-items: center;
+    gap: 10px;
+}
+
+.task-card-description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    color: #A8A8A8;
+}
+
+.subtask-container {
+    background-color: #dfdfdf;
+    height: 8px;
+    width: 55%;
+    border-radius: 8px;
+}
+
+.subtask-value {
+    background-color: #4589ff;
+    height: 8px;
+    border-radius: 8px;
+}
+
+.subtask-info {
+    width: 45%;
+    text-wrap: nowrap;
+    font-size: 14px;
+}
+
+.task-card-contacts {
+    display: flex;
+    margin-right: initial;
+}
+
+.task-card-prio {
+    width: 17px;
+    height: 13px;
+}
+
+.task-card-prio-medium {
+    width: 17px;
+    height: 8px;
+}
+
+/* Task Card Overlay Styling */
+
+.task-card-overlay-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-card-overlay-top img:hover,
+.task-card-subtask-overlay img:hover {
+    background-color: #dddcdc;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.task-card-overlay-title {
+    font-size: 40px;
+}
+
+.task-card-overlay-bottom {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+.btn-delete:hover {
+    background-image: url(../assets/img/board-delete-blue.png);
+}
+
+.btn-edit:hover {
+    background-image: url(../assets/img/board-edit-blue.png);
+}
+
+.tc-column {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tc-overlay {
+    display: flex;
+    align-items: baseline;
+}
+
+.task-card-subtask-overlay {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.st-overlay {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+@media(max-width: 1190px) {
+
+
+
+    .board-mainContainer {
+        left: auto;
+        width: auto;
+
+    }
+
+    .board-topAddtaskFont {
+        display: none;
+        height: 24px;
+        width: 24px;
+    }
+
+    .board-AddImage {
+        height: 24px;
+        width: 24px;
+    }
+
+    .board-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: initial;
+        justify-content: space-around;
+    }
+
+    #left,
+    #right,
+    #leftNum2,
+    #rightNum2 {
+        display: flex;
+        width: 1000px;
+        padding: 1px;
+    }
+
+    .toAdd-bottom {
+        padding: 16px;
+    }
+
+    .scroll-div {
+        height: 270px;
+        justify-content: initial;
+        /* damit wird es zurückgesetzt auf dem anfangs zustand */
+        overflow-y: hidden;
+    }
+
+    .list {
+        height: 224px;
+        width: 224px;
+        margin: 8px;
+    }
+
+
+    /* Stil für die horizontale Scrollleiste */
+    .scroll-div::-webkit-scrollbar {
+        height: 4px;
+        /* Höhe der horizontalen Scrollleiste */
+    }
+
+    .scroll-div::-webkit-scrollbar-track {
+        background: #e9ebeb;
+        border-radius: 10px;
+    }
+
+    .scroll-div::-webkit-scrollbar-thumb {
+        background-color: #dcdada;
+        border-radius: 10px;
+        border: 2px solid #aeabab;
+    }
+
+    .scroll-div::-webkit-scrollbar-thumb:hover {
+        background-color: #c5c2c2;
+        /* Farbe des Scrollbalkens beim Hover */
+    }
+
+    .board-bottom {
+        margin-top: 64px;
+    }
+
+}
+
+@media(max-width: 690px) {
+
+    .board-InputFieldDiv {
+        position: initial;
+    }
+
+    .board-InputField {
+        position: absolute;
+        top: 130px;
+        right: 10px;
+        left: auto;
+        border-radius: 10px;
+        width: 278px;
+        height: 39px;
+    }
+
+    .board-searchImage {
+        position: absolute;
+        background-color: white;
+        top: 140px;
+        right: 24px;
+        left: auto;
+        cursor: pointer;
+    }
+
+    h1 {
+        font-size: 47px;
+    }
+
+    .board-top {
+        display: flex;
+        margin: 40px;
+        margin-right: 10px;
+    }
+
+
+    .overDiv-bottom-f {
+        margin-bottom: 100px;
+    }
+
+
+}

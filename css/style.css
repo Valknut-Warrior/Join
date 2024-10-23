@@ -36,10 +36,10 @@ html[data-theme=light] {
   --summary-task-btn: #fff;
   --summary-task-btn-hover: #2a3647;
   --summary-task-btn-text-hover: #fff;
-  --summary-backlog: url('../public/icons/round-backlog-dark.png');
-  --summary-backlog-hover: url('../public/icons/round-backlog-white.png');
-  --summary-done: url('../public/icons/round-done-dark.png');
-  --summary-done-hover: url('../public/icons/round-done-white.png');
+  --summary-backlog: url('./icons/round-backlog-dark.png');
+  --summary-backlog-hover: url('../icons/round-backlog-white.png');
+  --summary-done: url('../icons/round-done-dark.png');
+  --summary-done-hover: url('../icons/round-done-white.png');
 }
 
 html[data-theme=dark] {
@@ -68,10 +68,10 @@ html[data-theme=dark] {
   --summary-task-btn: #2a3647;
   --summary-task-btn-hover: #fff;
   --summary-task-btn-text-hover: #2a3647;
-  --summary-backlog: url('../public/icons/round-backlog-white.png');
-  --summary-backlog-hover: url('../public/icons/round-backlog-dark.png');
-  --summary-done: url('../public/icons/round-done-white.png');
-  --summary-done-hover: url('../public/icons/round-done-dark.png');
+  --summary-backlog: url('../icons/round-backlog-white.png');
+  --summary-backlog-hover: url('../icons/round-backlog-dark.png');
+  --summary-done: url('..//icons/round-done-white.png');
+  --summary-done-hover: url('../icons/round-done-dark.png');
 }
 
 * {

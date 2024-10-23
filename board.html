@@ -1,38 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/board.css">
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./public/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./public/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./public/icons/favicon-16x16.png">
-    <link rel="manifest" href="./public/icons/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+    <link rel="manifest" href="./icons/site.webmanifest">
 
     <!-- Script -->
     <script src="./js/main.js"></script>
+    <script src="./js/board.js"></script>
     <title>Join - Board</title>
 </head>
+
 <body>
     <div class="root">
         <header w3-include-html="header.html"></header>
-    
+
         <div class="main">
             <!-- Hier wird die Sidebar inkludiert -->
             <div w3-include-html="sidebar.html"></div>
-    
+
             <div class="content">
-               
+                <div class="board-mainContainer">
+                    <div class="board-top">
+                        <div class="board-title">
+                            <h1>Board</h1>
+                        </div>
+
+                        <div class="board-input">
+                            <div class="board-InputFieldDiv">
+                                <input class="board-InputField" id="filterTaskInput" onkeyup="filterAndShowTask()"
+                                    type="text" placeholder="Filter tasks...">
+                                <img class="board-searchImage" src="./icons/searchImage.png" alt="">
+                            </div>
+                            <div class="board-topAddtaskDiv" onclick="showOrHideOverlay()">
+                                <span class="board-topAddtaskFont">Add task</span>
+                                <img class="board-AddImage" src="./icons/addImage.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="board-bottom">
+                        <div class="overDiv-bottom">
+                            <div class="toAdd-bottom"><span class="board-centerTitel">To do</span> <img
+                                    class="board-bottomPlusImg hover-image" src="./icons/plusButton.png" alt=""
+                                    onclick="showOrHideOverlay()"></div>
+                            <div class="scroll-div" id="scroll-div-1">
+                                <div id="left">
+                                    <!-- <span class="noTaskSpan">No tasks in to do</span> -->
+                                    <div class="drag-area" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')" ondragover="allowDrop(event); highlight('open')"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="overDiv-bottom">
+                            <div class="toAdd-bottom"><span class="board-centerTitel">In progress</span><img
+                                    class="board-bottomPlusImg hover-image" src="./icons/plusButton.png" alt=""
+                                    onclick="showOrHideOverlay()"></div>
+                            <div class="scroll-div" id="scroll-div-2">
+                                <div id="leftNum2">
+                                    <!-- <span class="noTaskSpan">No tasks in progress</span> -->
+                                    <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')" ondragover="allowDrop(event); highlight('closed')"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overDiv-bottom">
+                            <div class="toAdd-bottom"><span class="board-centerTitel">Await feedback</span><img
+                                    class="board-bottomPlusImg hover-image" src="./icons/plusButton.png" alt=""
+                                    onclick="showOrHideOverlay()"></div>
+                            <div class="scroll-div" id="scroll-div-3">
+                                <div id="right">
+                                    <!-- <span class="noTaskSpan">No tasks in await feedback</span> -->
+                                    <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')" ondragover="allowDrop(event); highlight('closed')"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overDiv-bottom-f">
+                            <div class="toAdd-bottom"><span class="board-centerTitel">Done</span></div>
+                            <div class="scroll-div" id="scroll-div-4">
+                                <div id="rightNum2">
+                                    <!-- <span class="noTaskSpan">No tasks in done</span> -->
+                                    <!-- <div class="list" draggable="true" onclick="openList()"></div> -->
+                                    <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')" ondragover="allowDrop(event); highlight('closed')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-    
+
+
+
             <div id="toast"></div>
         </div>
     </div>
 </body>
+
 </html>
