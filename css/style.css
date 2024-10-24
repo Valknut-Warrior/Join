@@ -32,14 +32,6 @@ html[data-theme=light] {
   --login-link-color: rgba(176, 178, 179, 1);
   --border-left: 1px rgba(227, 228, 229, 0.7);
   --background-conten-button: rgba(255, 255, 255, 1);
-  --background-color-sidebar-clicked: rgba(9,25,49, 1);
-  --summary-task-btn: #fff;
-  --summary-task-btn-hover: #2a3647;
-  --summary-task-btn-text-hover: #fff;
-  --summary-backlog: url('./icons/round-backlog-dark.png');
-  --summary-backlog-hover: url('../icons/round-backlog-white.png');
-  --summary-done: url('../icons/round-done-dark.png');
-  --summary-done-hover: url('../icons/round-done-white.png');
 }
 
 html[data-theme=dark] {
@@ -64,14 +56,6 @@ html[data-theme=dark] {
   --login-link-color: rgba(221, 222, 223, 1);
   --border-left: 1px rgba(190, 190, 190, 0.7);
   --background-conten-button: rgba(63, 77, 84, 1);
-  --background-color-sidebar-clicked: rgba(67,80,87, 1);
-  --summary-task-btn: #2a3647;
-  --summary-task-btn-hover: #fff;
-  --summary-task-btn-text-hover: #2a3647;
-  --summary-backlog: url('../icons/round-backlog-white.png');
-  --summary-backlog-hover: url('../icons/round-backlog-dark.png');
-  --summary-done: url('..//icons/round-done-white.png');
-  --summary-done-hover: url('../icons/round-done-dark.png');
 }
 
 * {
@@ -98,7 +82,6 @@ body {
 
 a {
   color: var(--link-color);
-  text-decoration: none !important;
 }
 
 a:hover {
@@ -248,12 +231,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar-footer {
+  height: 400px;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
   align-self: center;
-  position: absolute;
-  bottom: 45px;
 }
 
 .sidebar-footer ul {
@@ -269,10 +251,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-color-sidebar);
   text-decoration: none;
   filter: brightness(70%);
-}
-
-.clicked {
-  background-color: var(--background-color-sidebar-clicked);
 }
 
 .footer {
@@ -802,6 +780,14 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 15px;
 }
 
+.input-title, .textarea-description, .input-date, .select-category, .input-subtask {
+  background: var(--background-color-login);
+  border: solid 1px var(--border-inputfeld-login);
+  border-radius: 10px;
+  height: 48px;
+  padding: 8px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 /* Small devices (portrait tablets and large phones, 600px and up) */
 /* Medium devices (landscape tablets, 768px and up) */
@@ -931,7 +917,7 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 750px;
   }
   .content-left textarea {
-    min-height: 154px;
+    min-height: 205px;
   }
   .content-right input, textarea, select {
     width: 750px;

@@ -783,6 +783,14 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 15px;
 }
 
+.input-title, .textarea-description, .input-date, .select-category, .input-subtask {
+  background: var(--background-color-login);
+  border: solid 1px var(--border-inputfeld-login);
+  border-radius: 10px;
+  height: 48px;
+  padding: 8px;
+}
+
 
 
 
@@ -953,7 +961,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .content-left textarea {
-    min-height: 154px;
+    min-height: 205px;
   }
 
   .content-right input,textarea,select {
