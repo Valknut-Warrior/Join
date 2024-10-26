@@ -770,6 +770,12 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 15px;
 }
 
+.add-button-content-high:focus {
+  background: url(/icons/prio-high.svg) right no-repeat;
+  padding-right: 20px;
+  background-size: 15px;
+  color: #1FD7C1;
+}
 
 .add-button-content-medium {
   background: url(/icons/prio-medium.svg) right no-repeat;

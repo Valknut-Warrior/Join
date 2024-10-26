@@ -20,7 +20,7 @@
 
     <!-- Script -->
     <script src="./js/main.js"></script>
-    <script src="./js/addTask.js"></script>
+    <script src="./js/addTask.js" defer></script>
 
     <title>Join - Add Task</title>
 </head>
@@ -39,7 +39,7 @@
             <div class="content-add-task">
                 <div class="content-left">
 
-                    <div class="dfg">
+                    <div>
                         <label for="title">Title<span class="star"> *</span></label><br>
                         <input class="input-title" type="text" id="title" name="title" placeholder="Enter a Title">
                     </div>
@@ -55,7 +55,7 @@
                 <div class="content-right">
                     <div class="dfg">
                         <label for="date">Due date<span class="star"> *</span></label><br>
-                        <input class="input-date" type="text" id="date" name="date" placeholder="dd/mm/yyyy">
+                        <input class="input-date" type="date" id="date" name="date" placeholder="dd/mm/yyyy">
                     </div>
 
                     <div class="content-add-task-button dfg">
@@ -67,7 +67,7 @@
                         </p>
                     </div>
 
-                    <div class="dfg">
+                    <div>
                         <label for="category">Category<span class="star"> *</span></label><br>
                         <select class="select-category" id="category" name="category">
                             <option value="0">Select contacts to assign</option>
@@ -85,7 +85,8 @@
             </div>
         </div>
 
-        <div id="toast"></div>
+        <div id="toast">
+        </div>
     </div>
 </div>
 </body>
