@@ -1,18 +1,54 @@
-let todos = [{
-    'id': 0,
-    'title': 'Putzen',
-    'category': 'open'
-}, {
-    'id': 1,
-    'title': 'Kochen',
-    'category': 'open'
-}, {
-    'id': 2,
-    'title': 'Einkaufen',
-    'category': 'closed'
-}];
+const tasks = [{
+    "category": "User Story",
+    "contacts": [
+      "Max Mustermann"
+    ],
+    "databaseKey": "-O8loADmcZ2h2D9qHeg3",
+    "date": "2024-10-12",
+    "description": "Dieser Task wird benötigt um das editieren auf der Board Seite zu simulieren.",
+    "prio": "medium",
+    "progress": "to-do",
+    "subtask": [
+      {
+        "done": false,
+        "title": "Subtask 1"
+      },
+      {
+        "done": false,
+        "title": "Add new Subtask"
+      },
+      {
+        "done": true,
+        "title": "Editieren funktioniert"
+      }
+    ],
+    "title": "Test Task für das Editieren."
+  }, {
+    "category": "Technical Task",
+    "contacts": [
+      "Max Mustermann"
+    ],
+    "databaseKey": "-O9-9mjJbFH1o3WGp8NR",
+    "date": "2024-10-14",
+    "description": "controll every point of the list",
+    "prio": "high",
+    "progress": "in-progress",
+    "title": "join "
+  }, {
+    "category": "User Story",
+    "contacts": [
+      "Max Mustermann"
+    ],
+    "databaseKey": "-O9-9mjJbFH1o3WGp8NR",
+    "date": "2024-10-14",
+    "description": "controll Array",
+    "prio": "high",
+    "progress": "to-do",
+    "title": "dritter task "
+  }];
 
 let currentDraggedElement;
+let currentTask;
 
 window.onload = () => {
     includeHTML();
@@ -20,31 +56,27 @@ window.onload = () => {
 }
 
 function updateHTML() {
-    let open = todos.filter(t => t.category == 'open');
+    renderTaskSection('toDo', 'to-do');
+    renderTaskSection('inProgress', 'in-progress');
+}
 
-    document.getElementById('open').innerHTML = '';
+function renderTaskSection(section, keyword) {
+    const filteredTask = tasks.filter((t, i) => t.progress == keyword);
+    document.getElementById(section).innerHTML = '';
 
-    for (let index = 0; index < open.length; index++) {
-        const element = open[index];
-        document.getElementById('open').innerHTML += generateTodoHTML(element);
-    }
+    filteredTask.forEach((task, i) => {
+        currentTask = task;
+        document.getElementById(section).innerHTML += generateTodoHTML(task, i);
+    });
 
-    let closed = todos.filter(t => t.category == 'closed');
-
-    document.getElementById('closed').innerHTML = '';
-
-    for (let index = 0; index < closed.length; index++) {
-        const element = closed[index];
-        document.getElementById('closed').innerHTML += generateTodoHTML(element);
-    }
 }
 
 function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTodoHTML(element) {
-    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
+function generateTodoHTML(task, i) {
+    return `<div draggable="true" ondragstart="startDragging(${i})" class="todo">${task.title}</div>`;
 }
 
 function allowDrop(ev) {
