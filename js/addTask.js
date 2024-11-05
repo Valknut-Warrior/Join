@@ -19,13 +19,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 });
 
-function setStartColorSVG() {
-    svgLow.classList.add("filter-green");
-    svgMedium.classList.add("filter-black");
-    buttonMedium.classList.add("bco","text-color-reverse", "font-bold");
-    svgHigh.classList.add("filter-red");
-}
-
 
 // Beim Klicken auf das Title-Feld den Rahmen setzen
 inputTitle.addEventListener("click", (event) => {
@@ -107,8 +100,14 @@ buttonHigh.addEventListener("mouseout", () => {
 
 // Füge `click`-Event-Listener hinzu, um die Farbe beim Klicken zu ändern
 buttonLow.addEventListener("click", () => {
-    buttonLow.classList.add("active-color");
-    buttonMedium.classList.remove("active-color");
+    buttonLow.classList.add("bcg","text-color-reverse", "font-bold");
+    svgLow.classList.add("filter-black");
+
+    buttonMedium.classList.remove("bco","text-color-reverse", "font-bold");
+    svgMedium.classList.remove("filter-black"); //stimmt noch nicht
+    svgMedium.classList.add("filter-orange");
+
+
     buttonHigh.classList.remove("active-color");
 });
 
@@ -123,3 +122,14 @@ buttonHigh.addEventListener("click", () => {
     buttonLow.classList.remove("active-color");
     buttonMedium.classList.remove("active-color");
 });
+
+
+/**
+ * Setze alles auf Standartwerte beim neu Laden
+ */
+function setStartColorSVG() {
+    svgLow.classList.add("filter-green");
+    svgMedium.classList.add("filter-black");
+    buttonMedium.classList.add("bco","text-color-reverse", "font-bold");
+    svgHigh.classList.add("filter-red");
+}
