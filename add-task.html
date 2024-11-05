@@ -61,9 +61,9 @@
                     <div class="content-add-task-button dfg">
                         <p>Prio</p>
                         <p class="add-task-button-set">
-                            <button class="prioritize-button-high" id="prioritize-button-high"><span class="add-button-content-high">Urgent</span></button>
-                            <button class="prioritize-button-medium" id="prioritize-button-medium"><span class="add-button-content-medium">Medium</span></button>
-                            <button class="prioritize-button-low" id="prioritize-button-low"><span class="add-button-content-low">Low</span></button>
+                            <button class="prioritize-button-high" id="prioritize-button-high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
+                            <button class="prioritize-button-medium" id="prioritize-button-medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
+                            <button class="prioritize-button-low" id="prioritize-button-low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
                         </p>
                     </div>
 
@@ -72,13 +72,18 @@
                         <select class="select-category" id="category" name="category">
                             <option value="0">Select contacts to assign</option>
                             <option value="1">Technical Task</option>
-                            <option value="1">User Story</option>
+                            <option value="2">User Story</option>
                         </select>
                     </div>
 
                     <div class="dfg">
                         <label for="subtask">Subtask</label><br>
                         <input class="input-subtask" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+                    </div>
+
+                    <div>
+                        <button class="clear-task-button" id="clear-task-button">Clear</button>
+                        <button class="create-task-button" id="create-task-button">Create Task</button>
                     </div>
                 </div>
 
