@@ -41,13 +41,13 @@
 
                     <div>
                         <label for="title">Title<span class="star"> *</span></label><br>
-                        <input class="input-title" type="text" id="title" name="title" placeholder="Enter a Title">
+                        <input class="input-title" type="text" id="title" name="title" placeholder="Enter a Title" required>
                     </div>
 
                     <div class="dfg">
                         <label for="description">Description</label><br>
                         <textarea class="textarea-description" id="description" name="description"
-                                  rows="4" cols="50" placeholder="Enter a Description">
+                                  rows="4" cols="50" placeholder="Enter a Description" required>
                         </textarea>
                     </div>
 
@@ -55,25 +55,31 @@
                 <div class="content-right">
                     <div class="dfg">
                         <label for="date">Due date<span class="star"> *</span></label><br>
-                        <input class="input-date" type="date" id="date" name="date" placeholder="dd/mm/yyyy">
+                        <input class="input-date" type="date" id="date" name="date" placeholder="dd/mm/yyyy" required>
                     </div>
 
                     <div class="content-add-task-button dfg">
                         <p>Prio</p>
                         <p class="add-task-button-set">
-                            <button class="prioritize-button-high" id="prioritize-button-high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
-                            <button class="prioritize-button-medium" id="prioritize-button-medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
-                            <button class="prioritize-button-low" id="prioritize-button-low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
+                            <button class="prioritize-button-high" id="prioritize-button-high" value="high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
+                            <button class="prioritize-button-medium" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
+                            <button class="prioritize-button-low" id="prioritize-button-low" value="low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
                         </p>
                     </div>
 
-                    <div>
-                        <label for="category">Category<span class="star"> *</span></label><br>
-                        <select class="select-category" id="category" name="category">
-                            <option value="0">Select contacts to assign</option>
-                            <option value="1">Technical Task</option>
-                            <option value="2">User Story</option>
-                        </select>
+
+                    <div class="dfg custom-select-container" id="custom-select-container">
+                        <div class="custom-select" id="customSelect">
+                            <span class="selected-option">Select task category</span>
+                            <svg class="custom-arrow" width="14" height="14" viewBox="0 0 24 24">
+                                <path d="M7 10l5 5 5-5z"></path>
+                            </svg>
+                        </div>
+                        <ul class="options-list" id="optionsList">
+                            <li data-value="0">Select task category</li>
+                            <li data-value="1">Technical Task</li>
+                            <li data-value="2">User Story</li>
+                        </ul>
                     </div>
 
                     <div class="dfg">
@@ -81,12 +87,15 @@
                         <input class="input-subtask" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
                     </div>
 
-                    <div>
-                        <button class="clear-task-button" id="clear-task-button">Clear</button>
-                        <button class="create-task-button" id="create-task-button">Create Task</button>
-                    </div>
                 </div>
 
+
+
+            </div>
+
+            <div class="task-buttons">
+                <button class="clear-task-button" id="clear-task-button">Clear</button>
+                <button class="create-task-button" id="create-task-button">Create Task</button>
             </div>
         </div>
 

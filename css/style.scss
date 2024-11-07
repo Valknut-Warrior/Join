@@ -38,6 +38,7 @@ html[data-theme='light'] {
   --add-task-orange-icon:brightness(0) saturate(100%) invert(68%) sepia(98%) saturate(3723%) hue-rotate(354deg) brightness(102%) contrast(101%);
   --add-task-white-icon: brightness(0) saturate(100%) invert(100%) sepia(56%) saturate(378%) hue-rotate(293deg) brightness(101%) contrast(105%);
   --add-task-black-icon: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(774%) hue-rotate(171deg) brightness(116%) contrast(100%); //hier muss man es umgehren ;)
+  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%); ;
   --box-shadow-add-task: 1px 5px 4px -2px rgba(227, 228, 229, 0.7);
   --background-color-orange: rgba(255, 168, 0, 1);
   --background-color-green: rgba(123, 226, 42, 1);
@@ -71,7 +72,8 @@ html[data-theme='dark'] {
   --add-task-red-icon: brightness(0) saturate(100%) invert(8%) sepia(100%) saturate(6833%) hue-rotate(355deg) brightness(122%) contrast(101%);
   --add-task-orange-icon:brightness(0) saturate(100%) invert(68%) sepia(98%) saturate(3723%) hue-rotate(354deg) brightness(102%) contrast(101%);
   --add-task-white-icon: brightness(0) saturate(100%) invert(100%) sepia(56%) saturate(378%) hue-rotate(293deg) brightness(101%) contrast(105%);
-  --add-task-black-icon: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%) hue-rotate(59deg) brightness(105%) contrast(111%);;
+  --add-task-black-icon: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%) hue-rotate(59deg) brightness(105%) contrast(111%);
+  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%); ;
   --box-shadow-add-task: 1px 5px 4px -2px rgba(190, 190, 190, 0.7);
   --background-color-orange: rgba(255, 168, 0, 1);
   --background-color-green: rgba(123, 226, 42, 1);
@@ -84,6 +86,7 @@ html[data-theme='dark'] {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
 }
 
 *:focus {
@@ -125,6 +128,16 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   width: 100%;
   height: 100%;
+}
+/* Standard-Platzhalterfarbe für die meisten Browser */
+input::placeholder {
+  color: var(--text-color);
+  opacity: 1;
+}
+
+textarea::placeholder {
+  color: var(--text-color);
+  opacity: 1;
 }
 
 .header {
@@ -781,7 +794,8 @@ h1, h2, h3, h4, h5, h6 {
 .content-add-task-button {
     display: flex;
     flex-direction: column;
-    width: 92%;
+    width: 100%;
+    justify-items: left;
 }
 
 .atb-sitz {
@@ -789,13 +803,14 @@ h1, h2, h3, h4, h5, h6 {
   width: 15px;
 }
 
-.input-title, .textarea-description, .input-date, .select-category, .input-subtask {
+.input-title, .textarea-description, .input-date, .select-category, .input-subtask, .custom-select-container {
   background: var(--background-color-login);
   border: solid 1px var(--border-inputfeld-login);
   border-radius: 10px;
   height: 48px;
   padding: 8px;
   color: var(--text-color);
+  cursor: pointer;
 }
 
 .dfg {
@@ -829,6 +844,10 @@ h1, h2, h3, h4, h5, h6 {
   filter: var(--add-task-black-icon);
 }
 
+.filter-standart {
+  filter: var(--add-task-standart-icon);
+}
+
 .bco {
   background-color: var(--background-color-orange) !important;
   box-shadow: none;
@@ -852,6 +871,77 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 }
 
+.select-container {
+  position: relative;
+  display: inline-block;
+  width: 93%;
+}
+.custom-select-container {
+  position: relative;
+  width: 100%;
+}
+.custom-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.custom-arrow {
+  transition: transform 0.3s;
+}
+
+.options-list {
+  display: none; /* Dropdown standardmäßig ausgeblendet */
+  position: absolute;
+  top: 100%; /* Positioniert das Dropdown unter dem Auswahlfeld */
+  left: 0;
+  width: 100%;
+  margin-top: 4px;
+  //border: 1px solid #ccc;
+  background-color: var(--background-color-login);
+  list-style: none;
+  padding: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  height: 100%;
+
+}
+
+
+.options-list li {
+  padding: 8px;
+  cursor: pointer;
+  background-color: var(--background-color-login);
+  width: 100%;
+  color: var(--text-color);
+  border-radius: 10px;
+  position: relative;
+  top: -10px;
+}
+
+.options-list li:hover {
+  background-color: var(--background-color-login);
+  z-index: -1;
+}
+
+.custom-select.open .custom-arrow {
+  transform: rotate(180deg); /* Dreht den Pfeil bei geöffnetem Dropdown */
+}
+
+.custom-select.open .custom-arrow {
+  transform: rotate(180deg); /* Pfeil dreht sich bei offenem Dropdown */
+}
+
+.task-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  margin-top: 40px;
+  justify-content: center;
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -887,81 +977,6 @@ h1, h2, h3, h4, h5, h6 {
   #question img {
     width: 17px;
     height: 17px;
-  }
-
-  // Spinner
-
-  .loader {
-    animation: rotate 1s infinite;
-    height: 50px;
-    width: 50px;
-  }
-
-  .loader:before,
-  .loader:after {
-    border-radius: 50%;
-    content: '';
-    display: block;
-    height: 20px;
-    width: 20px;
-  }
-  .loader:before {
-    animation: ball1 1s infinite;
-    background-color: #cb2025;
-    box-shadow: 30px 0 0 #f8b334;
-    margin-bottom: 10px;
-  }
-  .loader:after {
-    animation: ball2 1s infinite;
-    background-color: #00a096;
-    box-shadow: 30px 0 0 #97bf0d;
-  }
-
-  @keyframes rotate {
-    0% {
-      -webkit-transform: rotate(0deg) scale(0.8);
-      -moz-transform: rotate(0deg) scale(0.8);
-    }
-    50% {
-      -webkit-transform: rotate(360deg) scale(1.2);
-      -moz-transform: rotate(360deg) scale(1.2);
-    }
-    100% {
-      -webkit-transform: rotate(720deg) scale(0.8);
-      -moz-transform: rotate(720deg) scale(0.8);
-    }
-  }
-
-  @keyframes ball1 {
-    0% {
-      box-shadow: 30px 0 0 #f8b334;
-    }
-    50% {
-      box-shadow: 0 0 0 #f8b334;
-      margin-bottom: 0;
-      -webkit-transform: translate(15px, 15px);
-      -moz-transform: translate(15px, 15px);
-    }
-    100% {
-      box-shadow: 30px 0 0 #f8b334;
-      margin-bottom: 10px;
-    }
-  }
-
-  @keyframes ball2 {
-    0% {
-      box-shadow: 30px 0 0 #97bf0d;
-    }
-    50% {
-      box-shadow: 0 0 0 #97bf0d;
-      margin-top: -20px;
-      -webkit-transform: translate(15px, 15px);
-      -moz-transform: translate(15px, 15px);
-    }
-    100% {
-      box-shadow: 30px 0 0 #97bf0d;
-      margin-top: 0;
-    }
   }
 
   /* Sing Up */
@@ -1019,11 +1034,17 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 750px;
   }
 
-  .content-left textarea {
-    min-height: 209px;
+  .content-add-task-button {
+    width: 750px;
+    max-width: 750px;
+    min-width: 750px;
   }
 
-  .content-right input,textarea,select {
+  .content-left textarea {
+    min-height: 191px;
+  }
+
+  .content-right input,textarea,select,.custom-select-container {
     width: 750px;
     max-width: 750px;
     min-width: 750px;

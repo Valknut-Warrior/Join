@@ -3,7 +3,7 @@
 const inputTitle = document.getElementById("title");
 const inputDescription = document.getElementById("description");
 const inputDate = document.getElementById("date");
-const inputCategory = document.getElementById("category");
+const inputCategory = document.getElementById("custom-select-container");
 const inputSub = document.getElementById("subtask");
 const buttonLow = document.getElementById("prioritize-button-low");
 const buttonMedium = document.getElementById("prioritize-button-medium");
@@ -13,9 +13,14 @@ const svgLow = document.getElementById("svg-low");
 const svgMedium = document.getElementById("svg-medium");
 const svgHigh = document.getElementById("svg-high");
 
+const customSelect = document.getElementById("customSelect");
+const optionsList = document.getElementById("optionsList");
+const selectedOption = document.querySelector(".selected-option");
+
 document.addEventListener("DOMContentLoaded", (event) => {
 
-    setStartColorSVG();
+    setStartColorSVGButton();
+    setMinDate();
 
 });
 
@@ -48,6 +53,7 @@ inputDate.addEventListener("click", (event) => {
 });
 
 // Beim Klicken auf das Category-Feld den Rahmen setzen
+/*
 inputCategory.addEventListener("click", (event) => {
     inputCategory.style.border = "solid 1px var(--border-input-focus)";
     inputTitle.style.border = "solid 1px var(--border-inputfeld-login)";
@@ -55,6 +61,7 @@ inputCategory.addEventListener("click", (event) => {
     inputDate.style.border = "solid 1px var(--border-inputfeld-login)";
     inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
 });
+*/
 
 // Beim Klicken auf das Subtask-Feld den Rahmen setzen
 inputSub.addEventListener("click", (event) => {
@@ -100,36 +107,124 @@ buttonHigh.addEventListener("mouseout", () => {
 
 // Füge `click`-Event-Listener hinzu, um die Farbe beim Klicken zu ändern
 buttonLow.addEventListener("click", () => {
-    buttonLow.classList.add("bcg","text-color-reverse", "font-bold");
+
+    deleteButtonColor();
+
+    buttonLow.classList.add("bcg", "text-color-reverse", "font-bold");
     svgLow.classList.add("filter-black");
 
-    buttonMedium.classList.remove("bco","text-color-reverse", "font-bold");
-    svgMedium.classList.remove("filter-black"); //stimmt noch nicht
-    svgMedium.classList.add("filter-orange");
-
-
-    buttonHigh.classList.remove("active-color");
+    svgMedium.classList.remove("filter-standart", "filter-black");
+    svgMedium.classList.add("filter-orange")
+    svgHigh.classList.remove("filter-standart", "filter-black");
+    svgHigh.classList.add("filter-red");
 });
+
+
 
 buttonMedium.addEventListener("click", () => {
-    buttonMedium.classList.add("active-color");
-    buttonLow.classList.remove("active-color");
-    buttonHigh.classList.remove("active-color");
+
+    deleteButtonColor();
+
+    buttonMedium.classList.add("bco", "text-color-reverse", "font-bold");
+    svgMedium.classList.add("filter-black");
+
+    svgLow.classList.remove("filter-standart", "filter-black");
+    svgLow.classList.add("filter-green");
+    svgHigh.classList.remove("filter-standart", "filter-black");
+    svgHigh.classList.add("filter-red");
+
 });
 
+
 buttonHigh.addEventListener("click", () => {
-    buttonHigh.classList.add("active-color");
-    buttonLow.classList.remove("active-color");
-    buttonMedium.classList.remove("active-color");
+
+    deleteButtonColor();
+
+    buttonHigh.classList.add("bcr", "text-color-reverse", "font-bold");
+    svgLow.classList.add("filter-green");
+
+    svgLow.classList.remove("filter-standart", "filter-black");
+    svgMedium.classList.add("filter-orange");
+    svgMedium.classList.remove("filter-standart", "filter-black");
+    svgHigh.classList.add("filter-black");
+    svgHigh.classList.remove("filter-standart");
+
+
 });
 
 
 /**
- * Setze alles auf Standartwerte beim neu Laden
+ * Setze alles auf Standartwerte beim reload
  */
-function setStartColorSVG() {
+function setStartColorSVGButton() {
     svgLow.classList.add("filter-green");
     svgMedium.classList.add("filter-black");
-    buttonMedium.classList.add("bco","text-color-reverse", "font-bold");
+    buttonMedium.classList.add("bco", "text-color-reverse", "font-bold");
     svgHigh.classList.add("filter-red");
+}
+
+
+/**
+ *  Lösche alle Klassen aus den Ad-Task Buttons
+ */
+function deleteButtonColor() {
+    // Löscht alle Klassen vom Low Button
+    buttonLow.classList.remove("bcg", "text-color-reverse", "font-bold");
+    svgLow.classList.add("filter-standart");
+    //svgLow.classList.add("filter-orange");
+
+    // Löscht alle Klassen vom Medium Button
+
+    buttonMedium.classList.remove("bco", "text-color-reverse", "font-bold");
+    svgMedium.classList.add("filter-standart");
+    //svgMedium.classList.add("filter-orange");
+
+    // Löscht alle Klassen vom High Button
+
+    buttonHigh.classList.remove("bcr", "text-color-reverse", "font-bold");
+    svgHigh.classList.add("filter-standart");
+}
+
+
+
+// Öffnet oder schließt das Dropdown-Menü beim Klicken
+customSelect.addEventListener("click", () => {
+    const isOpen = optionsList.style.display === "block";
+    optionsList.style.display = isOpen ? "none" : "block";
+    customSelect.classList.toggle("open", !isOpen); // Toggle für die Pfeildrehung
+
+
+    inputCategory.style.border = "solid 1px var(--border-input-focus)";
+    inputTitle.style.border = "solid 1px var(--border-inputfeld-login)";
+    inputDescription.style.border = "solid 1px var(--border-inputfeld-login)";
+    inputDate.style.border = "solid 1px var(--border-inputfeld-login)";
+    inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
+});
+
+// Setzt die ausgewählte Option und schließt das Dropdown
+optionsList.addEventListener("click", (event) => {
+    if (event.target.tagName === "LI") {
+        selectedOption.textContent = event.target.textContent; // Setzt den Text der ausgewählten Option
+        optionsList.style.display = "none";
+        customSelect.classList.remove("open"); // Pfeil zurückdrehen
+    }
+});
+
+// Schließt das Dropdown, wenn außerhalb geklickt wird
+document.addEventListener("click", (event) => {
+    if (!customSelect.contains(event.target)) {
+        optionsList.style.display = "none";
+        customSelect.classList.remove("open"); // Pfeil zurückdrehen
+    }
+});
+
+// Funktion zum Festlegen des Mindestdatums auf das heutige Datum
+function setMinDate() {
+    const dateInput = document.getElementById("date");
+
+    // Das heutige Datum im Format "YYYY-MM-DD" erhalten
+    const today = new Date().toISOString().split("T")[0];
+
+    // Mindestdatum auf heute setzen
+    dateInput.min = today;
 }
