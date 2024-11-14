@@ -39,7 +39,7 @@
             <div class="content-add-task">
                 <div class="content-left">
 
-                    <div>
+                    <div class="dfg">
                         <label for="title">Title<span class="star"> *</span></label><br>
                         <input class="input-title" type="text" id="title" name="title" placeholder="Enter a Title" required>
                     </div>
@@ -69,6 +69,7 @@
 
 
                     <div class="dfg custom-select-container" id="custom-select-container">
+                        <!--<p>category</p>-->
                         <div class="custom-select" id="customSelect">
                             <span class="selected-option">Select task category</span>
                             <svg class="custom-arrow" width="14" height="14" viewBox="0 0 24 24">
@@ -85,6 +86,9 @@
                     <div class="dfg">
                         <label for="subtask">Subtask</label><br>
                         <input class="input-subtask" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+                        <div class="input-Button" id="subtask-icon" onclick="subtaskCross();"><img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray"></div>
+
+                        <div id="subtasks"></div>
                     </div>
 
                 </div>
@@ -93,9 +97,16 @@
 
             </div>
 
-            <div class="task-buttons">
-                <button class="clear-task-button" id="clear-task-button">Clear</button>
-                <button class="create-task-button" id="create-task-button">Create Task</button>
+            <div class="button-set task-buttons">
+
+                <div class="clear-task-button" id="clear-task" onclick="clearAllBox()">
+                    <button id="clear-task-button">Clear</button>
+                </div>
+
+                <div class="create-task-button" id="create-button">
+                   <button id="create-task-button">Create Task</button>
+               </div>
+
             </div>
         </div>
 

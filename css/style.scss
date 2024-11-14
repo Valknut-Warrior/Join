@@ -38,7 +38,8 @@ html[data-theme='light'] {
   --add-task-orange-icon:brightness(0) saturate(100%) invert(68%) sepia(98%) saturate(3723%) hue-rotate(354deg) brightness(102%) contrast(101%);
   --add-task-white-icon: brightness(0) saturate(100%) invert(100%) sepia(56%) saturate(378%) hue-rotate(293deg) brightness(101%) contrast(105%);
   --add-task-black-icon: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(774%) hue-rotate(171deg) brightness(116%) contrast(100%); //hier muss man es umgehren ;)
-  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%); ;
+  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%);
+  --add-task-gray-icon: brightness(0) saturate(100%) invert(53%) sepia(25%) saturate(5%) hue-rotate(223deg) brightness(91%) contrast(95%);
   --box-shadow-add-task: 1px 5px 4px -2px rgba(227, 228, 229, 0.7);
   --background-color-orange: rgba(255, 168, 0, 1);
   --background-color-green: rgba(123, 226, 42, 1);
@@ -73,7 +74,8 @@ html[data-theme='dark'] {
   --add-task-orange-icon:brightness(0) saturate(100%) invert(68%) sepia(98%) saturate(3723%) hue-rotate(354deg) brightness(102%) contrast(101%);
   --add-task-white-icon: brightness(0) saturate(100%) invert(100%) sepia(56%) saturate(378%) hue-rotate(293deg) brightness(101%) contrast(105%);
   --add-task-black-icon: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%) hue-rotate(59deg) brightness(105%) contrast(111%);
-  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%); ;
+  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%);
+  --add-task-gray-icon: brightness(0) saturate(100%) invert(53%) sepia(25%) saturate(5%) hue-rotate(223deg) brightness(91%) contrast(95%);
   --box-shadow-add-task: 1px 5px 4px -2px rgba(190, 190, 190, 0.7);
   --background-color-orange: rgba(255, 168, 0, 1);
   --background-color-green: rgba(123, 226, 42, 1);
@@ -121,6 +123,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-face), serif;
   font-style: var(--font-style-normal);
   font-weight: 700;
+}
+
+label {
+  margin-bottom: 5px;
 }
 
 .root {
@@ -848,6 +854,10 @@ textarea::placeholder {
   filter: var(--add-task-standart-icon);
 }
 
+.filter-gray {
+  filter: var(--add-task-gray-icon);
+}
+
 .bco {
   background-color: var(--background-color-orange) !important;
   box-shadow: none;
@@ -906,7 +916,6 @@ textarea::placeholder {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 100;
   height: 100%;
-
 }
 
 
@@ -938,10 +947,53 @@ textarea::placeholder {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  width: 100%;
+  width: 97.2%;
   margin-top: 40px;
-  justify-content: center;
+  justify-content: right;
 }
+
+
+.create-task-button button {
+  background-color: var(--submit-login-button);
+  color: var(--submit-login-button-text);
+  border-radius: 8px;
+  width: 140px;
+}
+
+.focus-task-button button {
+  background-color: var(--mouseover-button);
+  color: var(--mouseover-button-text);
+  width: 140px;
+  height: 48px;
+  padding: 15px 24px 15px 24px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.clear-task-button button {
+  width: 85px;
+  border: solid 1px black;
+  border-radius: 8px;
+  color: var(--submit-login-guest-button-text);
+}
+
+.focus-clear button {
+  width: 85px;
+  border: solid 1px var(--mouseover-button);
+  border-radius: 8px;
+  color: var(--mouseover-button);
+}
+/* Subtask */
+
+.input-Button {
+    position: relative;
+    top: -34px;
+    left: 720px;
+    cursor: pointer;
+}
+
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
