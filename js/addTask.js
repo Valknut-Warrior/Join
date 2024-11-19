@@ -22,7 +22,8 @@ const clearTaskButton = document.getElementById("clear-task");
 
 const subTaskIcon = document.getElementById("subtask-icon");
 const subtasks = document.getElementById("subtasks");
-subtasks.value = {};
+let subtaskArray = [];
+
 
 document.addEventListener("DOMContentLoaded", (event) => {
 
@@ -67,6 +68,11 @@ inputSub.addEventListener("click", (event) => {
     inputDescription.style.border = "solid 1px var(--border-inputfeld-login)";
     inputDate.style.border = "solid 1px var(--border-inputfeld-login)";
     inputCategory.style.border = "solid 1px var(--border-inputfeld-login)";
+
+    // Setzt die Icons bei SubTask
+    subTaskIcon.innerHTML = "<img src=\"icons/close.svg\" alt=\"Close\" class=\"add-subtask-button filter-gray\">|<img src=\"icons/check.svg\" alt=\"Check\" class=\"add-subtask-button filter-gray\">";
+    subTaskIcon.classList.remove("input-Button");
+    subTaskIcon.classList.add("input-Button-Dou");
 });
 
 
@@ -155,7 +161,7 @@ buttonHigh.addEventListener("click", () => {
 });
 
 /**
- * Enferne alle Focus
+ * Enferne alle Focus Rahmen
  */
 function removeFocus() {
     inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
@@ -235,7 +241,7 @@ document.addEventListener("click", (event) => {
 function setMinDate() {
     const dateInput = document.getElementById("date");
 
-    // Das heutige Datum im Format "YYYY-MM-DD" erhalten
+    // Das heutige Datum erhalten
     const today = new Date().toISOString().split("T")[0];
 
     // Mindestdatum auf heute setzen
@@ -273,9 +279,161 @@ function clearAllBox() {
     selectedOption.dataset.value = "0"; // Wert auf "0" setzen
     inputSub.value = "";
     removeFocus();
+
+    subTaskIcon.classList.remove("input-Button-Dou");
+    subTaskIcon.classList.add("input-Button");
+
+    inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
+    subTaskIcon.innerHTML = "<img src=\"icons/add.svg\" alt=\"Add\" class=\"add-subtask-button filter-gray\">";
 }
 
 function subtaskCross() {
-    console.log("subtaskCross");
-    subTaskIcon.innerHTML = "<img src=\"icons/close.svg\" alt=\"Close\" class=\"add-subtask-button filter-gray\">|<img src=\"icons/check.svg\" alt=\"Check\" class=\"add-subtask-button filter-gray\">";
+    subTaskIcon.innerHTML = `
+       <img onclick="chanceSub();" src="icons/close.svg" alt="Close" class="add-subtask-button filter-gray"> |
+       <img onclick="checkSub();" src="icons/check.svg" alt="Check" class="add-subtask-button filter-gray">
+    `;
+
+    subTaskIcon.className = "input-Button-Dou"; // Direkte Zuweisung statt remove/add
+
+
+    inputSub.style.border = "solid 1px var(--border-input-focus)";
+    inputSub.focus();
+}
+
+function chanceSub() {
+    console.log("chanceSub() wurde aufgerufen");
+
+
+
+    setTimeout(() => {
+        subTaskIcon.classList.remove("input-Button-Dou");
+        subTaskIcon.classList.add("input-Button");
+
+        subTaskIcon.innerHTML = `
+            <img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray">
+        `;
+    }, 0); // 0ms Delay, um das DOM zu aktualisieren
+
+
+    inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
+    inputSub.value = "";
+}
+
+function checkSub() {
+    const sub = inputSub.value.trim(); // Entferne Leerzeichen am Anfang/Ende
+
+    if (sub) { // Nur speichern, wenn das Feld nicht leer ist
+        subtaskArray.push(sub); // Subtask zum Array hinzufügen
+        updateSubtaskDisplay(); // Subtask-Liste aktualisieren
+        inputSub.value = ""; // Eingabefeld leeren
+        inputSub.style.border = "solid 1px var(--border-inputfeld-login)"; // Rahmen zurücksetzen
+    } else {
+        alert("Bitte geben Sie einen gültigen Subtask ein."); // Optional: Feedback für leere Eingabe
+    }
+}
+
+function updateSubtaskDisplay() {
+    const subtasksDiv = document.getElementById("subtasks");
+    subtasksDiv.innerHTML = ""; // Vorherige Inhalte löschen
+
+    subtaskArray.forEach((task, index) => {
+        // Subtask-Element erstellen
+        const taskDiv = document.createElement("div");
+        taskDiv.className = "subtask-item";
+
+        // Subtask-Text und Buttons hinzufügen
+        taskDiv.innerHTML = `
+            <span>${task}</span>
+            <div>
+              <!--  <button onclick="updateSubtask(${index})" class="edit-subtask-button">Edit</button>
+                <button onclick="removeSubtask(${index})" class="remove-subtask-button">X</button>-->
+                <img class="edit-subtask-icon filter-gray" onclick="updateSubtask(${index})"  src="icons/edit.svg" alt="Edit">
+                <img class="remove-subtask-icon filter-gray" onclick="removeSubtask(${index})" src="icons/delete.svg" alt="Delete">
+            </div>
+        `;
+
+        subtasksDiv.appendChild(taskDiv); // Zum Container hinzufügen
+    });
+}
+
+function removeSubtask(index) {
+    subtaskArray.splice(index, 1); // Subtask aus dem Array entfernen
+    updateSubtaskDisplay(); // Anzeige aktualisieren
+}
+
+function updateSubtask(index) {
+    // Lade den Subtask ins Eingabefeld
+    inputSub.value = subtaskArray[index];
+    inputSub.focus();
+
+    // Rahmen hervorheben, um den Bearbeitungsmodus zu kennzeichnen
+    inputSub.style.border = "solid 1px var(--border-input-focus)";
+
+    // Ändere die Check- und Close-Icons zu "Save" und "Cancel"
+    subTaskIcon.innerHTML = `
+        <img onclick="cancelEdit();" src="icons/close.svg" alt="Cancel" class="add-subtask-button filter-gray">
+        |
+        <img onclick="saveSubtask(${index});" src="icons/check.svg" alt="Check" class="add-subtask-button filter-gray">
+
+    `;
+}
+
+function saveSubtask(index) {
+    const updatedValue = inputSub.value.trim(); // Hole den neuen Wert
+
+    if (updatedValue) {
+        subtaskArray[index] = updatedValue; // Aktualisiere den Subtask im Array
+        updateSubtaskDisplay(); // Aktualisiere die Anzeige
+        resetSubtaskInput(); // Eingabefeld zurücksetzen
+    } else {
+        alert("Bitte geben Sie einen gültigen Subtask ein."); // Optional: Feedback
+    }
+}
+
+function cancelEdit() {
+    resetSubtaskInput(); // Eingabefeld zurücksetzen
+}
+
+function resetSubtaskInput() {
+    inputSub.value = ""; // Eingabefeld leeren
+    inputSub.style.border = "solid 1px var(--border-inputfeld-login)"; // Rahmen zurücksetzen
+    subTaskIcon.innerHTML = `
+        <img onclick="subtaskCross();" src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray">
+    `;
+}
+
+function createTask() {
+    console.log("create task");
+
+    const title = document.getElementById("title").value.trim();
+    const date = document.getElementById("date").value.trim();
+    const category = document.getElementById("optionsList").value;
+
+    console.log(title);
+
+    // Validierung der Eingaben
+    if (!title) {
+        showToast("Sie müssen das Title Feld ausfüllen.");
+    }else if (!date) {
+        showToast("Sie müssen das Date Feld ausfüllen.");
+    }else if (!category) {
+        showToast("Sie müssen eine Title Feld ausfüllen.");
+    }
+    else if (!title || !date || !category) {
+        showToast("Sie müssen alle Felder mit * ausfüllen.");
+    }
+}
+
+
+/**
+ * Show Toast
+ * @param text
+ */
+function showToast(text){
+    const x=document.getElementById("toast");
+    x.classList.add("show");
+    x.innerHTML=text;
+    setTimeout(function(){
+        x.classList.remove("show");
+    },4000);
 }

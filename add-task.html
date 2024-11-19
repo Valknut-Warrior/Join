@@ -83,11 +83,14 @@
                         </ul>
                     </div>
 
+
+
                     <div class="dfg">
                         <label for="subtask">Subtask</label><br>
                         <input class="input-subtask" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
-                        <div class="input-Button" id="subtask-icon" onclick="subtaskCross();"><img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray"></div>
-
+                        <div class="input-Button" id="subtask-icon" onclick="subtaskCross();">
+                            <img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray">
+                        </div>
                         <div id="subtasks"></div>
                     </div>
 
@@ -99,14 +102,18 @@
 
             <div class="button-set task-buttons">
 
-                <div class="clear-task-button" id="clear-task" onclick="clearAllBox()">
+                <div class="clear-task-button" id="clear-task" onclick="clearAllBox();">
                     <button id="clear-task-button">Clear</button>
                 </div>
 
                 <div class="create-task-button" id="create-button">
-                   <button id="create-task-button">Create Task</button>
+                   <button id="create-task-button" onclick="createTask();">Create Task</button>
                </div>
 
+            </div>
+
+            <div class="required-task" id="required-task">
+                <span class="star">* </span>&nbsp; This field is required
             </div>
         </div>
 

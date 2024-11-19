@@ -1,6 +1,5 @@
 "use strict";
 
-//const loadingIndicator = document.getElementById("loading");
 const mailInput = document.getElementById("mailInput");
 const pwdInput = document.getElementById("pwdInput");
 const signUpButton = document.getElementById("sign-up");
@@ -12,9 +11,7 @@ const autoFill  = document.getElementById("auto-login");
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
-   // showLoading();
     themeToggle();
-    //hideLoading();
     w3.includeHTML();
     cleanFields();
 
@@ -44,8 +41,8 @@ async function loadData(path = "") {
 }
 
 function login(users) {
-    const mail = document.getElementById("mail").value;
-    const pwd = document.getElementById("pwd").value;
+    const mail = document.getElementById("mail").value.trim();
+    const pwd = document.getElementById("pwd").value.trim();
 
     // Validierung der Eingaben
     if (!mail || !pwd) {
@@ -188,29 +185,10 @@ window.addEventListener('load', () => {
 });
 
 
-
-
-
 /**
- * Show Spinner
+ * Show Toast
+ * @param text
  */
-/*
-function showLoading() {
-    loadingIndicator.classList.add("active");
-}
-
-*/
-
-/**
- * Hide Spinner
- */
-/*
-function hideLoading() {
-    loadingIndicator.classList.remove("active");
-}
-*/
-
-
 function showToast(text){
     const x=document.getElementById("toast");
     x.classList.add("show");
