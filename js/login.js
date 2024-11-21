@@ -186,16 +186,24 @@ window.addEventListener('load', () => {
 
 
 /**
- * Show Toast
- * @param text
+ * Zeigt eine Toast-Benachrichtigung an.
+ * @param {string} text - Nachricht für die Toast-Benachrichtigung.
+ * @param {string} color - Hintergrundfarbe des Toasts (optional, Standard: rot).
  */
-function showToast(text){
-    const x=document.getElementById("toast");
-    x.classList.add("show");
-    x.innerHTML=text;
-    setTimeout(function(){
-        x.classList.remove("show");
-    },4000);
+function showToast(text, color = "#950B02") {
+    const toast = document.getElementById("toast");
+
+    // Nachricht und Hintergrundfarbe setzen
+    toast.textContent = text;
+    toast.style.backgroundColor = color;
+
+    // Toast anzeigen
+    toast.classList.add("show");
+
+    // Toast nach 4 Sekunden ausblenden
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 4000); // 4 Sekunden
 }
 
 /**

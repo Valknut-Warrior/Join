@@ -1,5 +1,6 @@
 "use strict";
 
+const BASE_URL = "https://join-38273-default-rtdb.europe-west1.firebasedatabase.app/";
 const inputTitle = document.getElementById("title");
 const inputDescription = document.getElementById("description");
 const inputDate = document.getElementById("date");
@@ -21,15 +22,20 @@ const addTaskButton = document.getElementById("create-button");
 const clearTaskButton = document.getElementById("clear-task");
 
 const subTaskIcon = document.getElementById("subtask-icon");
-const subtasks = document.getElementById("subtasks");
 let subtaskArray = [];
+
+let selectedPrio = "medium"; // Variable für die ausgewählte Priorität
+
+// Buttons referenzieren
+const highButton = document.getElementById("prioritize-button-high");
+const mediumButton = document.getElementById("prioritize-button-medium");
+const lowButton = document.getElementById("prioritize-button-low");
 
 
 document.addEventListener("DOMContentLoaded", (event) => {
 
     setStartColorSVGButton();
     setMinDate();
-
 });
 
 
@@ -161,7 +167,7 @@ buttonHigh.addEventListener("click", () => {
 });
 
 /**
- * Enferne alle Focus Rahmen
+ * Entferne alle Focus Rahmen
  */
 function removeFocus() {
     inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
@@ -319,19 +325,27 @@ function chanceSub() {
     inputSub.value = "";
 }
 
-function checkSub() {
-    const sub = inputSub.value.trim(); // Entferne Leerzeichen am Anfang/Ende
 
-    if (sub) { // Nur speichern, wenn das Feld nicht leer ist
-        subtaskArray.push(sub); // Subtask zum Array hinzufügen
-        updateSubtaskDisplay(); // Subtask-Liste aktualisieren
+/**
+ * Subtask validieren und hinzufügen
+ */
+function checkSub() {
+    const sub = inputSub.value.trim(); // Leerzeichen entfernen
+
+    if (sub) {
+        // Subtask als Objekt hinzufügen
+        subtaskArray.push({ done: false, title: sub });
+        updateSubtaskDisplay(); // Anzeige aktualisieren
         inputSub.value = ""; // Eingabefeld leeren
         inputSub.style.border = "solid 1px var(--border-inputfeld-login)"; // Rahmen zurücksetzen
     } else {
-        alert("Bitte geben Sie einen gültigen Subtask ein."); // Optional: Feedback für leere Eingabe
+        alert("Bitte geben Sie einen gültigen Subtask ein."); // Optionales Feedback
     }
 }
 
+/**
+ * Subtask-Liste anzeigen
+ */
 function updateSubtaskDisplay() {
     const subtasksDiv = document.getElementById("subtasks");
     subtasksDiv.innerHTML = ""; // Vorherige Inhalte löschen
@@ -341,13 +355,11 @@ function updateSubtaskDisplay() {
         const taskDiv = document.createElement("div");
         taskDiv.className = "subtask-item";
 
-        // Subtask-Text und Buttons hinzufügen
+        // Subtask-Checkbox, Titel und Buttons hinzufügen
         taskDiv.innerHTML = `
-            <span>${task}</span>
+            <span>${task.title}</span>
             <div>
-              <!--  <button onclick="updateSubtask(${index})" class="edit-subtask-button">Edit</button>
-                <button onclick="removeSubtask(${index})" class="remove-subtask-button">X</button>-->
-                <img class="edit-subtask-icon filter-gray" onclick="updateSubtask(${index})"  src="icons/edit.svg" alt="Edit">
+                <img class="edit-subtask-icon filter-gray" onclick="updateSubtask(${index})" src="icons/edit.svg" alt="Edit">
                 <img class="remove-subtask-icon filter-gray" onclick="removeSubtask(${index})" src="icons/delete.svg" alt="Delete">
             </div>
         `;
@@ -355,6 +367,7 @@ function updateSubtaskDisplay() {
         subtasksDiv.appendChild(taskDiv); // Zum Container hinzufügen
     });
 }
+
 
 function removeSubtask(index) {
     subtaskArray.splice(index, 1); // Subtask aus dem Array entfernen
@@ -403,37 +416,107 @@ function resetSubtaskInput() {
 }
 
 function createTask() {
-    console.log("create task");
-
     const title = document.getElementById("title").value.trim();
     const date = document.getElementById("date").value.trim();
-    const category = document.getElementById("optionsList").value;
-
-    console.log(title);
+    const category = document.querySelector(".selected-option").textContent.trim();
+    const desc = document.getElementById("description").value.trim();
 
     // Validierung der Eingaben
     if (!title) {
-        showToast("Sie müssen das Title Feld ausfüllen.");
-    }else if (!date) {
-        showToast("Sie müssen das Date Feld ausfüllen.");
-    }else if (!category) {
-        showToast("Sie müssen eine Title Feld ausfüllen.");
-    }
-    else if (!title || !date || !category) {
-        showToast("Sie müssen alle Felder mit * ausfüllen.");
+        showToast("Sie müssen das Titel-Feld ausfüllen.");
+    } else if (!date) {
+        showToast("Sie müssen das Datum-Feld ausfüllen.");
+    } else if (category === "Select task category") {
+        showToast("Sie müssen eine Kategorie auswählen.");
+    }else if (!selectedPrio) {
+        showToast("Sie müssen eine Priorität auswählen.");
+    } else {
+        // Alle Felder sind ausgefüllt
+        //console.log("Task erstellen mit:", {    subtaskArray });
+
+        postData("/tasks", {
+       "category": category,
+       "databaseKey": "-O8loADmcZ2h2D9qHeg3",
+       "date": date,
+       "description": desc,
+       "prio": selectedPrio,
+       "progress": "to-do",
+       "subtask": subtaskArray,
+       "title": title
+   });
+
+
+
+        // Erfolgsnachricht mit grünem Toast
+        showToast("Task wurde erfolgreich erstellt!", "#4CAF50");
+
+        // Nach 3 Sekunden weiterleiten
+        setTimeout(() => {
+            window.location.href = "board.html";
+        }, 3000);
     }
 }
 
 
 /**
- * Show Toast
- * @param text
+ * Zeigt eine Toast-Benachrichtigung an.
+ * @param {string} text - Nachricht für die Toast-Benachrichtigung.
+ * @param {string} color - Hintergrundfarbe des Toasts (optional, Standard: rot).
  */
-function showToast(text){
-    const x=document.getElementById("toast");
-    x.classList.add("show");
-    x.innerHTML=text;
-    setTimeout(function(){
-        x.classList.remove("show");
-    },4000);
+function showToast(text, color = "#950B02") {
+    const toast = document.getElementById("toast");
+
+    // Nachricht und Hintergrundfarbe setzen
+    toast.textContent = text;
+    toast.style.backgroundColor = color;
+
+    // Toast anzeigen
+    toast.classList.add("show");
+
+    // Toast nach 4 Sekunden ausblenden
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 4000); // 4 Sekunden
 }
+
+
+/**
+ *
+ * @param path
+ * @param data
+ * @returns {Promise<void>}
+ */
+async function postData(path = "", data = {}) {
+    let response = await fetch(BASE_URL + path + ".json", {
+        method: "POST",
+        header: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    });
+}
+
+
+// Event-Listener hinzufügen
+highButton.addEventListener("click", () => setPriority("high", highButton));
+mediumButton.addEventListener("click", () => setPriority("medium", mediumButton));
+lowButton.addEventListener("click", () => setPriority("low", lowButton));
+
+/**
+ * Setzt die Priorität und hebt den Button hervor
+ * @param {string} prio - Die Priorität (z. B. "high", "medium", "low")
+ * @param {HTMLElement} button - Der Button, der geklickt wurde
+ */
+function setPriority(prio, button) {
+    selectedPrio = prio; // Speichere die ausgewählte Priorität
+
+    // Visuelles Feedback: Entferne aktive Klasse von allen Buttons
+    highButton.classList.remove("active");
+    mediumButton.classList.remove("active");
+    lowButton.classList.remove("active");
+
+    // Füge aktive Klasse zum aktuellen Button hinzu
+    button.classList.add("active");
+    console.log("Ausgewählte Priorität:", selectedPrio); // Debugging
+}
+

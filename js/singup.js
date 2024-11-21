@@ -177,11 +177,7 @@ document.getElementById("submit-singup").addEventListener("click", async (event)
     const pwdConfirmCheck = document.getElementById("pwdConfirm").value;
 
 
-    console.log("klick button:", isPoliceChecked);
-
     if (isPoliceChecked && nameCheck.trim() !== "" && mailCheck.trim() !== "" && pwdCheck.trim() !== "" && pwdConfirmCheck.trim() !== "") {
-        //Hier kommt die logik rein was soll passieren, wenn der haken gesetzt wurde und alle Felder ausgefüllt wurde.
-
         // Überprüfen, ob das Passwort und das Bestätigungsfeld übereinstimmen
         if (pwdCheck !== pwdConfirmCheck) {
             showToast("Die Passwörter stimmen nicht überein.");
@@ -220,16 +216,26 @@ document.getElementById("submit-singup").addEventListener("click", async (event)
 });
 
 
+
 /**
- * Toast Benachrichtigung
+ * Zeigt eine Toast-Benachrichtigung an.
+ * @param {string} text - Nachricht für die Toast-Benachrichtigung.
+ * @param {string} color - Hintergrundfarbe des Toasts (optional, Standard: rot).
  */
-function showToast(text) {
-    const x = document.getElementById("toast");
-    x.classList.add("show");
-    x.innerHTML = text;
-    setTimeout(function () {
-        x.classList.remove("show");
-    }, 4000);
+function showToast(text, color = "#950B02") {
+    const toast = document.getElementById("toast");
+
+    // Nachricht und Hintergrundfarbe setzen
+    toast.textContent = text;
+    toast.style.backgroundColor = color;
+
+    // Toast anzeigen
+    toast.classList.add("show");
+
+    // Toast nach 4 Sekunden ausblenden
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 4000); // 4 Sekunden
 }
 
 
