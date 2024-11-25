@@ -29,7 +29,7 @@
 
         <div class="main">
             <!-- Hier wird die Sidebar inkludiert -->
-            <div w3-include-html="sidebar.html"></div>
+            <div class="sidebar-inc" w3-include-html="sidebar.html"></div>
 
             <div class="content">
                 <div class="board-mainContainer">
@@ -51,6 +51,7 @@
                         </div>
                     </div>
 
+
                     <div class="board-bottom">
                         <div class="overDiv-bottom">
                             <div class="toAdd-bottom"><span class="board-centerTitel">To do</span> <img
@@ -59,8 +60,8 @@
                             <div class="scroll-div" id="scroll-div-1">
                                 <div id="left">
                                     <!-- <span class="noTaskSpan">No tasks in to do</span> -->
-                                    <div class="drag-area" id="toDo" ondrop="moveTo('to-do')" ondragleave="removeHighlight('toDo')" ondragover="allowDrop(event); highlight('toDo')"></div>
-                                </div>
+                                    <div class="drag-area" id="toDo" ondrop="moveTo('to-do')" ondragleave="removeHighlight('toDo')" ondragend="clearAllHighlights()" ondragover="allowDrop(event); highlight('toDo')"></div>
+                        </div>
                             </div>
                         </div>
 
@@ -72,7 +73,7 @@
                             <div class="scroll-div" id="scroll-div-2">
                                 <div id="leftNum2">
                                     <!-- <span class="noTaskSpan">No tasks in progress</span> -->
-                                    <div class="drag-area" id="inProgress" ondrop="moveTo('in-progress')" ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"></div>
+                                    <div class="drag-area" id="inProgress" ondrop="moveTo('in-progress')" ondragleave="removeHighlight('inProgress')" ondragend="clearAllHighlights()"  ondragover="allowDrop(event); highlight('inProgress')"></div>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +85,7 @@
                             <div class="scroll-div" id="scroll-div-3">
                                 <div id="right">
                                     <!-- <span class="noTaskSpan">No tasks in await feedback</span> -->
-                                    <div class="drag-area" id="awaitFeedback" ondrop="moveTo('await-feedback')" ondragleave="removeHighlight('awaitFeedback')" ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
+                                    <div class="drag-area" id="awaitFeedback" ondrop="moveTo('await-feedback')" ondragleave="removeHighlight('awaitFeedback')" ondragend="clearAllHighlights()"  ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
                                 </div>
                             </div>
                         </div>
@@ -95,10 +96,13 @@
                                 <div id="rightNum2">
                                     <!-- <span class="noTaskSpan">No tasks in done</span> -->
                                     <!-- <div class="list" draggable="true" onclick="openList()"></div> -->
-                                    <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>
+                                    <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragend="clearAllHighlights()"  ondragover="allowDrop(event); highlight('done')"></div>
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>

@@ -1,61 +1,49 @@
-const tasks = [{
-  "category": "User Story",
-  "contacts": [
-    "Max Mustermann"
-  ],
-  "databaseKey": "-O8loADmcZ2h2D9qHeg3",
-  "date": "2024-10-12",
-  "description": "Dieser Task wird benötigt um das editieren auf der Board Seite zu simulieren.",
-  "prio": "medium",
-  "progress": "to-do",
-  "subtask": [
-    {
-      "done": false,
-      "title": "Subtask 1"
-    },
-    {
-      "done": false,
-      "title": "Add new Subtask"
-    },
-    {
-      "done": true,
-      "title": "Editieren funktioniert"
-    }
-  ],
-  "title": "Test Task für das Editieren."
-}, {
-  "category": "Technical Task",
-  "contacts": [
-    "Max Mustermann"
-  ],
-  "databaseKey": "-O9-9mjJbFH1o3WGp8NR",
-  "date": "2024-10-14",
-  "description": "controll every point of the list",
-  "prio": "high",
-  "progress": "in-progress",
-  "title": "join "
-}, {
-  "category": "User Story",
-  "contacts": [
-    "Max Mustermann"
-  ],
-  "databaseKey": "-O9-9mjJbFH1o3WGp8NR",
-  "date": "2024-10-14",
-  "description": "controll Array",
-  "prio": "high",
-  "progress": "to-do",
-  "title": "dritter task "
-}];
+"use strict";
 
+const BASE_URL = "https://join-38273-default-rtdb.europe-west1.firebasedatabase.app/";
+let tasks = []; // Tasks werden hier dynamisch geladen
 let currentDraggedElement;
-let currentTask;
 
-window.onload = () => {
+window.onload = async () => {
   includeHTML();
+  await fetchTasks(); // Tasks von Firebase laden
   setID();
   updateHTML();
+};
+
+/**
+ * Ruft die Aufgaben aus der Firebase-Datenbank ab und speichert sie in der `tasks`-Variable.
+ */
+async function fetchTasks() {
+  try {
+    const response = await fetch(`${BASE_URL}tasks.json`); // Aufgaben abrufen
+    const data = await response.json(); // Daten im JSON-Format umwandeln
+
+    if (data) {
+      tasks = Object.values(data); // Konvertiert das Objekt in ein Array
+      console.log("Tasks erfolgreich geladen:", tasks);
+    } else {
+      console.warn("Keine Tasks in der Datenbank gefunden.");
+    }
+  } catch (error) {
+    console.error("Fehler beim Laden der Tasks:", error);
+  }
 }
 
+/**
+ * Weist jedem Task in der `tasks`-Liste eine eindeutige ID zu.
+ */
+function setID() {
+  let currentID = 0;
+  tasks.forEach(task => {
+    task.id = currentID;
+    currentID++;
+  });
+}
+
+/**
+ * Aktualisiert das Task-Board, indem die Tasks in die entsprechenden Bereiche gerendert werden.
+ */
 function updateHTML() {
   renderTaskSection('toDo', 'to-do');
   renderTaskSection('inProgress', 'in-progress');
@@ -63,49 +51,104 @@ function updateHTML() {
   renderTaskSection('done', 'done');
 }
 
+/**
+ * Rendert die Tasks in einen bestimmten Bereich basierend auf ihrem Fortschritt.
+ *
+ * @param {string} section - Die ID des HTML-Elements, das den Aufgabenbereich repräsentiert.
+ * @param {string} keyword - Der Fortschrittsstatus, nach dem Tasks gefiltert werden (z. B. "to-do", "done").
+ */
 function renderTaskSection(section, keyword) {
-  const filteredTask = tasks.filter(t => t.progress == keyword);
-  document.getElementById(section).innerHTML = '';
+  const filteredTasks = tasks.filter(task => task.progress === keyword);
+  const container = document.getElementById(section);
+  container.innerHTML = '';
 
-  if (filteredTask.length > 0) {
-    filteredTask.forEach(task => {
-      currentTask = task;
-      document.getElementById(section).innerHTML += generateTodoHTML(task);
+  if (filteredTasks.length > 0) {
+    filteredTasks.forEach(task => {
+      container.innerHTML += generateTodoHTML(task);
     });
   } else {
-    document.getElementById(section).innerHTML = `<span class="noTaskSpan">No tasks in ${keyword}</span>`;
+    container.innerHTML = `<span class="noTaskSpan">Keine Aufgaben in ${keyword}</span>`;
   }
 }
 
-function setID() {
-  let currentID = 0;
-  tasks.forEach(t => {
-    t.id = currentID;
-    currentID++
-  })
+/**
+ * Generiert den HTML-Code für eine einzelne Aufgabe.
+ *
+ * @param {Object} task - Das Aufgabenobjekt, das gerendert werden soll.
+ * @returns {string} - Der HTML-String, der die Aufgabe darstellt.
+ */
+function generateTodoHTML(task) {
+  let categoryClass = '';
+  if (task.category === 'Technical Task') {
+    categoryClass = 'category-technical';
+  } else {
+    categoryClass = 'category-story';
+  }
+  return `
+        <div class="list" draggable="true" 
+             ondragstart="startDragging(${task.id})" 
+             ondragend="clearAllHighlights()" 
+             class="todo">
+             <div class="task-card-category">
+             <span class="${categoryClass}">${task.category}</span>
+             </div>
+             <h3 class="task-card-title">${task.title}</h3>
+            <p class="task-card-description">${task.description}</p>
+        </div>`;
 }
 
+/**
+ * Setzt die ID des aktuell gezogenen Tasks.
+ *
+ * @param {number} id - Die ID des gezogenen Tasks.
+ */
 function startDragging(id) {
   currentDraggedElement = id;
 }
 
-function generateTodoHTML(task) {
-  return `<div draggable="true" ondragstart="startDragging(${task.id})" class="todo">${task.title}</div>`;
+/**
+ * Erlaubt das Ziehen und Ablegen von Elementen, indem das Standardverhalten verhindert wird.
+ *
+ * @param {DragEvent} event - Das Drag-Event.
+ */
+function allowDrop(event) {
+  event.preventDefault();
 }
 
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
+/**
+ * Verschiebt den aktuell gezogenen Task in eine neue Fortschrittskategorie und aktualisiert das Board.
+ *
+ * @param {string} progress - Die neue Fortschrittskategorie für den Task (z. B. "to-do", "done").
+ */
 function moveTo(progress) {
   tasks[currentDraggedElement].progress = progress;
   updateHTML();
 }
 
+/**
+ * Hebt den Drop-Bereich hervor, wenn ein ziehbares Element darüber schwebt.
+ *
+ * @param {string} id - Die ID des Drop-Bereichs, der hervorgehoben werden soll.
+ */
 function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
+/**
+ * Entfernt die Hervorhebung von allen Drop-Bereichen.
+ */
+function clearAllHighlights() {
+  const dropZones = document.querySelectorAll('.drag-area');
+  dropZones.forEach(zone => {
+    zone.classList.remove('drag-area-highlight');
+  });
+}
+
+/**
+ * Entfernt die Hervorhebung von einem bestimmten Drop-Bereich.
+ *
+ * @param {string} id - Die ID des Drop-Bereichs, dessen Hervorhebung entfernt werden soll.
+ */
 function removeHighlight(id) {
   document.getElementById(id).classList.remove('drag-area-highlight');
 }

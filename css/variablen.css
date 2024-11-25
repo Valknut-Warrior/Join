@@ -1,0 +1,85 @@
+:root {
+  --background-color: #fff;
+  --text-color: #121416d8;
+  --link-color: #543fd7;
+  --font-face: "Lato", "Roboto", sans-serif;
+  --font-style-italic: "italic";
+  --font-style-normal: "normal";
+  --star-color: rgba(255, 41, 41, 0.7);
+  --sidebar-width: 232px;
+  --header-height: 96px;
+}
+
+html[data-theme=light] {
+  --background-color: #fff;
+  --text-color: rgba(18, 20, 22, 0.85);
+  --link-color: #543fd7;
+  --border-shadow: 0 1px 0 0 rgba(227, 228, 229, 0.7);
+  --background-header: rgba(255, 255, 255, 1);
+  --background-color-content: rgba(246, 247, 248, 1);
+  --background-color-sidebar: rgba(42, 54, 71, 1);
+  --background-color-sidebar-hover: rgba(98, 110, 149, 1);
+  --text-color-sidebar: rgba(200, 204, 209, 1);
+  --background-color-login: rgba(255, 255, 255, 1);
+  --background-color-login-content: rgba(246, 247, 248, 1);
+  --border-inputfeld-login: rgba(227, 228, 229, 0.7);
+  --border-input-focus: rgba(21, 29, 254, 1);
+  --submit-login-button: rgba(42, 54, 71, 1);
+  --submit-login-button-text: rgba(255, 255, 255, 1);
+  --submit-login-guest-button-text: rgba(18, 20, 22, 0.85);
+  --mouseover-button: rgba(0, 255, 255, 1);
+  --mouseover-button-text: rgba(18, 20, 22, 0.85);
+  --login-link-color: rgba(176, 178, 179, 1);
+  --border-left: 1px rgba(227, 228, 229, 0.7);
+  --background-conten-button: rgba(255, 255, 255, 1);
+  --add-task-green-icon: brightness(0) saturate(100%) invert(46%) sepia(74%) saturate(2660%) hue-rotate(92deg) brightness(94%) contrast(107%);
+  --add-task-red-icon: brightness(0) saturate(100%) invert(8%) sepia(100%) saturate(6833%) hue-rotate(355deg) brightness(122%) contrast(101%);
+  --add-task-orange-icon:brightness(0) saturate(100%) invert(68%) sepia(98%) saturate(3723%) hue-rotate(354deg) brightness(102%) contrast(101%);
+  --add-task-white-icon: brightness(0) saturate(100%) invert(100%) sepia(56%) saturate(378%) hue-rotate(293deg) brightness(101%) contrast(105%);
+  --add-task-black-icon: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(774%) hue-rotate(171deg) brightness(116%) contrast(100%);
+  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%);
+  --add-task-gray-icon: brightness(0) saturate(100%) invert(53%) sepia(25%) saturate(5%) hue-rotate(223deg) brightness(91%) contrast(95%);
+  --box-shadow-add-task: 1px 5px 4px -2px rgba(227, 228, 229, 0.7);
+  --background-color-orange: rgba(255, 168, 0, 1);
+  --background-color-green: rgba(123, 226, 42, 1);
+  --background-color-red: rgba(255, 61, 0, 1);
+  --text-color-reverse: rgba(247, 248, 248, 1);
+}
+
+html[data-theme=dark] {
+  --background-color: #212a2e;
+  --text-color: rgba(247, 248, 248, 1);
+  --link-color: #828fff;
+  --border-shadow: 0 1px 0 0 rgba(190, 190, 190, 0.7);
+  --background-header: rgba(63, 77, 84, 1);
+  --background-color-content: rgba(55, 68, 74, 1);
+  --background-color-sidebar: rgba(46, 56, 61, 1);
+  --background-color-sidebar-hover: rgba(59, 69, 74, 1);
+  --text-color-sidebar: rgba(200, 204, 209, 1);
+  --background-color-login: rgba(63, 77, 84, 1);
+  --background-color-login-content: rgba(55, 68, 74, 1);
+  --border-inputfeld-login: rgba(190, 190, 190, 0.7);
+  --border-input-focus: rgba(56, 62, 219, 1);
+  --submit-login-button: rgba(42, 54, 71, 1);
+  --submit-login-button-text: rgba(247, 248, 248, 1);
+  --submit-login-guest-button-text: rgba(247, 248, 248, 1);
+  --mouseover-button: rgba(0, 255, 255, 1);
+  --mouseover-button-text: rgba(18, 20, 22, 0.85);
+  --login-link-color: rgba(221, 222, 223, 1);
+  --border-left: 1px rgba(190, 190, 190, 0.7);
+  --background-conten-button: rgba(63, 77, 84, 1);
+  --add-task-green-icon: brightness(0) saturate(100%) invert(46%) sepia(74%) saturate(2660%) hue-rotate(92deg) brightness(94%) contrast(107%);
+  --add-task-red-icon: brightness(0) saturate(100%) invert(8%) sepia(100%) saturate(6833%) hue-rotate(355deg) brightness(122%) contrast(101%);
+  --add-task-orange-icon:brightness(0) saturate(100%) invert(68%) sepia(98%) saturate(3723%) hue-rotate(354deg) brightness(102%) contrast(101%);
+  --add-task-white-icon: brightness(0) saturate(100%) invert(100%) sepia(56%) saturate(378%) hue-rotate(293deg) brightness(101%) contrast(105%);
+  --add-task-black-icon: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%) hue-rotate(59deg) brightness(105%) contrast(111%);
+  --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%);
+  --add-task-gray-icon: brightness(0) saturate(100%) invert(53%) sepia(25%) saturate(5%) hue-rotate(223deg) brightness(91%) contrast(95%);
+  --box-shadow-add-task: 1px 5px 4px -2px rgba(190, 190, 190, 0.7);
+  --background-color-orange: rgba(255, 168, 0, 1);
+  --background-color-green: rgba(123, 226, 42, 1);
+  --background-color-red: rgba(255, 61, 0, 1);
+  --text-color-reverse: rgba(18, 20, 22, 0.85);
+}
+
+/*# sourceMappingURL=variablen.css.map */

@@ -1,5 +1,6 @@
-@charset "UTF-8";
-@import url("variablen.css");
+@import url('variablen.css');
+
+
 .drag-area {
   height: 200px;
   /*
@@ -28,6 +29,7 @@
   padding: 10px;
   margin: 10px;
 }
+
 
 .board-mainContainer {
   display: flex;
@@ -82,6 +84,7 @@
   transition: 0.1s ease;
   filter: brightness(0.9);
   background-color: #29ABE2;
+
 }
 
 .board-topAddtaskFont {
@@ -89,6 +92,7 @@
   margin-right: 10px;
   color: white;
   font-weight: 700;
+
 }
 
 .board-AddImage {
@@ -162,6 +166,8 @@
   /* overflow-y: scroll;*/
   /* Verhindert anfängliche Anzeige der Scrollleiste */
 }
+
+
 
 .scroll-div::-webkit-scrollbar {
   width: 4px;
@@ -245,6 +251,7 @@
 }
 
 /* Task Card Styling */
+
 .task-card-category,
 .task-card-title,
 .task-card-description,
@@ -341,6 +348,7 @@
 }
 
 /* Task Card Overlay Styling */
+
 .task-card-overlay-top {
   display: flex;
   justify-content: space-between;
@@ -406,26 +414,34 @@
   width: 25%;
 }
 
-@media (max-width: 1190px) {
+@media(max-width: 1190px) {
+
+
+
   .board-mainContainer {
     left: auto;
     width: auto;
+
   }
+
   .board-topAddtaskFont {
     display: none;
     height: 24px;
     width: 24px;
   }
+
   .board-AddImage {
     height: 24px;
     width: 24px;
   }
+
   .board-bottom {
     display: flex;
     flex-direction: column;
     align-items: initial;
     justify-content: space-around;
   }
+
   #left,
   #right,
   #leftNum2,
@@ -434,46 +450,59 @@
     width: 1000px;
     padding: 1px;
   }
+
   .toAdd-bottom {
     padding: 16px;
   }
+
   .scroll-div {
     height: 270px;
     justify-content: initial;
     /* damit wird es zurückgesetzt auf dem anfangs zustand */
     overflow-y: hidden;
   }
+
   .list {
     height: 224px;
     width: 224px;
     margin: 8px;
   }
+
+
   /* Stil für die horizontale Scrollleiste */
   .scroll-div::-webkit-scrollbar {
     height: 4px;
     /* Höhe der horizontalen Scrollleiste */
   }
+
   .scroll-div::-webkit-scrollbar-track {
     background: #e9ebeb;
     border-radius: 10px;
   }
+
   .scroll-div::-webkit-scrollbar-thumb {
     background-color: #dcdada;
     border-radius: 10px;
     border: 2px solid #aeabab;
   }
+
   .scroll-div::-webkit-scrollbar-thumb:hover {
     background-color: #c5c2c2;
     /* Farbe des Scrollbalkens beim Hover */
   }
+
   .board-bottom {
     margin-top: 64px;
   }
+
 }
-@media (max-width: 690px) {
+
+@media(max-width: 690px) {
+
   .board-InputFieldDiv {
     position: initial;
   }
+
   .board-InputField {
     position: absolute;
     top: 130px;
@@ -483,6 +512,7 @@
     width: 278px;
     height: 39px;
   }
+
   .board-searchImage {
     position: absolute;
     background-color: white;
@@ -491,16 +521,20 @@
     left: auto;
     cursor: pointer;
   }
+
   h1 {
     font-size: 47px;
   }
+
   .board-top {
     display: flex;
     margin: 48px 5px 48px 48px;
   }
+
+
   .overDiv-bottom-f {
     margin-bottom: 100px;
   }
-}
 
-/*# sourceMappingURL=board.css.map */
+
+}

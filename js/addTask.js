@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     setStartColorSVGButton();
     setMinDate();
+    clearAllBox();
 });
 
 
