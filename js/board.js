@@ -11,6 +11,7 @@ window.onload = async () => {
   updateHTML();
 };
 
+
 /**
  * Ruft die Aufgaben aus der Firebase-Datenbank ab und speichert sie in der `tasks`-Variable.
  */
@@ -20,7 +21,10 @@ async function fetchTasks() {
     const data = await response.json(); // Daten im JSON-Format umwandeln
 
     if (data) {
-      tasks = Object.values(data); // Konvertiert das Objekt in ein Array
+      tasks = Object.entries(data).map(([key, task]) => ({
+        ...task,
+        databaseKey: key, // Den eindeutigen Schlüssel speichern
+      }));
       console.log("Tasks erfolgreich geladen:", tasks);
     } else {
       console.warn("Keine Tasks in der Datenbank gefunden.");
@@ -29,7 +33,6 @@ async function fetchTasks() {
     console.error("Fehler beim Laden der Tasks:", error);
   }
 }
-
 /**
  * Weist jedem Task in der `tasks`-Liste eine eindeutige ID zu.
  */
@@ -77,25 +80,57 @@ function renderTaskSection(section, keyword) {
  * @param {Object} task - Das Aufgabenobjekt, das gerendert werden soll.
  * @returns {string} - Der HTML-String, der die Aufgabe darstellt.
  */
+
 function generateTodoHTML(task) {
+  let subTaskHTML = '';
   let categoryClass = '';
+
+  // Kategorie CSS-Klasse festlegen
   if (task.category === 'Technical Task') {
     categoryClass = 'category-technical';
   } else {
     categoryClass = 'category-story';
   }
+
+  // Priorität bestimmen
+  let priotask = '';
+  if (task.prio === 'low') {
+    priotask = '<img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="task-card-prio atb-sitz"/>';
+  } else if (task.prio === 'medium') {
+    priotask = '<img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="task-card-prio atb-sitz"/>';
+  } else if (task.prio === 'high') {
+    priotask = '<img id="svg-high" src="/icons/prio-high.svg" alt="High" class="task-card-prio atb-sitz"/>';
+  }
+
+  // Subtasks zählen und HTML erstellen, wenn vorhanden
+  if (Array.isArray(task.subtask) && task.subtask.length > 0) {
+    const completedSubtasks = task.subtask.filter(subtask => subtask.done).length; // Anzahl abgeschlossener Subtasks
+    const totalSubtasks = task.subtask.length; // Gesamtanzahl der Subtasks
+
+    subTaskHTML = `
+            <div class="task-card-subtask" id="boardSubtask-to-do-0">
+                <div class="subtask-container">
+                    <div class="subtask-value" style="width: ${Math.round((completedSubtasks / totalSubtasks) * 100)}%"></div>
+                </div>
+                <div class="subtask-info">${completedSubtasks}/${totalSubtasks} Subtasks</div>
+            </div>`;
+  }
+
   return `
         <div class="list" draggable="true" 
              ondragstart="startDragging(${task.id})" 
              ondragend="clearAllHighlights()" 
              class="todo">
              <div class="task-card-category">
-             <span class="${categoryClass}">${task.category}</span>
+                <span class="${categoryClass}">${task.category}</span> <span>${priotask}</span>
              </div>
-             <h3 class="task-card-title">${task.title}</h3>
-            <p class="task-card-description">${task.description}</p>
+                <h3 class="task-card-title">${task.title}</h3>
+                <p class="task-card-description">${task.description}</p>
+            ${subTaskHTML}
         </div>`;
 }
+
+
 
 /**
  * Setzt die ID des aktuell gezogenen Tasks.
@@ -115,14 +150,16 @@ function allowDrop(event) {
   event.preventDefault();
 }
 
+
 /**
  * Verschiebt den aktuell gezogenen Task in eine neue Fortschrittskategorie und aktualisiert das Board.
  *
  * @param {string} progress - Die neue Fortschrittskategorie für den Task (z. B. "to-do", "done").
  */
 function moveTo(progress) {
-  tasks[currentDraggedElement].progress = progress;
-  updateHTML();
+  tasks[currentDraggedElement].progress = progress; // Fortschritt lokal aktualisieren
+  updateTaskProgressInDatabase(currentDraggedElement); // Fortschritt in Firebase speichern
+  updateHTML(); // HTML aktualisieren
 }
 
 /**
@@ -151,4 +188,51 @@ function clearAllHighlights() {
  */
 function removeHighlight(id) {
   document.getElementById(id).classList.remove('drag-area-highlight');
+}
+
+/**
+ * Shows or hides the task overlay based on task section.
+ * @param {string} taskSection - The section of the task to show.
+ */
+function showOrHideOverlay(taskSection) {
+  if (document.body.getAttribute('style') === 'visibility: visible; overflow: hidden;') {
+    allowScrolling()
+  } else {
+    preventScrolling();
+  }
+  const atOverlay = document.getElementById('atOverlay');
+  const script = document.scripts.namedItem('taskOnBoard');
+  if (atOverlay.classList.contains('at-overlay-hidden')) {
+    atOverlay.classList.toggle('at-overlay-hidden');
+    if (!script || script.getAttribute('src') !== './js/add-task.js') {
+      if (script) script.remove();
+      loadExternalScript('./js/add-task.js', loadInitAddTask);
+    }
+  } else {
+    atOverlay.classList.toggle('at-overlay-hidden');
+  }
+  progressStatus = taskSection;
+}
+
+/**
+ * Aktualisiert den Fortschrittsstatus eines Tasks in der Firebase-Datenbank.
+ *
+ * @param {number} taskIndex - Der Index des Tasks im `tasks`-Array.
+ */
+async function updateTaskProgressInDatabase(taskIndex) {
+  try {
+    const task = tasks[taskIndex];
+    const databaseKey = task.databaseKey; // Der eindeutige Schlüssel des Tasks in Firebase
+    if (!databaseKey) return; // Verhindere Updates, wenn kein Schlüssel existiert
+
+    await fetch(`${BASE_URL}tasks/${databaseKey}.json`, {
+      method: 'PATCH', // Aktualisierung (kein vollständiges Überschreiben)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ progress: task.progress }), // Nur das `progress`-Feld aktualisieren
+    });
+
+    console.log(`Task "${task.title}" erfolgreich aktualisiert.`);
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren des Tasks in Firebase:", error);
+  }
 }

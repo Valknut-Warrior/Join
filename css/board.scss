@@ -16,7 +16,8 @@
 
 .drag-area-highlight {
   background-color: var(--background-color-login);
-  min-height: 302px;
+  min-height: 60vh;
+  max-height: max-content;
   min-width: 21vw;
   width: 99%;
   border-radius: 16px;
@@ -34,11 +35,12 @@
 .board-mainContainer {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--header-height));
-  width: calc(100vw - var(--sidebar-width));
+  width: 107em;
   position: relative;
-  top: var(--header-height);
+  top: 35px;
   right: 65px;
+  min-height: 50em;
+  max-height: 100em;
 }
 
 .board-top {
@@ -140,6 +142,9 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-right: 90px;
+  margin-left: 48px;
+  gap: 20px;
 }
 
 .noTaskSpan {
@@ -150,6 +155,7 @@
   border-radius: 10px;
   color: #a9a9a9;
   width: 217px;
+  height: 73px;
   display: flex;
   justify-content: center;
   align-self: flex-start;
@@ -264,6 +270,8 @@
 .task-card-category {
   display: flex;
   align-items: center;
+  flex: 1;
+  justify-content: space-between;
 }
 
 .category-story,
@@ -413,6 +421,7 @@
   min-width: 25%;
   width: 25%;
 }
+
 
 @media(max-width: 1190px) {
 

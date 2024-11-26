@@ -429,32 +429,48 @@ function createTask() {
         showToast("Sie müssen das Datum-Feld ausfüllen.");
     } else if (category === "Select task category") {
         showToast("Sie müssen eine Kategorie auswählen.");
-    }else if (!selectedPrio) {
+    } else if (!selectedPrio) {
         showToast("Sie müssen eine Priorität auswählen.");
     } else {
         // Alle Felder sind ausgefüllt
-        //console.log("Task erstellen mit:", {    subtaskArray });
+        const taskData = {
+            "category": category,
+            "date": date,
+            "description": desc,
+            "prio": selectedPrio,
+            "progress": "to-do",
+            "subtask": subtaskArray,
+            "title": title
+        };
 
-        postData("/tasks", {
-       "category": category,
-       "databaseKey": "-O8loADmcZ2h2D9qHeg3",
-       "date": date,
-       "description": desc,
-       "prio": selectedPrio,
-       "progress": "to-do",
-       "subtask": subtaskArray,
-       "title": title
-   });
+        // Sende die Daten an Firebase
+        postData("/tasks", taskData)
+            .then(responseData => {
+                const databaseKey = responseData.name; // Firebase generierter Key
+                console.log("Task erfolgreich erstellt mit Key:", databaseKey);
 
+                // Aktualisiere den Task mit dem databaseKey
+                return fetch(`${BASE_URL}/tasks/${databaseKey}.json`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ databaseKey }),
+                });
+            })
+            .then(() => {
+                // Erfolgsnachricht mit grünem Toast
+                showToast("Task wurde erfolgreich erstellt!", "#4CAF50");
 
-
-        // Erfolgsnachricht mit grünem Toast
-        showToast("Task wurde erfolgreich erstellt!", "#4CAF50");
-
-        // Nach 3 Sekunden weiterleiten
-        setTimeout(() => {
-            window.location.href = "board.html";
-        }, 3000);
+                // Nach 3 Sekunden weiterleiten
+                setTimeout(() => {
+                    window.location.href = "board.html";
+                }, 3000);
+            })
+            .catch(error => {
+                console.error("Fehler beim Erstellen des Tasks:", error);
+                showToast("Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.", "#F44336");
+            });
     }
 }
 
@@ -482,20 +498,28 @@ function showToast(text, color = "#950B02") {
 
 
 /**
- *
- * @param path
- * @param data
- * @returns {Promise<void>}
+ * Führt eine POST-Anfrage an Firebase aus und gibt die Antwort zurück.
+ * @param {string} endpoint - Der Firebase-Endpunkt (z. B. "/tasks").
+ * @param {Object} data - Die zu speichernden Daten.
+ * @returns {Promise<Object>} Die Antwort von Firebase.
  */
-async function postData(path = "", data = {}) {
-    let response = await fetch(BASE_URL + path + ".json", {
+async function postData(endpoint = '', data = {}) {
+    const response = await fetch(`${BASE_URL}${endpoint}.json`, {
         method: "POST",
-        header: {
+        headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     });
+
+    if (!response.ok) {
+        throw new Error("Fehler beim Hinzufügen der Daten.");
+    }
+
+    return response.json(); // Gibt die Firebase-Antwort (inkl. generiertem Key) zurück
 }
+
+
 
 
 // Event-Listener hinzufügen
