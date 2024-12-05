@@ -589,6 +589,19 @@ textarea::placeholder {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s ease, visibility 0.5s ease;
+  animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 #toast.show {
@@ -776,7 +789,7 @@ textarea::placeholder {
   filter: var(--add-task-black-icon);
 }
 
-.filter-standart {
+.filter-standard  {
   filter: var(--add-task-standart-icon);
 }
 
@@ -940,6 +953,7 @@ textarea::placeholder {
   height: 11px;
   line-height: 7px;
   color: gray;
+  align-items: center;
 }
 
 .add-subtask-button {

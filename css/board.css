@@ -15,7 +15,7 @@
 
 .drag-area-highlight {
   background-color: var(--background-color-login);
-  min-height: 60vh;
+  min-height: 60em;
   max-height: max-content;
   min-width: 21vw;
   width: 99%;
@@ -37,8 +37,9 @@
   position: relative;
   top: 35px;
   right: 65px;
-  min-height: 50em;
+  min-height: 60em;
   max-height: 100em;
+  padding-bottom: 10px;
 }
 
 .board-top {
@@ -201,7 +202,7 @@
   min-height: 300px;
   min-width: 20vw;
   width: 99%;
-  margin-bottom: 8px;
+  margin-bottom: 25px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -414,68 +415,130 @@
   width: 25%;
 }
 
-@media (max-width: 1190px) {
-  .board-mainContainer {
-    left: auto;
-    width: auto;
+#overlayContainer {
+  display: none; /* Standard: unsichtbar */
+}
+
+#overlayContainer.show {
+  display: block !important; /* Sichtbar machen */
+}
+
+.at-overlay, .et-overlay {
+  background-color: var(--background-color-content);
+  position: absolute;
+  top: 52%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  min-height: 90%;
+  max-height: 95%;
+  border-radius: 25px;
+  padding: 50px;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  border: 1px solid var(--border-inputfeld-login);
+}
+
+.overlay-add-task {
+  display: flex;
+  flex-direction: row;
+  gap: 10px 0;
+}
+
+.content-overlay-left {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px;
+  row-gap: 15px;
+  align-items: center;
+  width: 50%;
+}
+
+.content-overlay-right {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px;
+  row-gap: 15px;
+  border-left: solid var(--border-left);
+  align-items: center;
+  width: 50%;
+}
+
+.headlineAndClosed {
+  display: flex;
+  flex-direction: row;
+  width: 98.2%;
+  height: 30px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-left: 25px;
+}
+
+.headline {
+  width: 100%;
+  font-size: x-large;
+}
+
+#closedSVG {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.input-title, .textarea-description, .input-date, .select-category, .input-subtask, .custom-select-container {
+  background: var(--background-color-login);
+  border: solid 1px var(--border-inputfeld-login);
+  border-radius: 10px;
+  height: 48px;
+  padding: 8px;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.input-Button {
+  position: relative;
+  top: -34px;
+  left: 631px;
+  cursor: pointer;
+}
+
+.input-Button-Dou {
+  position: relative;
+  top: -34px;
+  left: 609px;
+  cursor: pointer;
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2px;
+  height: 11px;
+  line-height: 7px;
+  color: gray;
+  align-items: center;
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .content-overlay-left input, textarea, select {
+    width: 660px;
+    max-width: 660px;
+    min-width: 660px;
   }
-  .board-topAddtaskFont {
-    display: none;
-    height: 24px;
-    width: 24px;
+  .content-overlay-left textarea {
+    min-height: 220px;
   }
-  .board-AddImage {
-    height: 24px;
-    width: 24px;
+  .content-overlay-right input, textarea, select, .custom-select-container {
+    width: 660px;
+    max-width: 660px;
+    min-width: 660px;
   }
-  .board-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: initial;
-    justify-content: space-around;
-  }
-  #left,
-  #right,
-  #leftNum2,
-  #rightNum2 {
-    display: flex;
-    width: 1000px;
-    padding: 1px;
-  }
-  .toAdd-bottom {
-    padding: 16px;
-  }
-  .scroll-div {
-    height: 270px;
-    justify-content: initial;
-    /* damit wird es zurückgesetzt auf dem anfangs zustand */
-    overflow-y: hidden;
-  }
-  .list {
-    height: 224px;
-    width: 224px;
-    margin: 8px;
-  }
-  /* Stil für die horizontale Scrollleiste */
-  .scroll-div::-webkit-scrollbar {
-    height: 4px;
-    /* Höhe der horizontalen Scrollleiste */
-  }
-  .scroll-div::-webkit-scrollbar-track {
-    background: #e9ebeb;
-    border-radius: 10px;
-  }
-  .scroll-div::-webkit-scrollbar-thumb {
-    background-color: #dcdada;
-    border-radius: 10px;
-    border: 2px solid #aeabab;
-  }
-  .scroll-div::-webkit-scrollbar-thumb:hover {
-    background-color: #c5c2c2;
-    /* Farbe des Scrollbalkens beim Hover */
-  }
-  .board-bottom {
-    margin-top: 64px;
+  .content-add-task-button {
+    width: 660px;
+    max-width: 660px;
+    min-width: 660px;
   }
 }
 @media (max-width: 690px) {
