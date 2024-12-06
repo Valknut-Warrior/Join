@@ -589,20 +589,9 @@ textarea::placeholder {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s ease, visibility 0.5s ease;
-  animation: fadeOut 4s forwards;
 }
 
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
+
 
 #toast.show {
   visibility: visible;

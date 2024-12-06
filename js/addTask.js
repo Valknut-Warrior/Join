@@ -232,10 +232,12 @@
   function setMinDate() {
     const dateInput = document.getElementById("date");
 
-    // Das heutige Datum erhalten
-    const today = new Date().toISOString().split("T")[0];
+    if (!dateInput) {
+      console.error("Das Date-Eingabefeld konnte nicht gefunden werden.");
+      return;
+    }
 
-    // Mindestdatum auf heute setzen
+    const today = new Date().toISOString().split("T")[0];
     dateInput.min = today;
   }
 

@@ -125,7 +125,7 @@ function generateTodoHTML(task) {
   }
 
   return `
-        <div class="list" draggable="true" 
+        <div class="list" draggable="true" onclick="showOrHideOverlayTask(${JSON.stringify(task).replace(/"/g, "&quot;")})"
              ondragstart="startDragging(${task.id})" 
              ondragend="clearAllHighlights()" 
              class="todo">
@@ -135,7 +135,9 @@ function generateTodoHTML(task) {
                 <h3 class="task-card-title">${task.title}</h3>
                 <p class="task-card-description">${task.description}</p>
             ${subTaskHTML}
-        </div>`;
+        </div>
+
+`;
 }
 
 /**
@@ -295,8 +297,10 @@ function showOrHideOverlay() {
       overlayContainer.style.display = "block";
       document.body.style.overflowY = "hidden"; // Scrollen verhindern
       // Initialisiere notwendige Funktionen erneut
-      setMinDate();
-      setStartColorSVGButton();
+
+      //setMinDate();
+      //setStartColorSVGButton();
+
       return;
     }
 
@@ -455,22 +459,7 @@ function overlayClosed() {
   // Markiere Skript als nicht geladen
   window.addTaskLoaded = false;
 }
-/**
- * Schließt das Overlay
- */
-/*
-function overlayClosed() {
-  const overlayContainer = document.getElementById("overlayContainer");
 
-  overlayContainer.classList.remove("at-overlay");
-  overlayContainer.style.display = "none";
-  overlayContainer.innerHTML = "";
-
-  document.body.style.overflowY = "scroll";
-
-  //window.location.href = "board.html";
-}
-*/
 /**
  * Setze alles auf Standartwerte beim reload
  */
@@ -490,9 +479,215 @@ function setStartColorSVGButton() {
 function setMinDate() {
   const dateInput = document.getElementById("date");
 
-  // Das heutige Datum erhalten
-  const today = new Date().toISOString().split("T")[0];
+  if (!dateInput) {
+    console.error("Das Date-Eingabefeld konnte nicht gefunden werden.");
+    return;
+  }
 
-  // Mindestdatum auf heute setzen
+  const today = new Date().toISOString().split("T")[0];
   dateInput.min = today;
+}
+
+/*
+function showOrHideOverlayTask(task) {
+  const overlay = document.getElementById("overlayContainerTask");
+
+  if (overlay.style.display === "none" || overlay.innerHTML === "") {
+    // Sicherstellen, dass subtasks ein Array ist, um Fehler zu vermeiden
+    const subtasks = Array.isArray(task.subtask) ? task.subtask : [];
+
+    // Kategorie bestimmen
+    let categoryClass = "";
+
+    // Kategorie CSS-Klasse festlegen
+    if (task.category === "Technical Task") {
+      categoryClass = "category-technical";
+    } else {
+      categoryClass = "category-story";
+    }
+
+    // Priorität bestimmen
+    let priotask = "";
+    if (task.prio === "low") {
+      priotask =
+        '<img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="task-card-prio atb-sitz"/>';
+    } else if (task.prio === "medium") {
+      priotask =
+        '<img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="task-card-prio atb-sitz"/>';
+    } else if (task.prio === "high") {
+      priotask =
+        '<img id="svg-high" src="/icons/prio-high.svg" alt="High" class="task-card-prio atb-sitz"/>';
+    }
+
+    overlay.innerHTML = `
+      <div class="overlay-content">
+        <div class="task-card-overlay-top">
+              <div class="task-card-overlay-category"><span class="${categoryClass}">${task.category}</span></div>
+                  <div class="overlay-closed" id="overlay-closed" onclick="hideOverlayTask()">
+                            <img id="closedSVG" class="filter-gray " src="/icons/close.svg" alt="Close" /> 
+                  </div>                 
+        </div>
+        <h3 class="task-card-overlay-title">${task.title}</h3>
+        <p class="task-card-overlay-description">${task.description}</p>
+        <p class="task-card-overlay-date">Due date: ${task.date}</p>
+        <p class="task-card-overlay-prio">Priority: ${capitalizeFirstLetter(task.prio)} ${priotask}</p>
+        <div class="task-card-subtask-overlay" id="overlaySubtask"><p>Subtasks</p>
+        <div class="st-overlay">
+                <ul>
+          ${
+            subtasks.length > 0
+              ? subtasks.map((subtask) => `<li>${subtask.title}</li>`).join("")
+              : "<li>Keine Subtasks vorhanden.</li>"
+          }
+        </ul>
+</div>
+        </div>
+      </div>
+    `;
+    overlay.style.display = "block"; // Overlay anzeigen
+    overlay.classList.add("overlay");
+    // Verhindert das Scrollen
+    document.body.style.overflowY = "hidden";
+    window.scrollTo(0, 0);
+  } else {
+    overlay.style.display = "none"; // Overlay verstecken
+    overlay.classList.remove("overlay");
+  }
+}
+*/
+
+function showOrHideOverlayTask(task) {
+  const overlay = document.getElementById("overlayContainerTask");
+
+  if (overlay.style.display === "none" || overlay.innerHTML === "") {
+    // Sicherstellen, dass subtasks ein Array ist, um Fehler zu vermeiden
+    const subtasks = Array.isArray(task.subtask) ? task.subtask : [];
+
+    // Kategorie bestimmen
+    let categoryClass =
+      task.category === "Technical Task"
+        ? "category-technical"
+        : "category-story";
+
+    // Priorität bestimmen
+    let priotask = "";
+    if (task.prio === "low") {
+      priotask =
+        '<img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="task-card-prio atb-sitz"/>';
+    } else if (task.prio === "medium") {
+      priotask =
+        '<img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="task-card-prio atb-sitz"/>';
+    } else if (task.prio === "high") {
+      priotask =
+        '<img id="svg-high" src="/icons/prio-high.svg" alt="High" class="task-card-prio atb-sitz"/>';
+    }
+
+    // Subtasks rendern
+    const subtaskList =
+      subtasks.length > 0
+        ? subtasks
+            .map(
+              (subtask, index) => `
+        <li>
+          <input type="checkbox" id="subtask-${index}" ${subtask.done ? "checked" : ""} />
+          <label for="subtask-${index}">${subtask.title}</label>
+        </li>
+      `,
+            )
+            .join("")
+        : "<li>Keine Subtasks vorhanden.</li>";
+
+    overlay.innerHTML = `
+      <div class="overlay-content">
+        <div class="task-card-overlay-top">
+          <div class="task-card-overlay-category">
+            <span class="${categoryClass}">${task.category}</span>
+          </div>
+          <div class="overlay-closed" id="overlay-closed" onclick="hideOverlayTask()">
+            <img id="closedSVG" class="filter-gray" src="/icons/close.svg" alt="Close" /> 
+          </div>                 
+        </div>
+        <h3 class="task-card-overlay-title">${task.title}</h3>
+        <p class="task-card-overlay-description">${task.description}</p>
+        <p class="task-card-overlay-date">Due date: ${task.date}</p>
+        <p class="task-card-overlay-prio">Priority: ${capitalizeFirstLetter(task.prio)} ${priotask}</p>
+        <div class="task-card-subtask-overlay" id="overlaySubtask">
+          <p>Subtasks</p>
+          <div class="st-overlay">
+            <ul>${subtaskList}</ul>
+          </div>
+        </div>
+      </div>
+    `;
+
+    overlay.style.display = "block";
+    overlay.classList.add("overlay");
+
+    // Event-Listener für Checkboxen hinzufügen
+    subtasks.forEach((subtask, index) => {
+      const checkbox = document.getElementById(`subtask-${index}`);
+      if (checkbox) {
+        checkbox.addEventListener("change", () => {
+          updateSubtaskStatusInFirebase(task.id, index, checkbox.checked);
+        });
+      }
+    });
+
+    // Verhindert das Scrollen
+    document.body.style.overflowY = "hidden";
+    window.scrollTo(0, 0);
+  } else {
+    overlay.style.display = "none";
+    overlay.classList.remove("overlay");
+  }
+}
+
+// Funktion zum Aktualisieren des Subtask-Status in Firebase
+function updateSubtaskStatusInFirebase(taskId, subtaskIndex, isDone) {
+  // Firebase-Datenstruktur anpassen
+  const firebaseRef = firebase.firestore().collection("tasks").doc(taskId);
+
+  firebaseRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const taskData = doc.data();
+        const updatedSubtasks = [...taskData.subtask];
+        updatedSubtasks[subtaskIndex].done = isDone; // Status aktualisieren
+
+        // In Firebase speichern
+        firebaseRef
+          .update({ subtask: updatedSubtasks })
+          .then(() => {
+            console.log(
+              `Subtask ${subtaskIndex} erfolgreich aktualisiert: ${isDone}`,
+            );
+          })
+          .catch((error) => {
+            console.error("Fehler beim Aktualisieren des Subtasks:", error);
+          });
+      } else {
+        console.error("Task nicht gefunden.");
+      }
+    })
+    .catch((error) => {
+      console.error("Fehler beim Abrufen des Tasks:", error);
+    });
+}
+
+function hideOverlayTask() {
+  const overlay = document.getElementById("overlayContainerTask");
+  overlay.style.display = "none";
+
+  document.body.style.overflowY = "scroll"; // Scrollen wieder erlauben
+}
+
+/**
+ *
+ * @param string
+ * @returns {string}
+ */
+function capitalizeFirstLetter(string) {
+  if (!string) return ""; // Falls der String leer oder undefined ist
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
