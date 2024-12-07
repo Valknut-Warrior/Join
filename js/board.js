@@ -488,7 +488,6 @@ function setMinDate() {
   dateInput.min = today;
 }
 
-/*
 function showOrHideOverlayTask(task) {
   const overlay = document.getElementById("overlayContainerTask");
 
@@ -532,15 +531,29 @@ function showOrHideOverlayTask(task) {
         <p class="task-card-overlay-date">Due date: ${task.date}</p>
         <p class="task-card-overlay-prio">Priority: ${capitalizeFirstLetter(task.prio)} ${priotask}</p>
         <div class="task-card-subtask-overlay" id="overlaySubtask"><p>Subtasks</p>
-        <div class="st-overlay">
+        <div class="st-overlay subtask-overlay-list">
                 <ul>
-          ${
-            subtasks.length > 0
-              ? subtasks.map((subtask) => `<li>${subtask.title}</li>`).join("")
-              : "<li>Keine Subtasks vorhanden.</li>"
-          }
+                
+          ${subtasks
+            .map(
+              (subtask, index) => `
+    <li>
+      <label>
+        <input type="checkbox" 
+               ${subtask.done ? "checked" : ""} 
+               onchange="toggleSubtaskStatus('${task.databaseKey}', ${index}, this.checked)">
+        ${subtask.title}
+      </label>
+    </li>`,
+            )
+            .join("")}
         </ul>
 </div>
+        </div>
+        <div class="task-card-overlay-bottom">
+                        <img class="overlay-action-btn btn-delete filter-gray" src="/icons/board-delete.png" alt="" onclick="deleteTask('-OAxMXPc_LkTUgb74fK3')">
+                        <hr>
+                        <img class="overlay-action-btn btn-edit filter-gray" src="/icons/board-edit.png" alt="" onclick="openOrCloseEditTask()">
         </div>
       </div>
     `;
@@ -553,126 +566,6 @@ function showOrHideOverlayTask(task) {
     overlay.style.display = "none"; // Overlay verstecken
     overlay.classList.remove("overlay");
   }
-}
-*/
-
-function showOrHideOverlayTask(task) {
-  const overlay = document.getElementById("overlayContainerTask");
-
-  if (overlay.style.display === "none" || overlay.innerHTML === "") {
-    // Sicherstellen, dass subtasks ein Array ist, um Fehler zu vermeiden
-    const subtasks = Array.isArray(task.subtask) ? task.subtask : [];
-
-    // Kategorie bestimmen
-    let categoryClass =
-      task.category === "Technical Task"
-        ? "category-technical"
-        : "category-story";
-
-    // Priorität bestimmen
-    let priotask = "";
-    if (task.prio === "low") {
-      priotask =
-        '<img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="task-card-prio atb-sitz"/>';
-    } else if (task.prio === "medium") {
-      priotask =
-        '<img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="task-card-prio atb-sitz"/>';
-    } else if (task.prio === "high") {
-      priotask =
-        '<img id="svg-high" src="/icons/prio-high.svg" alt="High" class="task-card-prio atb-sitz"/>';
-    }
-
-    // Subtasks rendern
-    const subtaskList =
-      subtasks.length > 0
-        ? subtasks
-            .map(
-              (subtask, index) => `
-        <li>
-          <input type="checkbox" id="subtask-${index}" ${subtask.done ? "checked" : ""} />
-          <label for="subtask-${index}">${subtask.title}</label>
-        </li>
-      `,
-            )
-            .join("")
-        : "<li>Keine Subtasks vorhanden.</li>";
-
-    overlay.innerHTML = `
-      <div class="overlay-content">
-        <div class="task-card-overlay-top">
-          <div class="task-card-overlay-category">
-            <span class="${categoryClass}">${task.category}</span>
-          </div>
-          <div class="overlay-closed" id="overlay-closed" onclick="hideOverlayTask()">
-            <img id="closedSVG" class="filter-gray" src="/icons/close.svg" alt="Close" /> 
-          </div>                 
-        </div>
-        <h3 class="task-card-overlay-title">${task.title}</h3>
-        <p class="task-card-overlay-description">${task.description}</p>
-        <p class="task-card-overlay-date">Due date: ${task.date}</p>
-        <p class="task-card-overlay-prio">Priority: ${capitalizeFirstLetter(task.prio)} ${priotask}</p>
-        <div class="task-card-subtask-overlay" id="overlaySubtask">
-          <p>Subtasks</p>
-          <div class="st-overlay">
-            <ul>${subtaskList}</ul>
-          </div>
-        </div>
-      </div>
-    `;
-
-    overlay.style.display = "block";
-    overlay.classList.add("overlay");
-
-    // Event-Listener für Checkboxen hinzufügen
-    subtasks.forEach((subtask, index) => {
-      const checkbox = document.getElementById(`subtask-${index}`);
-      if (checkbox) {
-        checkbox.addEventListener("change", () => {
-          updateSubtaskStatusInFirebase(task.id, index, checkbox.checked);
-        });
-      }
-    });
-
-    // Verhindert das Scrollen
-    document.body.style.overflowY = "hidden";
-    window.scrollTo(0, 0);
-  } else {
-    overlay.style.display = "none";
-    overlay.classList.remove("overlay");
-  }
-}
-
-// Funktion zum Aktualisieren des Subtask-Status in Firebase
-function updateSubtaskStatusInFirebase(taskId, subtaskIndex, isDone) {
-  // Firebase-Datenstruktur anpassen
-  const firebaseRef = firebase.firestore().collection("tasks").doc(taskId);
-
-  firebaseRef
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        const taskData = doc.data();
-        const updatedSubtasks = [...taskData.subtask];
-        updatedSubtasks[subtaskIndex].done = isDone; // Status aktualisieren
-
-        // In Firebase speichern
-        firebaseRef
-          .update({ subtask: updatedSubtasks })
-          .then(() => {
-            console.log(
-              `Subtask ${subtaskIndex} erfolgreich aktualisiert: ${isDone}`,
-            );
-          })
-          .catch((error) => {
-            console.error("Fehler beim Aktualisieren des Subtasks:", error);
-          });
-      } else {
-        console.error("Task nicht gefunden.");
-      }
-    })
-    .catch((error) => {
-      console.error("Fehler beim Abrufen des Tasks:", error);
-    });
 }
 
 function hideOverlayTask() {
@@ -690,4 +583,33 @@ function hideOverlayTask() {
 function capitalizeFirstLetter(string) {
   if (!string) return ""; // Falls der String leer oder undefined ist
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+/**
+ * Aktualisiert den Status eines Subtasks in Firebase.
+ *
+ * @param {string} taskKey - Der Firebase-Schlüssel der Hauptaufgabe.
+ * @param {number} subtaskIndex - Der Index des Subtasks im Array.
+ * @param {boolean} isDone - Der neue Status des Subtasks.
+ */
+async function toggleSubtaskStatus(taskKey, subtaskIndex, isDone) {
+  try {
+    const task = tasks.find((task) => task.databaseKey === taskKey);
+    if (!task) return;
+
+    // Lokale Änderung des Subtasks
+    task.subtask[subtaskIndex].done = isDone;
+
+    // Aktualisierung in Firebase
+    await fetch(`${BASE_URL}tasks/${taskKey}/subtask/${subtaskIndex}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ done: isDone }),
+    });
+
+    console.log(`Subtask ${subtaskIndex} erfolgreich aktualisiert: ${isDone}`);
+    updateHTML(); // Board aktualisieren
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren des Subtasks:", error);
+  }
 }
