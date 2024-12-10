@@ -1036,19 +1036,21 @@ function showToast(text, color = "#950B02") {
 }
 
 async function updateTask(currentTaskKey, progressNow) {
-  const taskKey = currentTaskKey; // Angenommen, currentTaskKey ist global definiert.
+  const taskKey = currentTaskKey;
 
   if (!taskKey) {
     console.error("Kein Task-Schlüssel verfügbar!");
     return;
   }
 
-  // Sammle die aktuellen Werte aus dem Formular
-  const title = document.getElementById("editTaskTitle").value;
-  const description = document.getElementById("editTaskDescription").value;
+  // Sammle aktuelle Werte aus dem Formular
+  const title = document.getElementById("editTaskTitle").value.trim();
+  const description = document
+    .getElementById("editTaskDescription")
+    .value.trim();
   const date = document.getElementById("date").value;
 
-  // Ermittlung der Priorität
+  // Prio
   const prioButtons = document.querySelectorAll(".edit-task-button-set button");
   let prio = "";
   prioButtons.forEach((button) => {
@@ -1057,35 +1059,31 @@ async function updateTask(currentTaskKey, progressNow) {
     }
   });
 
-  // Section ermitteln
-  const progress = progressNow;
-
   // Kategorie
   const categoryElement = document.querySelector(".selected-option");
   const category = categoryElement ? categoryElement.innerText : "";
 
-  // Subtasks aktualisieren
+  // Subtasks
   const subtaskElements = document.querySelectorAll(".edit-subtask-task ul li");
   const subtasks = Array.from(subtaskElements).map((li) => ({
     done: li.querySelector("input[type='checkbox']").checked,
     title: li.querySelector(".subtask-title-input").value,
   }));
 
-  // Zusammenstellung der aktualisierten Task-Daten
   const updatedTask = {
     title,
     description,
     date,
     prio,
     category,
-    progress,
+    progress: progressNow,
     subtask: subtasks,
   };
 
   try {
-    // API-Request zum Aktualisieren des Tasks
+    // Aktualisiere Task in der Datenbank
     const response = await fetch(`${BASE_URL}/tasks/${taskKey}.json`, {
-      method: "PUT", // Aktualisiert den gesamten Task
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
     });
@@ -1095,8 +1093,16 @@ async function updateTask(currentTaskKey, progressNow) {
     }
 
     console.log("Task erfolgreich aktualisiert!");
+
+    // Aktualisiere das lokale tasks-Array
+    const taskIndex = tasks.findIndex((task) => task.databaseKey === taskKey);
+    if (taskIndex !== -1) {
+      tasks[taskIndex] = { ...tasks[taskIndex], ...updatedTask };
+    }
+
+    // HTML aktualisieren
     updateHTML();
-    hideOverlayTask(); // Schließt das Overlay nach dem Update
+    hideOverlayTask(); // Schließt das Overlay
   } catch (error) {
     console.error("Fehler beim Aktualisieren des Tasks:", error);
   }
