@@ -40,11 +40,13 @@ html[data-theme='light'] {
   --add-task-black-icon: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(774%) hue-rotate(171deg) brightness(116%) contrast(100%); //hier muss man es umgehren ;)
   --add-task-standart-icon: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7479%) hue-rotate(1deg) brightness(93%) contrast(100%);
   --add-task-gray-icon: brightness(0) saturate(100%) invert(53%) sepia(25%) saturate(5%) hue-rotate(223deg) brightness(91%) contrast(95%);
+  --add-task-blue: invert(62%) sepia(55%) saturate(6340%) hue-rotate(162deg) brightness(96%) contrast(101%);;
   --box-shadow-add-task: 1px 5px 4px -2px rgba(227, 228, 229, 0.7);
   --background-color-orange: rgba(255, 168, 0, 1);
   --background-color-green: rgba(123, 226, 42, 1);
   --background-color-red: rgba(255, 61, 0, 1);
   --text-color-reverse: rgba(247, 248, 248, 1);
+  --closed-arrow-color: rgba(153, 152, 152, 1);
 }
 
 html[data-theme='dark'] {
@@ -81,4 +83,5 @@ html[data-theme='dark'] {
   --background-color-green: rgba(123, 226, 42, 1);
   --background-color-red: rgba(255, 61, 0, 1);
   --text-color-reverse: rgba(18, 20, 22, 0.85);
+  --closed-arrow-color: rgba(153, 152, 152, 1);
 }

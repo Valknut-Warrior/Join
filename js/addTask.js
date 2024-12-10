@@ -18,7 +18,6 @@
 
   const customSelect = document.getElementById("customSelect");
   const optionsList = document.getElementById("optionsList");
-
   const selectedOption = document.querySelector(".selected-option");
 
   const addTaskButton = document.getElementById("create-button");
@@ -558,6 +557,8 @@
     button.classList.add("active");
     console.log("Ausgewählte Priorität:", selectedPrio); // Debugging
   }
+
+  function boxShadow() {}
 
   window.createTask = createTask;
   window.subtaskCross = subtaskCross;

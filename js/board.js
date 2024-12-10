@@ -36,6 +36,7 @@ async function fetchTasks() {
     console.error("Fehler beim Laden der Tasks:", error);
   }
 }
+
 /**
  * Weist jedem Task in der `tasks`-Liste eine eindeutige ID zu.
  */
@@ -314,9 +315,19 @@ function showOrHideOverlay() {
                                 <h1>Add Task</h1>    
                           </div>
                           
-                    <div class="overlay-closed" id="overlay-closed" onclick="overlayClosed()">
-                            <img id="closedSVG" class="filter-gray " src="/icons/close.svg" alt="Close" /> 
-                    </div>
+                         <div class="task-main-container">
+        <div class="wrapper">
+            <a href="#" class="close-button" onclick="hideOverlayTask()">
+        <div class="in">
+            <div class="close-button-block"></div>
+            <div class="close-button-block"></div>
+           </div>
+        <div class="out">
+                <div class="close-button-block"></div>
+                <div class="close-button-block"></div>
+           </div>
+             </a>
+        </div>
                 </div>  
             <div class="overlay-add-task">
                 <div class="content-overlay-left">  
@@ -522,14 +533,26 @@ function showOrHideOverlayTask(task) {
       <div class="overlay-content">
         <div class="task-card-overlay-top">
               <div class="task-card-overlay-category"><span class="${categoryClass}">${task.category}</span></div>
-                  <div class="overlay-closed" id="overlay-closed" onclick="hideOverlayTask()">
-                            <img id="closedSVG" class="filter-gray " src="/icons/close.svg" alt="Close" /> 
-                  </div>                 
+                          <div class="wrapper">
+            <a href="#" class="close-button" onclick="hideOverlayTask()">
+        <div class="in">
+            <div class="close-button-block"></div>
+            <div class="close-button-block"></div>
+           </div>
+        <div class="out">
+                <div class="close-button-block"></div>
+                <div class="close-button-block"></div>
+           </div>
+             </a>
+        </div>                
         </div>
         <h3 class="task-card-overlay-title">${task.title}</h3>
         <p class="task-card-overlay-description">${task.description}</p>
         <p class="task-card-overlay-date">Due date: ${task.date}</p>
         <p class="task-card-overlay-prio">Priority: ${capitalizeFirstLetter(task.prio)} ${priotask}</p>
+        ${
+          subtasks.length > 0
+            ? ` 
         <div class="task-card-subtask-overlay" id="overlaySubtask"><p>Subtasks</p>
         <div class="st-overlay subtask-overlay-list">
                 <ul>
@@ -549,11 +572,14 @@ function showOrHideOverlayTask(task) {
             .join("")}
         </ul>
 </div>
-        </div>
+        </div>`
+            : ""
+        }
+        
         <div class="task-card-overlay-bottom">
-                        <img class="overlay-action-btn btn-delete filter-gray" src="/icons/board-delete.png" alt="" onclick="deleteTask('-OAxMXPc_LkTUgb74fK3')">
+                        <img class="overlay-action-btn btn-delete filter-gray" src="/icons/board-delete.png" alt="" onclick="deleteTask('${task.databaseKey}')">
                         <hr>
-                        <img class="overlay-action-btn btn-edit filter-gray" src="/icons/board-edit.png" alt="" onclick="openOrCloseEditTask()">
+                        <img class="overlay-action-btn btn-edit filter-gray" src="/icons/board-edit.png" alt="" onclick="openOrCloseEditTask('${task.databaseKey}')">
         </div>
       </div>
     `;
@@ -611,5 +637,467 @@ async function toggleSubtaskStatus(taskKey, subtaskIndex, isDone) {
     updateHTML(); // Board aktualisieren
   } catch (error) {
     console.error("Fehler beim Aktualisieren des Subtasks:", error);
+  }
+}
+
+/**
+ *
+ * @param taskKey
+ * @returns {Promise<void>}
+ */
+async function deleteTask(taskKey) {
+  try {
+    // Lokale Änderung: Task aus dem Array entfernen
+    const taskIndex = tasks.findIndex((task) => task.databaseKey === taskKey);
+    if (taskIndex === -1) {
+      console.warn("Task nicht gefunden:", taskKey);
+      return;
+    }
+    tasks.splice(taskIndex, 1);
+
+    // Firebase-Request: Task löschen
+    await fetch(`${BASE_URL}tasks/${taskKey}.json`, {
+      method: "DELETE",
+    });
+
+    console.log(`Task ${taskKey} erfolgreich gelöscht`);
+
+    // Aktualisiere die Anzeige
+    updateHTML();
+
+    // Overlay Schließen
+    hideOverlayTask();
+  } catch (error) {
+    console.error("Fehler beim Löschen der Aufgabe:", error);
+  }
+}
+
+function openOrCloseEditTask(taskKey) {
+  const overlay = document.getElementById("overlayContainerTask");
+
+  // Lokale Änderung: Task aus dem Array entfernen
+  const taskIndex = tasks.findIndex((task) => task.databaseKey === taskKey);
+  const task = tasks[taskIndex];
+
+  if (taskIndex === -1) {
+    console.warn("Task nicht gefunden:", taskKey);
+    return;
+  }
+
+  // Kategorie bestimmen
+  let categoryClass = "";
+
+  // Kategorie CSS-Klasse festlegen
+  if (task.category === "Technical Task") {
+    categoryClass = "category-technical";
+  } else {
+    categoryClass = "category-story";
+  }
+
+  const subtasks = task.subtask || [];
+
+  if (overlay.style.display === "block") {
+    overlay.innerHTML = "";
+
+    overlay.innerHTML = `
+     <div class="task-main-container">
+        <div class="wrapper">
+            <a href="#" class="close-button" onclick="hideOverlayTask()">
+        <div class="in">
+            <div class="close-button-block"></div>
+            <div class="close-button-block"></div>
+           </div>
+        <div class="out">
+                <div class="close-button-block"></div>
+                <div class="close-button-block"></div>
+           </div>
+             </a>
+        </div>
+            <form class="task-form et-form" action="">
+                <div class="edit-Task-Title">
+                    <label for="editTaskTitle">Title *</label>
+                    <input class="input-title" type="text" id="editTaskTitle" name="title" placeholder="Enter a Title" value="${task.title}" required>
+                </div>
+                
+                <div class="edit-Task-Description">
+                 <label for="editTaskDescription">Description</label>
+                   <textarea class="textarea-description" id="editTaskDescription" name="description" data-value="${task.description}">${task.description}
+                   </textarea>                 
+                </div>
+                
+                <div class="edit-Task-Date">
+                   <label for="date">Due date *</label>
+                   <input class="input-date" type="date" id="date" name="date" placeholder="dd/mm/yyyy" value="${task.date}" required>
+                </div>
+                
+                <div class="edit-Task-Prio">
+                      <label for="date">Prio</label>
+                    <p class="edit-task-button-set" id="edit-button-set">
+                         <button class="prioritize-button-high ${task.prio === "high" ? "bcr text-color-reverse font-bold active" : ""}" id="prioritize-button-high" value="high">Urgent <img id="svg-high-task" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
+                         <button class="prioritize-button-medium ${task.prio === "medium" ? "bco text-color-reverse font-bold active" : ""}" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium-task" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
+                         <button class="prioritize-button-low ${task.prio === "low" ? "bcg text-color-reverse font-bold active" : ""}" id="prioritize-button-low" value="low">Low <img id="svg-low-task" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
+                   </p>
+                </div>
+                <div class="edit-Task-Category">
+                    <div class="category-title">
+                         Category
+                    </div>
+
+                    <div class="edit-custom-select-container" id="custom-select-container">
+                        <div class="custom-select" id="customSelect">
+                        <span class="selected-option">${task.category === "Technical Task" ? "Technical Task" : "User Story"}</span>
+                            <svg class="custom-arrow" width="14" height="14" viewBox="0 0 24 24">
+                                <path d="M7 10l5 5 5-5z"></path>
+                            </svg>
+                        </div>
+                        <ul class="options-list" id="optionsList">
+                            <li class="${task.category === "Technical Task" ? "selected" : ""}">Technical Task</li>
+                            <li class="${task.category === "User Story" ? "selected" : ""}">User Story</li>
+                        </ul>
+                    </div>
+                </div>
+${
+  subtasks.length > 0
+    ? `             
+<div class="edit-Task-subtask">
+    <div class="subtask-title">
+        Subtasks
+    </div>
+    <div class="edit-subtask-task">
+        <ul>
+            ${subtasks
+              .map(
+                (subtask, index) => `
+            <li>
+                <input 
+                    type="checkbox" 
+                    ${subtask.done ? "checked" : ""} 
+                    onchange="toggleSubtaskStatus('${task.databaseKey}', ${index}, this.checked)">
+                <input 
+                    class="subtask-title-input"
+                    type="text" 
+                    value="${subtask.title}" 
+                    onblur="saveSubtaskEdit('${task.databaseKey}', ${index}, this.value)">
+                <button 
+                    class="btn-remove-subtask" 
+                    onclick="removeSubtask('${task.databaseKey}', ${index}')">
+                    Remove
+                </button>
+            </li>`,
+              )
+              .join("")}
+        </ul>
+    </div>
+  </div>
+</div>`
+    : ""
+}
+                
+                <div class="edit-button">
+                        <button class="edit-submit" onclick="updateTask('${task.databaseKey}', '${task.progress}');">Save Task</button>
+                </div>
+                
+            </form>
+    </div>
+    `;
+
+    const buttonLow = document.getElementById("prioritize-button-low");
+    const buttonMedium = document.getElementById("prioritize-button-medium");
+    const buttonHigh = document.getElementById("prioritize-button-high");
+
+    const svgLow = document.getElementById("svg-low-task");
+    const svgMedium = document.getElementById("svg-medium-task");
+    const svgHigh = document.getElementById("svg-high-task");
+
+    const customSelect = document.getElementById("customSelect");
+    const optionsList = document.getElementById("optionsList");
+    const selectedOption = document.querySelector(".selected-option");
+
+    // Füge `click`-Event-Listener hinzu, um die Farbe beim Klicken zu ändern
+    buttonLow.addEventListener("click", () => {
+      deleteButtonColor();
+      buttonLow.classList.add("bcg", "text-color-reverse", "font-bold");
+      svgLow.classList.add("filter-black");
+      svgLow.dataset.value = "low";
+
+      svgMedium.classList.remove("filter-standard", "filter-black");
+      svgMedium.classList.add("filter-orange");
+
+      svgHigh.classList.remove("filter-standard", "filter-black");
+      svgHigh.classList.add("filter-red");
+    });
+
+    buttonMedium.addEventListener("click", () => {
+      deleteButtonColor();
+      buttonMedium.classList.add("bco", "text-color-reverse", "font-bold");
+      svgMedium.classList.add("filter-black");
+      svgMedium.dataset.value = "medium";
+
+      svgLow.classList.remove("filter-standard", "filter-black");
+      svgLow.classList.add("filter-green");
+      svgHigh.classList.remove("filter-standard", "filter-black");
+      svgHigh.classList.add("filter-red");
+    });
+
+    buttonHigh.addEventListener("click", () => {
+      deleteButtonColor();
+      buttonHigh.classList.add("bcr", "text-color-reverse", "font-bold");
+      svgLow.classList.add("filter-green");
+
+      svgLow.classList.remove("filter-standard", "filter-black");
+      svgMedium.classList.add("filter-orange");
+      svgMedium.classList.remove("filter-standard", "filter-black");
+
+      svgHigh.classList.add("filter-black");
+      svgHigh.classList.remove("filter-standard");
+      svgHigh.dataset.value = "high";
+    });
+
+    boxShadow();
+
+    // Event-Listener für Formular-Submit verhindern
+    document.querySelector(".task-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+    });
+
+    // Öffnet oder schließt das Dropdown-Menü beim Klicken
+    customSelect.addEventListener("click", () => {
+      const isOpen = optionsList.style.display === "block";
+      optionsList.style.display = isOpen ? "none" : "block";
+      customSelect.classList.toggle("open", !isOpen); // Toggle für die Pfeildrehung
+    });
+
+    // Setzt die ausgewählte Option und schließt das Dropdown
+    optionsList.addEventListener("click", (event) => {
+      if (event.target.tagName === "LI") {
+        selectedOption.textContent = event.target.textContent; // Setzt den Text der ausgewählten Option
+        optionsList.style.display = "none";
+        customSelect.classList.remove("open"); // Pfeil zurückdrehen
+      }
+    });
+
+    // Schließt das Dropdown, wenn außerhalb geklickt wird
+    document.addEventListener("click", (event) => {
+      if (!customSelect.contains(event.target)) {
+        optionsList.style.display = "none";
+        customSelect.classList.remove("open"); // Pfeil zurückdrehen
+      }
+    });
+  }
+}
+
+/**
+ * Setze einen Shadow um die Button Low/Medium/High
+ */
+function boxShadow() {
+  const buttonLow = document.getElementById("prioritize-button-low");
+  const buttonMedium = document.getElementById("prioritize-button-medium");
+  const buttonHigh = document.getElementById("prioritize-button-high");
+
+  // Add-Task Button Low/Medium/High
+  buttonLow.addEventListener("mouseover", (event) => {
+    buttonLow.classList.add("box-shadow");
+    buttonMedium.classList.remove("box-shadow");
+    buttonHigh.classList.remove("box-shadow");
+  });
+
+  buttonMedium.addEventListener("mouseover", (event) => {
+    buttonMedium.classList.add("box-shadow");
+    buttonLow.classList.remove("box-shadow");
+    buttonHigh.classList.remove("box-shadow");
+  });
+
+  buttonHigh.addEventListener("mouseover", (event) => {
+    buttonHigh.classList.add("box-shadow");
+    buttonLow.classList.remove("box-shadow");
+    buttonMedium.classList.remove("box-shadow");
+  });
+
+  // Schatten entfernen, wenn Maus den Button verlässt
+  buttonLow.addEventListener("mouseout", () => {
+    buttonLow.classList.remove("box-shadow");
+  });
+
+  buttonMedium.addEventListener("mouseout", () => {
+    buttonMedium.classList.remove("box-shadow");
+  });
+
+  buttonHigh.addEventListener("mouseout", () => {
+    buttonHigh.classList.remove("box-shadow");
+  });
+}
+
+/**
+ *  Lösche alle Klassen aus den Ad-Task Buttons
+ */
+function deleteButtonColor() {
+  const buttonLow = document.getElementById("prioritize-button-low");
+  const buttonMedium = document.getElementById("prioritize-button-medium");
+  const buttonHigh = document.getElementById("prioritize-button-high");
+
+  const svgLow = document.getElementById("svg-low-task");
+  const svgMedium = document.getElementById("svg-medium-task");
+  const svgHigh = document.getElementById("svg-high-task");
+
+  // Löscht alle Klassen vom Low Button
+  buttonLow.classList.remove("bcg", "text-color-reverse", "font-bold");
+
+  // Löscht alle Klassen vom Medium Button
+
+  buttonMedium.classList.remove("bco", "text-color-reverse", "font-bold");
+  svgMedium.classList.add("filter-standard");
+  svgMedium.dataset.value = "medium";
+
+  // Löscht alle Klassen vom High Button
+
+  buttonHigh.classList.remove("bcr", "text-color-reverse", "font-bold");
+}
+
+/**
+ *
+ * @param taskKey
+ * @param subtaskIndex
+ * @returns {Promise<void>}
+ */
+async function removeSubtask(taskKey, subtaskIndex) {
+  try {
+    // Entferne den Subtask lokal
+    const task = tasks.find((task) => task.databaseKey === taskKey);
+    if (!task) return;
+
+    task.subtask.splice(subtaskIndex, 1);
+
+    // Entferne den Subtask aus Firebase
+    await fetch(`${BASE_URL}/tasks/${taskKey}/subtask.json`, {
+      method: "PUT", // Überschreibt die gesamte Subtask-Liste
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task.subtask),
+    });
+
+    console.log(`Subtask ${subtaskIndex} erfolgreich entfernt.`);
+    openOrCloseEditTask(taskKey); // UI aktualisieren
+  } catch (error) {
+    console.error("Fehler beim Entfernen des Subtasks:", error);
+  }
+}
+
+/**
+ *
+ * @param taskKey
+ * @param subtaskIndex
+ * @param newTitle
+ * @returns {Promise<void>}
+ */
+async function saveSubtaskEdit(taskKey, subtaskIndex, newTitle) {
+  try {
+    if (newTitle.trim() === "") {
+      showToast("Der Titel der Unteraufgabe darf nicht leer sein.", "#F44336");
+      return;
+    }
+
+    // Lokale Änderung
+    const task = tasks.find((task) => task.databaseKey === taskKey);
+    if (!task) return;
+
+    task.subtask[subtaskIndex].title = newTitle;
+
+    // Firebase aktualisieren
+    await fetch(`${BASE_URL}/tasks/${taskKey}/subtask/${subtaskIndex}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: newTitle }),
+    });
+
+    console.log(`Subtask ${subtaskIndex} erfolgreich bearbeitet.`);
+  } catch (error) {
+    console.error("Fehler beim Speichern des Subtasks:", error);
+  }
+}
+
+/**
+ * Zeigt eine Toast-Benachrichtigung an.
+ * @param {string} text - Nachricht für die Toast-Benachrichtigung.
+ * @param {string} color - Hintergrundfarbe des Toasts (optional, Standard: rot).
+ */
+function showToast(text, color = "#950B02") {
+  const toast = document.getElementById("toast");
+
+  // Nachricht und Hintergrundfarbe setzen
+  toast.textContent = text;
+  toast.style.backgroundColor = color;
+
+  // Toast anzeigen
+  toast.classList.add("show");
+
+  // Toast nach 4 Sekunden ausblenden
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 4000); // 4 Sekunden
+}
+
+async function updateTask(currentTaskKey, progressNow) {
+  const taskKey = currentTaskKey; // Angenommen, currentTaskKey ist global definiert.
+
+  if (!taskKey) {
+    console.error("Kein Task-Schlüssel verfügbar!");
+    return;
+  }
+
+  // Sammle die aktuellen Werte aus dem Formular
+  const title = document.getElementById("editTaskTitle").value;
+  const description = document.getElementById("editTaskDescription").value;
+  const date = document.getElementById("date").value;
+
+  // Ermittlung der Priorität
+  const prioButtons = document.querySelectorAll(".edit-task-button-set button");
+  let prio = "";
+  prioButtons.forEach((button) => {
+    if (button.classList.contains("active")) {
+      prio = button.value;
+    }
+  });
+
+  // Section ermitteln
+  const progress = progressNow;
+
+  // Kategorie
+  const categoryElement = document.querySelector(".selected-option");
+  const category = categoryElement ? categoryElement.innerText : "";
+
+  // Subtasks aktualisieren
+  const subtaskElements = document.querySelectorAll(".edit-subtask-task ul li");
+  const subtasks = Array.from(subtaskElements).map((li) => ({
+    done: li.querySelector("input[type='checkbox']").checked,
+    title: li.querySelector(".subtask-title-input").value,
+  }));
+
+  // Zusammenstellung der aktualisierten Task-Daten
+  const updatedTask = {
+    title,
+    description,
+    date,
+    prio,
+    category,
+    progress,
+    subtask: subtasks,
+  };
+
+  try {
+    // API-Request zum Aktualisieren des Tasks
+    const response = await fetch(`${BASE_URL}/tasks/${taskKey}.json`, {
+      method: "PUT", // Aktualisiert den gesamten Task
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedTask),
+    });
+
+    if (!response.ok) {
+      throw new Error("Fehler beim Aktualisieren des Tasks");
+    }
+
+    console.log("Task erfolgreich aktualisiert!");
+    updateHTML();
+    hideOverlayTask(); // Schließt das Overlay nach dem Update
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren des Tasks:", error);
   }
 }
