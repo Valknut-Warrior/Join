@@ -46,6 +46,7 @@ html[data-theme=light] {
   --background-color-red: rgba(255, 61, 0, 1);
   --text-color-reverse: rgba(247, 248, 248, 1);
   --closed-arrow-color: rgba(153, 152, 152, 1);
+  --summary-task-btn-hover: rgba(42, 54, 71, 1);
 }
 
 html[data-theme=dark] {
@@ -83,6 +84,7 @@ html[data-theme=dark] {
   --background-color-red: rgba(255, 61, 0, 1);
   --text-color-reverse: rgba(18, 20, 22, 0.85);
   --closed-arrow-color: rgba(153, 152, 152, 1);
+  --summary-task-btn-hover: rgba(46, 56, 61, 1);
 }
 
 /*# sourceMappingURL=variablen.css.map */

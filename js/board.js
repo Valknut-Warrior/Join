@@ -8,7 +8,7 @@ if (!window.BASE_URL) {
 let tasks = []; // Tasks werden hier dynamisch geladen
 let currentDraggedElement;
 var subtaskArray = [];
-let selectedPrio = ""; // Globale Variable für die Priorität
+var selectedPrio = ""; // Globale Variable für die Priorität
 
 window.onload = async () => {
   includeHTML();
@@ -907,7 +907,6 @@ ${
     mediumButton.classList.remove("active");
     lowButton.classList.remove("active");
     highButton.classList.add("active");
-    console.log("du hast auf high geklickt");
   });
 
   mediumButton.addEventListener("click", (event) => {
@@ -921,6 +920,15 @@ ${
     highButton.classList.remove("active");
     lowButton.classList.add("active");
   });
+
+  if (highButton)
+    highButton.addEventListener("click", () => setPriority("high", highButton));
+  if (mediumButton)
+    mediumButton.addEventListener("click", () =>
+      setPriority("medium", mediumButton),
+    );
+  if (lowButton)
+    lowButton.addEventListener("click", () => setPriority("low", lowButton));
 }
 
 /**
@@ -1073,6 +1081,11 @@ function showToast(text, color = "#950B02") {
 }
 
 function setPriority(prio, button) {
+  // Buttons referenzieren
+  const highButton = document.getElementById("prioritize-button-high");
+  const mediumButton = document.getElementById("prioritize-button-medium");
+  const lowButton = document.getElementById("prioritize-button-low");
+
   selectedPrio = prio; // Globale Variable aktualisieren
 
   // Visuelles Feedback: Entferne aktive Klasse von allen Buttons
