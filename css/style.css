@@ -835,11 +835,11 @@ textarea::placeholder {
 }
 
 .options-list {
-  display: none; /* Dropdown standardmäßig ausgeblendet */
-  position: absolute;
-  top: 100%; /* Positioniert das Dropdown unter dem Auswahlfeld */
-  left: 0;
-  width: 100%;
+  display: none;
+  position: relative;
+  top: 31%;
+  left: -7px;
+  width: 102%;
   margin-top: 4px;
   background-color: var(--background-color-login);
   list-style: none;

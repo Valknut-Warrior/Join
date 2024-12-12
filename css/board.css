@@ -707,7 +707,7 @@
   gap: 10px;
 }
 
-.task-form, .edit-Task-Title, .edit-Task-Description, .edit-Task-Date, .edit-Task-Prio {
+.task-form, .edit-Task-Title, .edit-Task-Description, .edit-Task-Date, .edit-Task-Prio, .edit-Task-subtask {
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -747,10 +747,10 @@
 
 .options-list {
   display: none;
-  position: absolute;
-  top: 86%;
-  left: 103px;
-  width: 66.5%;
+  position: relative;
+  top: 12px;
+  left: -7px;
+  width: 105%;
   margin-top: 4px;
   background-color: var(--background-color-login);
   list-style: none;
@@ -783,13 +783,27 @@
 }
 
 .edit-subtask-task li {
+  padding: 3px;
   list-style: none;
 }
 
-.edit-button {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
+.edit-subtask-task li:hover {
+  border-radius: 10px;
+  background: var(--background-color-login);
+  border: solid 1px var(--border-inputfeld-login);
+  opacity: 1;
+}
+
+.focus-task-button button {
+  background-color: var(--mouseover-button);
+  color: var(--mouseover-button-text);
+  width: 140px;
+  height: 48px;
+  padding: 15px 24px 15px 24px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
 }
 
 .edit-submit {
@@ -812,9 +826,9 @@
   border: none;
 }
 
-.subtask-title-input:focus {
-  border-bottom: 2px solid #007BFF;
-  outline: none;
+.subtask-title-input:hover {
+  background: var(--background-color-login);
+  opacity: 1;
 }
 
 .btn-remove-subtask {
@@ -828,6 +842,29 @@
 
 .btn-remove-subtask:hover {
   background-color: #d32f2f;
+}
+
+.edit-input-Button {
+  position: relative;
+  top: -34px;
+  left: 370px;
+  cursor: pointer;
+}
+
+.edit-input-Button-Dou {
+  position: relative;
+  top: -29px;
+  left: 348px;
+  cursor: pointer;
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2px;
+  height: 11px;
+  line-height: 7px;
+  color: gray;
+  align-items: center;
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */

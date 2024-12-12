@@ -7,6 +7,8 @@ if (!window.BASE_URL) {
 
 let tasks = []; // Tasks werden hier dynamisch geladen
 let currentDraggedElement;
+var subtaskArray = [];
+let selectedPrio = ""; // Globale Variable für die Priorität
 
 window.onload = async () => {
   includeHTML();
@@ -546,8 +548,8 @@ function showOrHideOverlayTask(task) {
              </a>
         </div>                
         </div>
-        <h3 class="task-card-overlay-title">${task.title}</h3>
-        <p class="task-card-overlay-description">${task.description}</p>
+        <h3 class="task-card-overlay-title">${task.title.trim()}</h3>
+        <p class="task-card-overlay-description">${task.description.trim()}</p>
         <p class="task-card-overlay-date">Due date: ${task.date}</p>
         <p class="task-card-overlay-prio">Priority: ${capitalizeFirstLetter(task.prio)} ${priotask}</p>
         ${
@@ -721,7 +723,7 @@ function openOrCloseEditTask(taskKey) {
                 
                 <div class="edit-Task-Description">
                  <label for="editTaskDescription">Description</label>
-                   <textarea class="textarea-description" id="editTaskDescription" name="description" data-value="${task.description}">${task.description}
+                   <textarea class="textarea-description" id="editTaskDescription" name="description" data-value="${task.description.trim()}">${task.description.trim()}
                    </textarea>                 
                 </div>
                 
@@ -733,9 +735,9 @@ function openOrCloseEditTask(taskKey) {
                 <div class="edit-Task-Prio">
                       <label for="date">Prio</label>
                     <p class="edit-task-button-set" id="edit-button-set">
-                         <button class="prioritize-button-high ${task.prio === "high" ? "bcr text-color-reverse font-bold active" : ""}" id="prioritize-button-high" value="high">Urgent <img id="svg-high-task" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
-                         <button class="prioritize-button-medium ${task.prio === "medium" ? "bco text-color-reverse font-bold active" : ""}" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium-task" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
-                         <button class="prioritize-button-low ${task.prio === "low" ? "bcg text-color-reverse font-bold active" : ""}" id="prioritize-button-low" value="low">Low <img id="svg-low-task" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
+                         <button class="prioritize-button-high ${task.prio === "high" ? "bcr text-color-reverse font-bold active" : ""}" id="prioritize-button-high" value="high">Urgent <img id="svg-high-task" src="/icons/prio-high.svg" alt="High" class="atb-sitz" onclick="setPriority('high', this)"/></button>
+                         <button class="prioritize-button-medium ${task.prio === "medium" ? "bco text-color-reverse font-bold active" : ""}" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium-task" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz" onclick="setPriority('medium', this)"/></button>
+                         <button class="prioritize-button-low ${task.prio === "low" ? "bcg text-color-reverse font-bold active" : ""}" id="prioritize-button-low" value="low">Low <img id="svg-low-task" src="/icons/prio-low.svg" alt="Low" class="atb-sitz" onclick="setPriority('low', this)"/></button>
                    </p>
                 </div>
                 <div class="edit-Task-Category">
@@ -780,7 +782,7 @@ ${
                     onblur="saveSubtaskEdit('${task.databaseKey}', ${index}, this.value)">
                 <button 
                     class="btn-remove-subtask" 
-                    onclick="removeSubtask('${task.databaseKey}', ${index}')">
+                    onclick="removeSubtask('${task.databaseKey}', ${index})">
                     Remove
                 </button>
             </li>`,
@@ -790,14 +792,22 @@ ${
     </div>
   </div>
 </div>`
-    : ""
+    : `<div class="edit-Task-subtask">
+      <label for="subtask">Subtask</label><br>
+      <input class="input-subtask" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+      <div class="edit-input-Button" id="subtask-icon" onclick="subtaskCross('${task.databaseKey}');">
+          <img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray">
+      </div>
+      <div id="subtasks"></div>
+  </div>`
 }
-                
-                <div class="edit-button">
-                        <button class="edit-submit" onclick="updateTask('${task.databaseKey}', '${task.progress}');">Save Task</button>
-                </div>
-                
-            </form>
+  <div class="button-set task-buttons">
+
+             <div class="create-task-button" id="create-button">
+          <button id="create-task-button" onclick="updateTask('${task.databaseKey}', '${task.progress}');">Save Task</button>
+   </div>
+    </div>
+ </form>
     </div>
     `;
 
@@ -884,6 +894,33 @@ ${
       }
     });
   }
+
+  saveButtonFocus();
+
+  // Buttons referenzieren
+  const highButton = document.getElementById("prioritize-button-high");
+  const mediumButton = document.getElementById("prioritize-button-medium");
+  const lowButton = document.getElementById("prioritize-button-low");
+  // Event-Listener hinzufügen
+
+  highButton.addEventListener("click", (event) => {
+    mediumButton.classList.remove("active");
+    lowButton.classList.remove("active");
+    highButton.classList.add("active");
+    console.log("du hast auf high geklickt");
+  });
+
+  mediumButton.addEventListener("click", (event) => {
+    lowButton.classList.remove("active");
+    highButton.classList.remove("active");
+    mediumButton.classList.add("active");
+  });
+
+  lowButton.addEventListener("click", (event) => {
+    mediumButton.classList.remove("active");
+    highButton.classList.remove("active");
+    lowButton.classList.add("active");
+  });
 }
 
 /**
@@ -1035,6 +1072,19 @@ function showToast(text, color = "#950B02") {
   }, 4000); // 4 Sekunden
 }
 
+function setPriority(prio, button) {
+  selectedPrio = prio; // Globale Variable aktualisieren
+
+  // Visuelles Feedback: Entferne aktive Klasse von allen Buttons
+  highButton.classList.remove("active");
+  mediumButton.classList.remove("active");
+  lowButton.classList.remove("active");
+
+  // Füge aktive Klasse zum aktuellen Button hinzu
+  button.classList.add("active");
+  console.log("Ausgewählte Priorität:", selectedPrio); // Debugging
+}
+
 async function updateTask(currentTaskKey, progressNow) {
   const taskKey = currentTaskKey;
 
@@ -1043,47 +1093,46 @@ async function updateTask(currentTaskKey, progressNow) {
     return;
   }
 
-  // Sammle aktuelle Werte aus dem Formular
+  // Sammle die aktuellen Werte aus dem Formular
   const title = document.getElementById("editTaskTitle").value.trim();
   const description = document
     .getElementById("editTaskDescription")
     .value.trim();
   const date = document.getElementById("date").value;
 
-  // Prio
-  const prioButtons = document.querySelectorAll(".edit-task-button-set button");
-  let prio = "";
-  prioButtons.forEach((button) => {
-    if (button.classList.contains("active")) {
-      prio = button.value;
-    }
-  });
+  // Übernehme die Priorität aus `selectedPrio`
+  const prio = selectedPrio; // Aus der globalen Variable
+  if (!prio) {
+    console.warn("Keine Priorität ausgewählt. Standardwert wird gesetzt.");
+  }
 
   // Kategorie
   const categoryElement = document.querySelector(".selected-option");
   const category = categoryElement ? categoryElement.innerText : "";
 
-  // Subtasks
-  const subtaskElements = document.querySelectorAll(".edit-subtask-task ul li");
-  const subtasks = Array.from(subtaskElements).map((li) => ({
-    done: li.querySelector("input[type='checkbox']").checked,
-    title: li.querySelector(".subtask-title-input").value,
-  }));
+  // Subtasks beibehalten
+  const currentTask = tasks.find((task) => task.databaseKey === taskKey);
+  if (!currentTask) {
+    console.error("Task nicht gefunden!");
+    return;
+  }
+  const subtasks = currentTask.subtask || []; // Aktuelle Subtasks beibehalten
 
+  // Zusammenstellung der aktualisierten Task-Daten
   const updatedTask = {
     title,
     description,
     date,
-    prio,
+    prio: prio || "low", // Setze einen Standardwert, falls prio leer ist
     category,
     progress: progressNow,
-    subtask: subtasks,
+    subtask: subtasks, // Aktuelle Subtasks hinzufügen
   };
 
   try {
-    // Aktualisiere Task in der Datenbank
+    // API-Request zum Aktualisieren des Tasks
     const response = await fetch(`${BASE_URL}/tasks/${taskKey}.json`, {
-      method: "PUT",
+      method: "PUT", // Aktualisiert den gesamten Task
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
     });
@@ -1093,17 +1142,139 @@ async function updateTask(currentTaskKey, progressNow) {
     }
 
     console.log("Task erfolgreich aktualisiert!");
-
-    // Aktualisiere das lokale tasks-Array
-    const taskIndex = tasks.findIndex((task) => task.databaseKey === taskKey);
-    if (taskIndex !== -1) {
-      tasks[taskIndex] = { ...tasks[taskIndex], ...updatedTask };
-    }
-
-    // HTML aktualisieren
     updateHTML();
-    hideOverlayTask(); // Schließt das Overlay
+    hideOverlayTask(); // Schließt das Overlay nach dem Update
   } catch (error) {
     console.error("Fehler beim Aktualisieren des Tasks:", error);
   }
+}
+
+function subtaskCross(currentTaskKey) {
+  const subTaskIcon = document.getElementById("subtask-icon");
+
+  subTaskIcon.innerHTML = `
+       <img onclick="chanceSub();" src="icons/close.svg" alt="Close" class="add-subtask-button filter-gray"> |
+       <img onclick="checkSub('${currentTaskKey}');" src="icons/check.svg" alt="Check" class="add-subtask-button filter-gray">
+    `;
+
+  subTaskIcon.className = "edit-input-Button-Dou"; // Direkte Zuweisung statt remove/add
+}
+
+function chanceSub() {
+  const subTaskIcon = document.getElementById("subtask-icon");
+
+  setTimeout(() => {
+    subTaskIcon.classList.remove("edit-input-Button-Dou");
+    subTaskIcon.classList.add("edit-input-Button");
+
+    subTaskIcon.innerHTML = `
+            <img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray">
+        `;
+  }, 0); // 0ms Delay, um das DOM zu aktualisieren
+}
+
+function checkSub(currentTaskKey) {
+  const inputSub = document.getElementById("subtask");
+  const sub = inputSub.value.trim(); // Leerzeichen entfernen
+
+  if (sub) {
+    // Füge den neuen Subtask zum aktuellen Task hinzu
+    const currentTask = tasks.find(
+      (tasks) => tasks.databaseKey === currentTaskKey,
+    );
+    if (!currentTask) {
+      console.error("Task nicht gefunden!");
+      return;
+    }
+
+    // Initialisiere die Subtask-Liste, falls sie noch nicht existiert
+    if (!currentTask.subtask) {
+      currentTask.subtask = [];
+    }
+
+    // Subtask hinzufügen
+    currentTask.subtask.push({ done: false, title: sub });
+
+    // Subtasks in der Anzeige und Datenbank aktualisieren
+    updateSubtaskDisplay(currentTask.subtask); // Anzeige aktualisieren
+    saveSubtasksToDatabase(currentTask); // Änderungen speichern
+
+    inputSub.value = ""; // Eingabefeld leeren
+  }
+}
+
+/**
+ * Subtask-Liste anzeigen
+ */
+function updateSubtaskDisplay(subtasks) {
+  const subtasksDiv = document.getElementById("subtasks");
+  subtasksDiv.innerHTML = ""; // Vorherige Inhalte löschen
+
+  subtasks.forEach((task, index) => {
+    const taskDiv = document.createElement("div");
+    taskDiv.className = "subtask-item";
+
+    taskDiv.innerHTML = `
+            <span>${task.title}</span>
+            <div>
+                <img class="edit-subtask-icon filter-gray" onclick="updateSubtask(${index})" src="icons/edit.svg" alt="Edit">
+                <img class="remove-subtask-icon filter-gray" onclick="removeSubtask(${index})" src="icons/delete.svg" alt="Delete">
+            </div>
+        `;
+
+    subtasksDiv.appendChild(taskDiv);
+  });
+}
+
+function updateSubtask(index) {
+  // Lade den Subtask ins Eingabefeld
+  inputSub.value = subtaskArray[index].title;
+  inputSub.focus();
+
+  // Rahmen hervorheben, um den Bearbeitungsmodus zu kennzeichnen
+  inputSub.style.border = "solid 1px var(--border-input-focus)";
+
+  // Ändere die Check- und Close-Icons zu "Save" und "Cancel"
+  subTaskIcon.innerHTML = `
+        <img onclick="cancelEdit();" src="icons/close.svg" alt="Cancel" class="add-subtask-button filter-gray">
+        |
+        <img onclick="saveSubtask(${index});" src="icons/check.svg" alt="Check" class="add-subtask-button filter-gray">
+
+    `;
+}
+
+async function saveSubtasksToDatabase(task) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/tasks/${task.databaseKey}/subtask.json`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task.subtask),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Fehler beim Speichern der Subtasks");
+    }
+
+    console.log("Subtasks erfolgreich gespeichert!");
+  } catch (error) {
+    console.error("Fehler beim Speichern der Subtasks:", error);
+  }
+}
+
+function saveButtonFocus() {
+  const saveTaskButton = document.getElementById("create-button");
+
+  // Aktionen beim Klick auf die Buttons im addTask
+  saveTaskButton.addEventListener("mouseover", (event) => {
+    saveTaskButton.classList.add("focus-task-button");
+    saveTaskButton.classList.remove("create-task-button");
+  });
+
+  saveTaskButton.addEventListener("mouseout", (event) => {
+    saveTaskButton.classList.add("create-task-button");
+    saveTaskButton.classList.remove("focus-task-button");
+  });
 }

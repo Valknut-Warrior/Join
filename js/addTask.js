@@ -293,8 +293,6 @@
   }
 
   function chanceSub() {
-    console.log("chanceSub() wurde aufgerufen");
-
     setTimeout(() => {
       subTaskIcon.classList.remove("input-Button-Dou");
       subTaskIcon.classList.add("input-Button");
@@ -557,8 +555,6 @@
     button.classList.add("active");
     console.log("Ausgewählte Priorität:", selectedPrio); // Debugging
   }
-
-  function boxShadow() {}
 
   window.createTask = createTask;
   window.subtaskCross = subtaskCross;
