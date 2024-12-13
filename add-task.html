@@ -19,6 +19,7 @@
     <link rel="manifest" href="/icons/site.webmanifest">
 
     <!-- Script -->
+    <script src="./js/auth.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/addTask.js" defer></script>
 
@@ -27,7 +28,7 @@
 <body>
 
 
-<div class="root">
+<div id="mainContainer" class="root hidden">
     <header w3-include-html="header.html"></header>
 
     <div class="main">
@@ -59,14 +60,14 @@
                     <div class="content-add-task-button dfg">
                         <p>Prio</p>
                         <p class="add-task-button-set">
-                            <button class="prioritize-button-high" id="prioritize-button-high" value="high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
-                            <button class="prioritize-button-medium" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
-                            <button class="prioritize-button-low" id="prioritize-button-low" value="low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
+                            <button class="prio-btn prioritize-button-high" id="prioritize-button-high" value="high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
+                            <button class="prio-btn prioritize-button-medium" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
+                            <button class="prio-btn prioritize-button-low" id="prioritize-button-low" value="low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
                         </p>
                     </div>
 
                     <div class="dfg category-title">
-                        Category<span class="star"> *</span>
+                        <p>Category<span class="star"> *</span></p>
                     </div>
 
                     <div class="dfg custom-select-container" id="custom-select-container">

@@ -202,3 +202,9 @@ function cleanFields() {
   mailInput.value = "";
   pwdInput.value = "";
 }
+
+function guestlogin() {
+  localStorage.setItem("currentUser", "Guest"); // Speichert das ausgewählte Thema
+  // Hier könnte eine Weiterleitung zum Board oder eine Session gesetzt werden
+  window.location.href = "/board.html"; // Weiterleitung
+}

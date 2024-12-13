@@ -5,9 +5,95 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Favicons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/icons/site.webmanifest">
+
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Script -->
+    <script src="./js/auth.js"></script>
     <title>Privacy Policy</title>
 </head>
 <body>
+
+<div class="root">
+
+    <header w3-include-html="header.html"></header>
+
+    <div class="main">
+        <!-- Hier wird die Sidebar inkludiert -->
+        <div w3-include-html="sidebar.html"></div>
+
+        <div class="content summary-section">
+            <header class="summary-header">
+                <h1>Join 360</h1>
+                <hr>
+                <h2>Key Metrics at a Glance</h2>
+            </header>
+            <div class="summary-container">
+                <div class="summary-container-left">
+                    <div class="summary-task-top">
+                        <a href="./board.html" class="summary-task-btn st-todo">
+                            <div>
+                                <p class="st-number">1</p>
+                                <p>To-Do</p>
+                            </div>
+                        </a>
+                        <a href="./board.html" class="summary-task-btn st-done">
+                            <div>
+                                <p class="st-number">3</p>
+                                <p>Done</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="summary-task-middle">
+                        <a href="./board.html" class="summary-task-btn st-info">
+                            <div class="st-info-left">
+                                <div>
+                                    <p class="st-number">1</p>
+                                    <p>Urgent</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="st-info-right">
+                                <div class="st-info-right-inner-content">
+                                    <p class="st-deadline" id="upcomingDeadline">October 23, 2024</p>
+                                    <p>Upcoming Deadline</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="summary-task-bottom">
+                        <a href="./board.html" class="summary-task-btn st-in-board">
+                            <p class="st-number">3</p>
+                            <p>Task in Board</p>
+                        </a>
+                        <a href="./board.html" class="summary-task-btn st-in-progress">
+                            <p class="st-number">4</p>
+                            <p>Task in Progress</p>
+                        </a>
+                        <a href="./board.html" class="summary-task-btn st-feedback">
+                            <p class="st-number">4</p>
+                            <p>Awaiting Feedback</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="summary-container-right">
+                    <div class="welcm-Section">
+                        <h2 class="wlcText" id="welcomeText">Moin</h2>
+                        <h1 class="wlcName" id="welcomeName">Guest</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

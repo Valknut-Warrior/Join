@@ -60,6 +60,7 @@
   height: 32px;
   border: solid 1px var(--border-inputfeld-login);
   padding: 5px;
+  color: var(--text-color);
 }
 
 .board-input {
@@ -486,6 +487,7 @@
 }
 
 .headlineAndClosed {
+  /*
   display: flex;
   flex-direction: row;
   width: 98.2%;
@@ -493,11 +495,14 @@
   justify-content: space-between;
   margin-bottom: 20px;
   padding-left: 25px;
+  */
 }
 
 .headline {
   width: 100%;
   font-size: x-large;
+  display: flex;
+  justify-content: space-between;
 }
 
 #closedSVG {
@@ -530,7 +535,7 @@
   align-items: center;
 }
 */
-.input-title, .textarea-description, .input-date, .select-category, .input-subtask, .custom-select-container {
+.input-title, .input-title-overlay-edit, .textarea-description, .input-date, .select-category, .input-subtask, .custom-select-container {
   background: var(--background-color-login);
   border: solid 1px var(--border-inputfeld-login);
   border-radius: 10px;
@@ -608,6 +613,7 @@
 }
 
 .task-main-container {
+  /*
   display: flex;
   padding: 50px;
   flex-direction: column;
@@ -618,6 +624,7 @@
   scrollbar-width: none;
   overflow-y: scroll;
   gap: 15px;
+  */
 }
 
 .task-main-container-top {
@@ -783,15 +790,15 @@
 }
 
 .edit-subtask-task li {
-  padding: 3px;
   list-style: none;
 }
 
-.edit-subtask-task li:hover {
+.subedit {
+  background-color: var(--background-color-login);
   border-radius: 10px;
-  background: var(--background-color-login);
   border: solid 1px var(--border-inputfeld-login);
-  opacity: 1;
+  margin-bottom: 5px;
+  padding: 6px;
 }
 
 .focus-task-button button {
@@ -813,11 +820,15 @@
   width: 140px;
 }
 
+.subtask-title-input li {
+  background-color: var(--background-color-login);
+}
+
 .subtask-title-input {
   font-size: 16px;
   width: 70%;
   margin-right: 10px;
-  background-color: var(--background-color-content);
+  background-color: var(--background-color-login);
   border-radius: 10px;
   height: 48px;
   padding: 8px;
@@ -826,11 +837,11 @@
   border: none;
 }
 
+/*
 .subtask-title-input:hover {
-  background: var(--background-color-login);
-  opacity: 1;
+  background: var(--edit-task-hovern);
 }
-
+*/
 .btn-remove-subtask {
   padding: 5px 10px;
   background-color: #f44336;
@@ -867,6 +878,23 @@
   align-items: center;
 }
 
+.prio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: none;
+  -webkit-box-shadow: 0 0 1px 0 rgba(79, 79, 79, 0.5);
+  -moz-box-shadow: 0 0 1px 0 rgba(79, 79, 79, 0.5);
+  box-shadow: 0 0 1px 0 rgba(79, 79, 79, 0.5);
+  font-size: 1rem;
+  cursor: pointer;
+  gap: 3px;
+}
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .content-overlay-left input, textarea, select {
@@ -876,6 +904,7 @@
   }
   .content-overlay-left textarea {
     min-height: 220px;
+    max-width: 660px;
   }
   .content-overlay-right input, textarea, select, .custom-select-container {
     width: 660px;
@@ -887,10 +916,7 @@
     max-width: 660px;
     min-width: 660px;
   }
-  .task-main-container {
-    width: 500px;
-  }
-  .input-title, textarea, .textarea-description, .input-date, .select-category, .input-subtask, .custom-select-containe {
+  .input-title-overlay-edit, .edit-Task-Description, .edit-Task-Date, .edit-Task-Category, .edit-Task-subtask {
     width: 400px !important;
     max-width: 400px !important;
     min-width: 400px !important;

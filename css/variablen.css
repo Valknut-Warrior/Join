@@ -47,6 +47,10 @@ html[data-theme=light] {
   --text-color-reverse: rgba(247, 248, 248, 1);
   --closed-arrow-color: rgba(153, 152, 152, 1);
   --summary-task-btn-hover: rgba(42, 54, 71, 1);
+  --summary-task-btn-text-hover: rgba(255, 255, 255, 1);
+  --edit-task-hover: rgba(204, 204, 204, 1);
+  --background-dropdown: rgba(42, 54, 71, 1);
+  --background-dropdown-hover:rgba(98, 110, 149, 1);
 }
 
 html[data-theme=dark] {
@@ -85,6 +89,10 @@ html[data-theme=dark] {
   --text-color-reverse: rgba(18, 20, 22, 0.85);
   --closed-arrow-color: rgba(153, 152, 152, 1);
   --summary-task-btn-hover: rgba(46, 56, 61, 1);
+  --summary-task-btn-text-hover: rgba(247, 248, 248, 1);
+  --edit-task-hover: rgba(52, 61, 66, 1);
+  --background-dropdown: rgba(46, 56, 61, 1);
+  --background-dropdown-hover: rgba(59, 69, 74, 1);
 }
 
 /*# sourceMappingURL=variablen.css.map */

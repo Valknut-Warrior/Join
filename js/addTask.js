@@ -37,6 +37,7 @@
     setStartColorSVGButton();
     setMinDate();
     clearAllBox();
+    checkUser();
   });
 
   // Beim Klicken auf das Title-Feld den Rahmen setzen
@@ -443,15 +444,11 @@
           showToast("Task wurde erfolgreich erstellt!", "#4CAF50");
 
           if (window.location.pathname === "/add-task.html") {
-            console.log("Du bist auf der gewünschten Seite.");
-
             // Nach 3 Sekunden weiterleiten
             setTimeout(() => {
               window.location.href = "board.html";
             }, 3000);
           } else if (window.location.pathname === "/board.html") {
-            console.log("Du bist auf der Board  Seite.");
-
             setTimeout(() => {
               const overlayContainer =
                 document.getElementById("overlayContainer");
@@ -554,6 +551,15 @@
     // Füge aktive Klasse zum aktuellen Button hinzu
     button.classList.add("active");
     console.log("Ausgewählte Priorität:", selectedPrio); // Debugging
+  }
+
+  function checkUser() {
+    const userName = localStorage.getItem("currentUser");
+    const main = document.getElementById("mainContainer");
+
+    if (userName) {
+      main.classList.remove("hidden");
+    }
   }
 
   window.createTask = createTask;

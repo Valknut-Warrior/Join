@@ -17,6 +17,10 @@ window.onload = async () => {
   updateHTML();
 };
 
+document.addEventListener("DOMContentLoaded", (event) => {
+  checkUser();
+});
+
 /**
  * Ruft die Aufgaben aus der Firebase-Datenbank ab und speichert sie in der `tasks`-Variable.
  */
@@ -312,24 +316,25 @@ function showOrHideOverlay() {
     window.scrollTo(0, 0);
     overlayContainer.classList.add("at-overlay");
 
-    overlayContainer.innerHTML = ` <div class="headlineAndClosed" id="headlineAndClosed">
+    overlayContainer.innerHTML = `<div class="headlineAndClosed" id="headlineAndClosed">
                           <div class="headline">
                                 <h1>Add Task</h1>    
+                                <div class="wrapper">
+                                    <div class="close-button" onclick="overlayClosed()">
+                                <div class="in">
+                                    <div class="close-button-block"></div>
+                                    <div class="close-button-block"></div>
+                                </div>
+                                <div class="out">
+                                    <div class="close-button-block"></div>
+                                    <div class="close-button-block"></div>
+                                </div>
+                                </div>
+                               </div>
                           </div>
                           
                          <div class="task-main-container">
-        <div class="wrapper">
-            <a href="#" class="close-button" onclick="hideOverlayTask()">
-        <div class="in">
-            <div class="close-button-block"></div>
-            <div class="close-button-block"></div>
-           </div>
-        <div class="out">
-                <div class="close-button-block"></div>
-                <div class="close-button-block"></div>
-           </div>
-             </a>
-        </div>
+       
                 </div>  
             <div class="overlay-add-task">
                 <div class="content-overlay-left">  
@@ -354,9 +359,9 @@ function showOrHideOverlay() {
                     <div class="content-add-task-button dfg">
                         <p>Prio</p>
                         <p class="add-task-button-set">
-                            <button class="prioritize-button-high" id="prioritize-button-high" value="high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
-                            <button class="prioritize-button-medium" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
-                            <button class="prioritize-button-low" id="prioritize-button-low" value="low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
+                            <button class="prio-btn prioritize-button-high" id="prioritize-button-high" value="high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
+                            <button class="prio-btn prioritize-button-medium" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
+                            <button class="prio-btn prioritize-button-low" id="prioritize-button-low" value="low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
                         </p>
                     </div>
 
@@ -718,18 +723,18 @@ function openOrCloseEditTask(taskKey) {
             <form class="task-form et-form" action="">
                 <div class="edit-Task-Title">
                     <label for="editTaskTitle">Title *</label>
-                    <input class="input-title" type="text" id="editTaskTitle" name="title" placeholder="Enter a Title" value="${task.title}" required>
+                    <input class="input-title-overlay-edit" type="text" id="editTaskTitle" name="title" placeholder="Enter a Title" value="${task.title}" required>
                 </div>
                 
                 <div class="edit-Task-Description">
                  <label for="editTaskDescription">Description</label>
-                   <textarea class="textarea-description" id="editTaskDescription" name="description" data-value="${task.description.trim()}">${task.description.trim()}
+                   <textarea class="edit-Task-Description textarea-description" id="editTaskDescription" name="description" data-value="${task.description.trim()}">${task.description.trim()}
                    </textarea>                 
-                </div>
+                </div> 
                 
                 <div class="edit-Task-Date">
                    <label for="date">Due date *</label>
-                   <input class="input-date" type="date" id="date" name="date" placeholder="dd/mm/yyyy" value="${task.date}" required>
+                   <input class="input-date edit-Task-Date" type="date" id="date" name="date" placeholder="dd/mm/yyyy" value="${task.date}" required>
                 </div>
                 
                 <div class="edit-Task-Prio">
@@ -770,7 +775,7 @@ ${
             ${subtasks
               .map(
                 (subtask, index) => `
-            <li>
+            <li class="subedit">
                 <input 
                     type="checkbox" 
                     ${subtask.done ? "checked" : ""} 
@@ -1240,6 +1245,9 @@ function updateSubtaskDisplay(subtasks) {
 }
 
 function updateSubtask(index) {
+  const subTaskIcon = document.getElementById("subtask-icon");
+  const inputSub = document.getElementById("subtask");
+
   // Lade den Subtask ins Eingabefeld
   inputSub.value = subtaskArray[index].title;
   inputSub.focus();
@@ -1290,4 +1298,13 @@ function saveButtonFocus() {
     saveTaskButton.classList.add("create-task-button");
     saveTaskButton.classList.remove("focus-task-button");
   });
+}
+
+function checkUser() {
+  const userName = localStorage.getItem("currentUser");
+  const main = document.getElementById("mainContainer");
+
+  if (userName) {
+    main.classList.remove("hidden");
+  }
 }
