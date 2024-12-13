@@ -52,6 +52,7 @@ html[data-theme='light'] {
   --edit-task-hover: rgba(204, 204, 204, 1);
   --background-dropdown: rgba(42, 54, 71, 1);
   --background-dropdown-hover:rgba(98, 110, 149, 1);
+  --text-color-dropdown: rgba(200, 204, 209, 1);
 }
 
 html[data-theme='dark'] {
@@ -94,4 +95,5 @@ html[data-theme='dark'] {
   --edit-task-hover: rgba(52, 61, 66, 1);
   --background-dropdown: rgba(46, 56, 61, 1);
   --background-dropdown-hover: rgba(59, 69, 74, 1);
+  --text-color-dropdown: rgba(200, 204, 209, 1);
 }
