@@ -14,15 +14,13 @@
   outline: none;
 }
 
-html {
-  scrollbar-color: snow lightslategray;
-}
-
-body {
+html, body {
+  /*scrollbar-color: snow lightslategray;*/
+  max-height: 100vh;
+  max-width: 100vw;
   background: var(--background-color);
   background-color: var(--background-color-content);
   color: var(--text-color);
-  overflow-x: hidden;
 }
 
 a {
@@ -71,9 +69,12 @@ textarea::placeholder {
 }
 
 .header {
+  display: flex;
   background-color: var(--background-header);
   flex-basis: 50px;
   box-shadow: var(--border-shadow);
+  position: fixed;
+  z-index: 998;
 }
 
 .headerName {
@@ -180,6 +181,7 @@ textarea::placeholder {
 
 .sidebar-inc {
   height: 100vh;
+  z-index: 999;
 }
 
 .sidebar-left {
@@ -363,10 +365,10 @@ textarea::placeholder {
 }
 
 .login-content {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  max-height: 100vh;
   display: flex;
-  flex: 1;
+  justify-content: center;
 }
 
 .singup-content {
@@ -400,6 +402,7 @@ textarea::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
 }
 
 .login-formular {
@@ -478,6 +481,12 @@ textarea::placeholder {
   background: var(--background-color-login);
   border: solid 1px var(--border-inputfeld-login);
   border-radius: 10px;
+}
+
+.subtask-input {
+  background: var(--background-color-login);
+  border: none;
+  color: var(--text-color);
 }
 
 #name {
@@ -616,6 +625,8 @@ textarea::placeholder {
   top: 10px;
   left: 10px;
   transform: translate(0, 0);
+  z-index: 1000;
+  position: fixed;
 }
 
 /* Größe und Stil des Logos */
@@ -809,7 +820,7 @@ textarea::placeholder {
   width: 15px;
 }
 
-.input-title, .textarea-description, .input-date, .select-category, .input-subtask, .custom-select-container {
+.input-title, .textarea-description, .input-date, .select-category, .input-subtask, .custom-select-container, .subtask-input {
   background: var(--background-color-login);
   border: solid 1px var(--border-inputfeld-login);
   border-radius: 10px;
@@ -892,7 +903,7 @@ textarea::placeholder {
 }
 
 .category-title {
-  width: 97%;
+  width: 93%;
   display: flex;
   flex-direction: row;
 }
@@ -1033,7 +1044,6 @@ textarea::placeholder {
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-  border: 1px solid var(--border-inputfeld-login);
   border-radius: 4px;
   margin-bottom: 5px;
 }
@@ -1041,9 +1051,11 @@ textarea::placeholder {
 .remove-subtask-icon {
   cursor: pointer;
   margin-right: 5px;
-  color: gray;
+  /*color: gray;*/
   width: 15px;
   height: 15px;
+  position: relative;
+  right: 31px;
 }
 
 .edit-subtask-icon {
@@ -1068,11 +1080,14 @@ textarea::placeholder {
 /* Large devices (laptops/desktops, 992px and up) */
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+  .root {
+    width: 1920px;
+    height: 1080px;
+  }
   .header {
-    display: flex;
     height: 50px;
-    max-width: 1980px;
-    min-width: 1200px;
+    max-width: 1920px;
+    width: 100vw;
   }
   #question img {
     width: 17px;
@@ -1099,11 +1114,16 @@ textarea::placeholder {
   }
   /* Login */
   .login-content {
-    width: 100%;
-    height: 100em;
     display: flex;
     flex: 1;
     flex-direction: column;
+    align-content: center;
+  }
+  .login-content::-webkit-scrollbar {
+    width: 0;
+    background: transparent; /* make scrollbar transparent */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
   }
   .login {
     width: 100%;
@@ -1130,10 +1150,13 @@ textarea::placeholder {
   .content-left textarea {
     min-height: 220px;
   }
-  .content-right input, textarea, select, .custom-select-container {
+  .content-right input, textarea, select, .custom-select-container, .subtask-item {
     width: 750px;
     max-width: 750px;
     min-width: 750px;
+  }
+  .subtask-input {
+    width: 400px !important;
   }
 }
 /* Extra 4K devices landscape */

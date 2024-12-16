@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
  * Wenn ein Benutzer angemeldet ist, wird die Seite angezeigt, andernfalls wird auf die Anmeldeseite umgeleitet.
  */
 function checkUserLoggedIn() {
-  setInterval(() => {
+  setTimeout(() => {
     const dropUser = document.getElementById("dropUser");
     const user = localStorage.getItem("currentUser");
     const result = user ? user.charAt(0).toUpperCase() : "N/A";

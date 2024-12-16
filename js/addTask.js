@@ -33,6 +33,21 @@
   const mediumButton = document.getElementById("prioritize-button-medium");
   const lowButton = document.getElementById("prioritize-button-low");
 
+  // Liste aller Eingabefelder
+  const inputFields = [
+    { element: inputTitle, focusStyle: "solid 1px var(--border-input-focus)" },
+    {
+      element: inputDescription,
+      focusStyle: "solid 1px var(--border-input-focus)",
+    },
+    { element: inputDate, focusStyle: "solid 1px var(--border-input-focus)" },
+    {
+      element: inputCategory,
+      focusStyle: "solid 1px var(--border-input-focus)",
+    },
+    { element: inputSub, focusStyle: "solid 1px var(--border-input-focus)" },
+  ];
+
   document.addEventListener("DOMContentLoaded", (event) => {
     setStartColorSVGButton();
     setMinDate();
@@ -40,122 +55,164 @@
     checkUser();
   });
 
-  // Beim Klicken auf das Title-Feld den Rahmen setzen
-  inputTitle.addEventListener("click", (event) => {
-    inputTitle.style.border = "solid 1px var(--border-input-focus)";
-    inputDescription.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputDate.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputCategory.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
-  });
+  // Standard-Stil für nicht fokussierte Felder
+  const defaultBorderStyle = "solid 1px var(--border-inputfeld-login)";
 
-  // Beim Klicken auf das Description-Feld den Rahmen setzen
-  inputDescription.addEventListener("click", (event) => {
-    inputDescription.style.border = "solid 1px var(--border-input-focus)";
-    inputTitle.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputDate.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputCategory.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
-  });
+  // Funktion, um den Rahmen der Felder dynamisch zu setzen
+  function handleFieldFocus(focusedElement) {
+    inputFields.forEach(({ element, focusStyle }) => {
+      if (element === focusedElement) {
+        element.style.border = focusStyle; // Fokusrahmen setzen
+      } else {
+        element.style.border = defaultBorderStyle; // Standardrahmen setzen
+      }
+    });
 
-  // Beim Klicken auf das Date-Feld den Rahmen setzen
-  inputDate.addEventListener("click", (event) => {
-    inputDate.style.border = "solid 1px var(--border-input-focus)";
-    inputTitle.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputDescription.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputCategory.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputSub.style.border = "solid 1px var(--border-inputfeld-login)";
-  });
+    // Zusätzliche Logik für das Subtask-Feld
+    if (focusedElement === inputSub) {
+      subTaskIcon.innerHTML =
+        '<img src="icons/close.svg" alt="Close" class="add-subtask-button filter-gray">|<img src="icons/check.svg" alt="Check" class="add-subtask-button filter-gray">';
+      subTaskIcon.classList.remove("input-Button");
+      subTaskIcon.classList.add("input-Button-Dou");
 
-  // Beim Klicken auf das Subtask-Feld den Rahmen setzen
-  inputSub.addEventListener("click", (event) => {
-    inputSub.style.border = "solid 1px var(--border-input-focus)";
-    inputTitle.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputDescription.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputDate.style.border = "solid 1px var(--border-inputfeld-login)";
-    inputCategory.style.border = "solid 1px var(--border-inputfeld-login)";
+      // Check im SubTask inputfeld, ob auf Enter gedrückt wurde
+      inputSub.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          checkSub();
+        }
+      });
+      // Check im SubTask inputfeld, ob auf ESC gedrückt wurde
+      inputSub.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" || event.key === "Esc") {
+          chanceSub();
+        }
+      });
+    }
+  }
 
-    // Setzt die Icons bei SubTask
-    subTaskIcon.innerHTML =
-      '<img src="icons/close.svg" alt="Close" class="add-subtask-button filter-gray">|<img src="icons/check.svg" alt="Check" class="add-subtask-button filter-gray">';
-    subTaskIcon.classList.remove("input-Button");
-    subTaskIcon.classList.add("input-Button-Dou");
+  // Event-Listener für alle Felder hinzufügen
+  inputFields.forEach(({ element }) => {
+    element.addEventListener("click", () => handleFieldFocus(element));
   });
 
   // Add-Task Button Low/Medium/High
-  buttonLow.addEventListener("mouseover", (event) => {
-    buttonLow.classList.add("box-shadow");
-    buttonMedium.classList.remove("box-shadow");
-    buttonHigh.classList.remove("box-shadow");
-  });
 
-  buttonMedium.addEventListener("mouseover", (event) => {
-    buttonMedium.classList.add("box-shadow");
-    buttonLow.classList.remove("box-shadow");
-    buttonHigh.classList.remove("box-shadow");
-  });
+  // Funktion, um den "box-shadow" hinzuzufügen und von anderen Buttons zu entfernen
+  function handleMouseOver(targetButton) {
+    [buttonLow, buttonMedium, buttonHigh].forEach((button) => {
+      if (button === targetButton) {
+        button.classList.add("box-shadow");
+      } else {
+        button.classList.remove("box-shadow");
+      }
+    });
+  }
 
-  buttonHigh.addEventListener("mouseover", (event) => {
-    buttonHigh.classList.add("box-shadow");
-    buttonLow.classList.remove("box-shadow");
-    buttonMedium.classList.remove("box-shadow");
-  });
+  // Funktion, um den "box-shadow" zu entfernen
+  function handleMouseOut(targetButton) {
+    targetButton.classList.remove("box-shadow");
+  }
 
-  // Schatten entfernen, wenn Maus den Button verlässt
-  buttonLow.addEventListener("mouseout", () => {
-    buttonLow.classList.remove("box-shadow");
-  });
-
-  buttonMedium.addEventListener("mouseout", () => {
-    buttonMedium.classList.remove("box-shadow");
-  });
-
-  buttonHigh.addEventListener("mouseout", () => {
-    buttonHigh.classList.remove("box-shadow");
+  // Event-Listener für alle Buttons hinzufügen
+  [buttonLow, buttonMedium, buttonHigh].forEach((button) => {
+    button.addEventListener("mouseover", () => handleMouseOver(button));
+    button.addEventListener("mouseout", () => handleMouseOut(button));
   });
 
   // Füge `click`-Event-Listener hinzu, um die Farbe beim Klicken zu ändern
-  buttonLow.addEventListener("click", () => {
+  function handleButtonClick(priority) {
     deleteButtonColor();
 
-    buttonLow.classList.add("bcg", "text-color-reverse", "font-bold");
-    svgLow.classList.add("filter-black");
-    svgLow.dataset.value = "low";
+    // Mapping von Prioritäten auf Klassen und Farben
+    const config = {
+      low: {
+        button: buttonLow,
+        svg: svgLow,
+        buttonClasses: ["bcg", "text-color-reverse", "font-bold"],
+        svgAddClasses: ["filter-black"],
+        svgRemoveClasses: ["filter-standard"],
+        otherSVGs: [
+          {
+            svg: svgMedium,
+            add: ["filter-orange"],
+            remove: ["filter-standard", "filter-black"],
+          },
+          {
+            svg: svgHigh,
+            add: ["filter-red"],
+            remove: ["filter-standard", "filter-black"],
+          },
+        ],
+      },
+      medium: {
+        button: buttonMedium,
+        svg: svgMedium,
+        buttonClasses: ["bco", "text-color-reverse", "font-bold"],
+        svgAddClasses: ["filter-black"],
+        svgRemoveClasses: ["filter-standard"],
+        otherSVGs: [
+          {
+            svg: svgLow,
+            add: ["filter-green"],
+            remove: ["filter-standard", "filter-black"],
+          },
+          {
+            svg: svgHigh,
+            add: ["filter-red"],
+            remove: ["filter-standard", "filter-black"],
+          },
+        ],
+      },
+      high: {
+        button: buttonHigh,
+        svg: svgHigh,
+        buttonClasses: ["bcr", "text-color-reverse", "font-bold"],
+        svgAddClasses: ["filter-black"],
+        svgRemoveClasses: ["filter-standard"],
+        otherSVGs: [
+          {
+            svg: svgLow,
+            add: ["filter-green"],
+            remove: ["filter-standard", "filter-black"],
+          },
+          {
+            svg: svgMedium,
+            add: ["filter-orange"],
+            remove: ["filter-standard", "filter-black"],
+          },
+        ],
+      },
+    };
 
-    svgMedium.classList.remove("filter-standard", "filter-black");
-    svgMedium.classList.add("filter-orange");
+    const {
+      button,
+      svg,
+      buttonClasses,
+      svgAddClasses,
+      svgRemoveClasses,
+      otherSVGs,
+    } = config[priority];
 
-    svgHigh.classList.remove("filter-standard", "filter-black");
-    svgHigh.classList.add("filter-red");
-  });
+    // Button spezifische Klassen hinzufügen
+    button.classList.add(...buttonClasses);
 
-  buttonMedium.addEventListener("click", () => {
-    deleteButtonColor();
+    // Haupt-SVG: Klassen hinzufügen/entfernen
+    svg.classList.add(...svgAddClasses);
+    svg.classList.remove(...svgRemoveClasses);
+    svg.dataset.value = priority;
 
-    buttonMedium.classList.add("bco", "text-color-reverse", "font-bold");
-    svgMedium.classList.add("filter-black");
-    svgMedium.dataset.value = "medium";
+    // Andere SVGs entsprechend der Konfiguration aktualisieren
+    otherSVGs.forEach(({ svg, add, remove }) => {
+      svg.classList.add(...add);
+      svg.classList.remove(...remove);
+    });
+  }
 
-    svgLow.classList.remove("filter-standard", "filter-black");
-    svgLow.classList.add("filter-green");
-    svgHigh.classList.remove("filter-standard", "filter-black");
-    svgHigh.classList.add("filter-red");
-  });
-
-  buttonHigh.addEventListener("click", () => {
-    deleteButtonColor();
-
-    buttonHigh.classList.add("bcr", "text-color-reverse", "font-bold");
-    svgLow.classList.add("filter-green");
-
-    svgLow.classList.remove("filter-standard", "filter-black");
-    svgMedium.classList.add("filter-orange");
-    svgMedium.classList.remove("filter-standard", "filter-black");
-
-    svgHigh.classList.add("filter-black");
-    svgHigh.classList.remove("filter-standard");
-    svgHigh.dataset.value = "high";
-  });
+  // Event-Listener für die Buttons hinzufügen
+  buttonLow.addEventListener("click", () => handleButtonClick("low"));
+  buttonMedium.addEventListener("click", () => handleButtonClick("medium"));
+  buttonHigh.addEventListener("click", () => handleButtonClick("high"));
 
   /**
    * Entferne alle Focus Rahmen
@@ -320,7 +377,7 @@
       inputSub.value = ""; // Eingabefeld leeren
       inputSub.style.border = "solid 1px var(--border-inputfeld-login)"; // Rahmen zurücksetzen
     } else {
-      alert("Bitte geben Sie einen gültigen Subtask ein."); // Optionales Feedback
+      showToast("Bitte geben Sie einen gültigen Subtask ein.");
     }
   }
 
@@ -336,14 +393,37 @@
       const taskDiv = document.createElement("div");
       taskDiv.className = "subtask-item";
 
-      // Subtask-Checkbox, Titel und Buttons hinzufügen
-      taskDiv.innerHTML = `
-            <span>${task.title}</span>
-            <div>
-                <img class="edit-subtask-icon filter-gray" onclick="updateSubtask(${index})" src="icons/edit.svg" alt="Edit">
-                <img class="remove-subtask-icon filter-gray" onclick="removeSubtask(${index})" src="icons/delete.svg" alt="Delete">
-            </div>
-        `;
+      // Subtask-Eingabefeld erstellen (statt nur ein <span>)
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = task.title;
+      input.className = "subtask-input";
+
+      // Eventlistener für Echtzeit-Änderungen
+      input.addEventListener("input", (event) => {
+        subtaskArray[index].title = event.target.value; // Subtask-Array aktualisieren
+        console.log(
+          `Subtask ${index} aktualisiert: ${subtaskArray[index].title}`,
+        );
+      });
+
+      // Container für Edit- und Delete-Icons
+      const iconContainer = document.createElement("div");
+
+      // Löschen-Icon hinzufügen
+      const deleteIcon = document.createElement("img");
+      deleteIcon.className = "remove-subtask-icon filter-gray";
+      deleteIcon.src = "icons/delete.svg";
+      deleteIcon.alt = "Delete";
+      deleteIcon.onclick = () => removeSubtask(index); // Löschen-Logik
+
+      // Icons in den Container hinzufügen
+
+      iconContainer.appendChild(deleteIcon);
+
+      // Elemente in das Subtask-Div einfügen
+      taskDiv.appendChild(input); // Eingabefeld hinzufügen
+      taskDiv.appendChild(iconContainer); // Icons hinzufügen
 
       subtasksDiv.appendChild(taskDiv); // Zum Container hinzufügen
     });

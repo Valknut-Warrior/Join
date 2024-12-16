@@ -1,0 +1,29 @@
+.content h1 {
+  padding: 0;
+}
+
+.content h2, h3, h4, h5, h6 {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.content h3, h4, h5, h6 {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.privacy {
+  display: flex;
+  flex-direction: column;
+  padding: 65px 65px 50px;
+  gap: 5px;
+}
+
+.privacy-policy-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/*# sourceMappingURL=privacy-policy.css.map */

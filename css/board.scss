@@ -1,6 +1,10 @@
 @import url('variablen.css');
 
 
+html, body {
+  overflow-x: hidden; /* Verhindert das Scrollen */
+}
+
 .drag-area {
   height: 200px;
   /*
@@ -841,7 +845,7 @@ $close-width: ($button-size / 10);
 
 .subedit {
   background-color: var(--background-color-login);
-  border-radius: 10px;
+  border-radius: 30px;
   border: solid 1px var(--border-inputfeld-login);
   margin-bottom: 5px;
   padding: 6px;
@@ -945,6 +949,10 @@ $close-width: ($button-size / 10);
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 
+  .board-bottom {
+    width: 1565px;
+    gap: 15px;
+  }
 
   .content-overlay-left input, textarea, select {
     width: 660px;
