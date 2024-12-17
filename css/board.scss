@@ -43,8 +43,8 @@ html, body {
   position: relative;
   top: 35px;
   right: 65px;
-  min-height: 60em;
-  max-height: 100em;
+  min-height: 60vh;
+  max-height: 100vh;
   padding-bottom: 10px;
 }
 
@@ -443,6 +443,8 @@ html, body {
 }
 
 .overDiv-bottom, .overDiv-bottom-f {
+  position: relative;
+  bottom: 40px;
   min-width: 25%;
   width: 25%;
 }

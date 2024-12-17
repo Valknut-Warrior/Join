@@ -21,6 +21,7 @@ html, body {
   background: var(--background-color);
   background-color: var(--background-color-content);
   color: var(--text-color);
+  height: 100%;
 }
 
 a {
@@ -284,10 +285,18 @@ textarea::placeholder {
   filter: brightness(70%);
 }
 
+/*
 .footer {
   flex-basis: 50px;
+  z-index: 10000;
+  position: fixed;
+  bottom: 0;
+  display: inline-flex;
+  background-color: aliceblue;
+  width: 100%;
+  height: 50px;
 }
-
+*/
 /* Tooltip CSS */
 [data-tooltip]:before,
 [data-tooltip]:after {
