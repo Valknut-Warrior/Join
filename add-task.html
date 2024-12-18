@@ -10,6 +10,7 @@
     <!-- Custom CSS -->
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/addTask.css">
 
     <!-- Favicons -->
 
@@ -36,65 +37,76 @@
         <div class="sidebar-inc" w3-include-html="sidebar.html"></div>
 
         <div class="content">
-            <h1>Add Task</h1>
             <div class="content-add-task">
-                <div class="content-left">
+                <h1>Add Task</h1>
+                <div class="task-main-container">
+                    <div class="content-left">
 
-                    <div class="dfg">
-                        <label for="title">Title<span class="star"> *</span></label><br>
-                        <input class="input-title" type="text" id="title" name="title" placeholder="Enter a Title" required>
-                    </div>
-
-                    <div class="dfg">
-                        <label for="description">Description</label><br>
-                        <textarea class="textarea-description" id="description" name="description" rows="4" cols="50" placeholder="Enter a Description"></textarea>
-                    </div>
-
-                </div>
-                <div class="content-right">
-                    <div class="dfg">
-                        <label for="date">Due date<span class="star"> *</span></label><br>
-                        <input class="input-date" type="date" id="date" name="date" placeholder="dd/mm/yyyy" required>
-                    </div>
-
-                    <div class="content-add-task-button dfg">
-                        <p>Prio</p>
-                        <p class="add-task-button-set">
-                            <button class="prio-btn prioritize-button-high" id="prioritize-button-high" value="high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High" class="atb-sitz"/></button>
-                            <button class="prio-btn prioritize-button-medium" id="prioritize-button-medium" value="medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg" alt="Medium" class="atb-sitz"/></button>
-                            <button class="prio-btn prioritize-button-low" id="prioritize-button-low" value="low">Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/></button>
-                        </p>
-                    </div>
-
-                    <div class="dfg category-title">
-                        <p>Category<span class="star"> *</span></p>
-                    </div>
-
-                    <div class="dfg custom-select-container" id="custom-select-container">
-                        <div class="custom-select" id="customSelect">
-                            <span class="selected-option">Select task category</span>
-                            <svg class="custom-arrow" width="14" height="14" viewBox="0 0 24 24">
-                                <path d="M7 10l5 5 5-5z"></path>
-                            </svg>
+                        <div class="dfg">
+                            <label for="title">Title<span class="star"> *</span></label><br>
+                            <input class="input-title" type="text" id="title" name="title" placeholder="Enter a Title"
+                                   required>
                         </div>
-                        <ul class="options-list" id="optionsList">
-                            <li data-value="0">Select task category</li>
-                            <li data-value="1">Technical Task</li>
-                            <li data-value="2">User Story</li>
-                        </ul>
-                    </div>
 
-                    <div class="dfg">
-                        <label for="subtask">Subtask</label><br>
-                        <input class="input-subtask" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
-                        <div class="input-Button" id="subtask-icon" onclick="subtaskCross();">
-                            <img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray">
+                        <div class="dfg">
+                            <label for="description">Description</label><br>
+                            <textarea class="textarea-description" id="description" name="description" rows="4"
+                                      cols="50" placeholder="Enter a Description"></textarea>
                         </div>
-                        <div id="subtasks"></div>
+
                     </div>
+                    <div class="content-right">
+                        <div class="dfg">
+                            <label for="date">Due date<span class="star"> *</span></label><br>
+                            <input class="input-date" type="date" id="date" name="date" placeholder="dd/mm/yyyy"
+                                   required>
+                        </div>
 
+                        <div class="content-add-task-button dfg">
+                            <p>Prio</p>
+                            <p class="add-task-button-set">
+                                <button class="prio-btn prioritize-button-high" id="prioritize-button-high"
+                                        value="high">Urgent <img id="svg-high" src="/icons/prio-high.svg" alt="High"
+                                                                 class="atb-sitz"/></button>
+                                <button class="prio-btn prioritize-button-medium" id="prioritize-button-medium"
+                                        value="medium">Medium <img id="svg-medium" src="/icons/prio-medium.svg"
+                                                                   alt="Medium" class="atb-sitz"/></button>
+                                <button class="prio-btn prioritize-button-low" id="prioritize-button-low" value="low">
+                                    Low <img id="svg-low" src="/icons/prio-low.svg" alt="Low" class="atb-sitz"/>
+                                </button>
+                            </p>
+                        </div>
+
+                        <div class="dfg category-title">
+                            <p>Category<span class="star"> *</span></p>
+                        </div>
+
+                        <div class="dfg custom-select-container" id="custom-select-container">
+                            <div class="custom-select" id="customSelect">
+                                <span class="selected-option">Select task category</span>
+                                <svg class="custom-arrow" width="14" height="14" viewBox="0 0 24 24">
+                                    <path d="M7 10l5 5 5-5z"></path>
+                                </svg>
+                            </div>
+                            <ul class="options-list" id="optionsList">
+                                <li data-value="0">Select task category</li>
+                                <li data-value="1">Technical Task</li>
+                                <li data-value="2">User Story</li>
+                            </ul>
+                        </div>
+
+                        <div class="dfg">
+                            <label for="subtask">Subtask</label><br>
+                            <input class="input-subtask" type="text" id="subtask" name="subtask"
+                                   placeholder="Add new subtask">
+                            <div class="input-Button" id="subtask-icon" onclick="subtaskCross();">
+                                <img src="icons/add.svg" alt="Add" class="add-subtask-button filter-gray">
+                            </div>
+                            <div id="subtasks"></div>
+                        </div>
+
+                    </div>
                 </div>
-
 
 
             </div>
@@ -106,8 +118,8 @@
                 </div>
 
                 <div class="create-task-button" id="create-button">
-                   <button id="create-task-button" onclick="createTask();">Create Task</button>
-               </div>
+                    <button id="create-task-button" onclick="createTask();">Create Task</button>
+                </div>
 
             </div>
 

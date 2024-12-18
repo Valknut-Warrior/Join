@@ -1,5 +1,6 @@
 .content h1 {
   padding: 0;
+  left: 0;
 }
 
 .content h2, h3, h4, h5, h6 {
@@ -17,6 +18,8 @@
   flex-direction: column;
   padding: 65px 65px 50px;
   gap: 5px;
+  z-index: 997;
+  position: relative;
 }
 
 .privacy-policy-header {
@@ -25,5 +28,14 @@
   align-items: center;
   justify-content: space-between;
 }
+
+/* Extra small devices (phones, 600px and down) */
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* Medium devices (landscape tablets, 768px and up) */
+/* Large devices (laptops/desktops, 992px and up) */
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* 2K devices (large laptops and desktops, 2560px and up) */
+/* Extra 4K devices landscape */
+/* Extra 4K devices portrait  */
 
 /*# sourceMappingURL=privacy-policy.css.map */

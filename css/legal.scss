@@ -1,5 +1,8 @@
+
+
 .content h1 {
   padding: 0;
+  left: 0;
 }
 
 .content h2,h3,h4,h5,h6 {
@@ -17,6 +20,9 @@
   flex-direction: column;
   padding: 65px 65px 50px;
   gap: 5px;
+  height: 100vh;
+  z-index: 997;
+  position: relative;
 }
 
 .legal-notice-head {
@@ -28,4 +34,57 @@
 
 .imprint-list {
   list-style: none;
+}
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+
+
+}
+
+
+/* 2K devices (large laptops and desktops, 2560px and up) */
+@media only screen and (min-width: 2560px) {
+
+
+
+}
+
+/* Extra 4K devices landscape */
+@media only screen and (min-width: 3840px) and (orientation: landscape) {
+
+
+
+}
+
+/* Extra 4K devices portrait  */
+@media only screen and (min-height: 2160px) and (orientation: portrait) {
+
+
+
 }

@@ -39,7 +39,7 @@ html, body {
 .board-mainContainer {
   display: flex;
   flex-direction: column;
-  width: 107em;
+  width: 93vw;
   position: relative;
   top: 35px;
   right: 65px;
@@ -592,7 +592,7 @@ html, body {
   position: absolute;
   left: 55%;
   transform: translate(-50%, -50%);
-  min-height: 67%;
+  min-height: 35%;
   max-height: 95%;
   border-radius: 25px;
   padding: 50px;
@@ -948,6 +948,66 @@ $close-width: ($button-size / 10);
   gap: 3px;
 }
 
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+  .board-InputFieldDiv {
+    position: initial;
+  }
+
+  .board-InputField {
+    position: absolute;
+    top: 130px;
+    right: 10px;
+    left: auto;
+    border-radius: 10px;
+    width: 278px;
+    height: 39px;
+  }
+
+  .board-searchImage {
+    position: absolute;
+    background-color: white;
+    top: 140px;
+    right: 24px;
+    left: auto;
+    cursor: pointer;
+  }
+
+  h1 {
+    font-size: 47px;
+  }
+
+  .board-top {
+    display: flex;
+    margin: 48px 5px 48px 48px;
+  }
+
+
+  .overDiv-bottom-f {
+    margin-bottom: 100px;
+  }
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 
@@ -992,44 +1052,64 @@ $close-width: ($button-size / 10);
 
 }
 
-@media(max-width: 690px) {
+/* 2K devices (large laptops and desktops, 2560px and up) */
+@media only screen and (min-width: 2560px) {
 
-  .board-InputFieldDiv {
-    position: initial;
+  .board-bottom {
+    width: 2085px;
+    gap: 15px;
   }
 
-  .board-InputField {
-    position: absolute;
-    top: 130px;
-    right: 10px;
-    left: auto;
-    border-radius: 10px;
-    width: 278px;
-    height: 39px;
+  .content h1 {
+    margin-bottom: 110px;
   }
 
-  .board-searchImage {
-    position: absolute;
-    background-color: white;
-    top: 140px;
-    right: 24px;
-    left: auto;
-    cursor: pointer;
+  .toAdd-bottom {
+    margin-left: 147px;
   }
 
-  h1 {
-    font-size: 47px;
+  .category-title {
+    width: 66%;
   }
 
-  .board-top {
-    display: flex;
-    margin: 48px 5px 48px 48px;
+}
+
+/* Extra 4K devices landscape */
+@media only screen and (min-width: 3840px) and (orientation: landscape) {
+
+  .header {
+    height: 50px;
+    max-width: 3840px;
+    width: 100vw;
   }
 
-
-  .overDiv-bottom-f {
-    margin-bottom: 100px;
+  .board-mainContainer {
+    width: 97vw;
   }
 
+  .board-bottom {
+    width: 3840px;
+    gap: 1px;
+  }
+
+}
+
+/* Extra 4K devices portrait  */
+@media only screen and (min-height: 2160px) and (orientation: portrait) {
+
+  .header {
+    height: 50px;
+    max-width: 3840px;
+    width: 100vw;
+  }
+
+  .board-mainContainer {
+    width: 97vw;
+  }
+
+  .board-bottom {
+    width: 3840px;
+    gap: 1px;
+  }
 
 }
