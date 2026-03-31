@@ -14,7 +14,9 @@ html, body {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  width: 250px;
+  width: 100%;
+  gap: 12px;
+  padding: 0 8px;
 }
 
 .drag-area-highlight {
@@ -37,10 +39,9 @@ html, body {
 .board-mainContainer {
   display: flex;
   flex-direction: column;
-  width: 93vw;
+  width: 100%;
   position: relative;
   top: 35px;
-  right: 65px;
   min-height: 60vh;
   max-height: 100vh;
   padding-bottom: 10px;
@@ -198,7 +199,7 @@ html, body {
 #right,
 #leftNum2,
 #rightNum2 {
-  width: 230px;
+  width: 100%;
   height: 100%;
   padding: 1px;
 }
@@ -346,8 +347,8 @@ html, body {
 .toAdd-bottom {
   display: flex;
   justify-content: space-between;
-  margin-left: 91px;
-  width: 340px;
+  width: 100%;
+  padding: 0 10px;
 }
 
 .board-title {
@@ -438,8 +439,7 @@ html, body {
 .overDiv-bottom, .overDiv-bottom-f {
   position: relative;
   bottom: 40px;
-  min-width: 25%;
-  width: 25%;
+  flex: 1;
 }
 
 #overlayContainer {
@@ -941,8 +941,7 @@ html, body {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .board-bottom {
-    width: 1565px;
-    gap: 15px;
+    gap: 20px;
   }
   .content-overlay-left input, textarea, select {
     width: 660px;
@@ -972,14 +971,10 @@ html, body {
 /* 2K devices (large laptops and desktops, 2560px and up) */
 @media only screen and (min-width: 2560px) {
   .board-bottom {
-    width: 2085px;
-    gap: 15px;
+    gap: 20px;
   }
   .content h1 {
     margin-bottom: 110px;
-  }
-  .toAdd-bottom {
-    margin-left: 147px;
   }
   .category-title {
     width: 66%;
